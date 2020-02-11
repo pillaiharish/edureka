@@ -1,0 +1,149 @@
+https://www.edureka.co/blog/advanced-java-tutorial#JDBCDriver
+https://www.edureka.co/blog/interview-questions/java-interview-questions/#JDBC
+
+Servlets
+It is used to create a web application. It is also a class that extends the capabilities of the web servers by providing support for dynamic response and data persistence and responds to the incoming requests. It can respond to any requests.
+When the servlet is loaded, its configuration details are read from web.xml. These can include initialization parameters.
+All servlets must implement the javax.servlet.Servlet interface, which defines servlet lifecycle methods. When implementing a generic service, we can extend the GenericServlet class provided with the Java Servlet API. The HttpServlet class provides methods, such as doGet() and doPost(), for handling HTTP-specific services
+
+There is only one instance of a servlet. Client requests share servlet instances.
+Client requests invoke the service() method of the generic servlet, which then delegates the request to doGet() or doPost() (or another overridden request-handling method), depending on the information in the request headers.
+Filters can be interposed between the container and the servlet to modify the servlet behavior, either during request or response. 
+A servlet can forward requests to other servlets.
+The servlet creates a response object, which the container passes back to the client in HTTP response headers. Servlets can write to the response using a java.io.PrintWriter or javax.servlet.ServletOutputStream object.
+The container calls the destroy() method before the servlet is unloaded
+
+Servlet Life Cycle
+The entire life cycle of a Servlet is managed by the Servlet container
+
+Loading a Servlet: The first stage of the Servlet life cycle involves loading and initializing the Servlet by the Servlet container. The Web container or Servlet Container can load the Servlet by Initializing the context, on configuring the Servlet with a zero or positive integer value. Preloaded servlets are loaded and initialized when the OC4J server starts up, or when the Web module is deployed or redeployed.Preloading requires the following steps:
+
+Specify the attribute setting load-on-startup="true" in the <web-app> 
+there must be a <load-on-startup> subelement under the <servlet> element in the web.xml file for the Web module.
+Value Range								Behavior
+Less than zero (<0)						Servlet is not preloaded.
+Greater than or equal to zero (>=0)		Servlet is preloaded. The order of its loading, with respect to other preloaded servlets in the same Web application, is according to the
+										load-on-startup value, lowest number first. (For example, 0 is loaded before 1, which is loaded before 2.
+Empty element							The behavior is as if the load-on-startup value is Integer.MAX_VALUE, ensuring that the servlet is loaded after any servlets with load-on-startup
+										values greater than or equal to zero.
+
+Initializing a Servlet: After the Servlet is instantiated successfully, the Servlet container initializes the instantiated Servlet object. The container initializes the Servlet object by invoking the init(ServletConfig) method which accepts ServletConfig object reference as a parameter.The reason for overriding the init() method would be to perform special actions that are required only once in the servlet lifetime, such as the following:
+establishing data source connections
+getting initialization parameters from the configuration and storing the values in local variables
+recovering persistent data that the servlet requires
+creating expensive session objects such as hashtables
+logging the servlet version to the log() method of the ServletContext object
+
+Handling request:It creates the ServletRequest and ServletResponse. In this case, if this is an HTTP request then the Web container creates HttpServletRequest and HttpServletResponse objects which are subtypes of the ServletRequest and ServletResponse objects respectively.
+
+Destroying a Servlet: When a Servlet container decides to destroy the Servlet, it performs the following operations,
+It allows all the threads currently running in the service method of the Servlet instance to complete their jobs and get released.
+After currently running threads have completed their jobs, the Servlet container calls the destroy() method on the Servlet instance.
+After the destroy() method is executed, the Servlet container releases all the references of this Servlet instance so that it becomes eligible for garbage collection.
+
+Steps to create Servlet
+For a servlet program, we need 3 files – index.html file, Java class file, and web.xml file.
+
+1. Index.html file
+<!DOCTYPE html>
+<html>
+<body>
+<form action ="add">
+  Enter 1st number: <input type="text" name="num1"><br>
+  Enter 2nd number: <input type="text" name="num2"><br>
+<input type ="submit">    
+</form>
+</body>
+</html>
+
+2. Java class file
+public class Add extends HttpServlet{
+       public void service(HttpServletRequest req, HttpServletResponse res) throws IOException
+       {
+              int i = Integer.parseInt(req.getParameter("num1"));
+              int j = Integer.parseInt(req.getParameter("num2");
+              int k= i+j;
+              PrintWriter out = res.getWriter();
+              out.println("Result is"+k);
+       }
+}
+
+3. web.xml file
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="<a href="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</a>" xmlns=<"<a href="http://java.sun.com/xml/ns/javaee">http://java.sun.com/xml/ns/javaee</a>" xsi:schemaLocation="<a href="http://java.sun.com/xml/ns/javaee">http://java.sun.com/xml/ns/javaee</a> <a href="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd</a>"</em> version=<em>"3.0"</em>>
+  <display-name>Basic</display-name>
+  <servlet>
+   <servlet-name>Addition</servlet-name>
+   <servlet-class>edureka.Add</servlet-class>
+  </servlet>
+  <servlet-mapping>
+   <servlet-name>Addition</servlet-name>
+   <url-pattern>/add</url-pattern>
+</servlet-mapping>
+<welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+ </welcome-file-list>
+</web-app>
+
+Session Tracking
+Session simply means a particular interval of time. Session tracking is a way to maintain state (data) of a user. It is also known as session management in servlet. We know that the Http protocol is stateless, so we need to maintain state using session tracking techniques. Each time user requests to the server, the server treats the request as the new request. So we need to maintain the state of a user to recognize a particular user
+
+client/Browser
+-------------------
+Internet
+-------------------
+Java Web Server
+-------------------
+Servlet
+
+Get																							Post
+Limited amount of data can be sent because data is sent in header.							Large amount of data can be sent because data is sent in body.
+Not Secured because data is exposed in URL bar.	 											Secured because data is not exposed in URL bar.
+Can be bookmarked	 																		Cannot be bookmarked
+Idempotent	 																				Non-Idempotent
+It is more efficient and used than Post	 													It is less efficient and used
+
+Request Dispatcher
+RequestDispatcher interface is used to forward the request to another resource that can be HTML, JSP or another servlet in same application. We can also use this to include the content of another resource to the response. There are two methods defined in this interface:
+1.void forward()
+Client/Browser-----request----->Servlet1----forward()------->Servlet2---------response-is-generated-------->Client/Browser
+									-
+									-
+									-
+								Response
+2.void include()Request Dispatcher?
+Client/Browser-----request----->Servlet1----forward()------->Servlet2----
+									-									-
+									-									-
+									------------<----response-of -Servlet2-is-included-in-response
+									-									
+									-									
+								Response------------->-------------Client/Browser
+
+cookies
+Cookies are text data sent by server to the client and it gets saved at the client local machine.
+Servlet API provides cookies support through javax.servlet.http.Cookie class that implements Serializable and Cloneable interfaces.
+HttpServletRequest getCookies() method is provided to get the array of Cookies from request, since there is no point of adding Cookie to request, there are no methods to set or add cookie to request.
+Similarly HttpServletResponse addCookie(Cookie c) method is provided to attach cookie in response header, there are no getter methods for cookie.
+
+ServletConfig																		ServletContext
+Servlet config object represent single servlet										It represent whole web application running on particular JVM and common for all the servlet
+Its like local parameter associated with particular servlet							Its like global parameter associated with whole application
+It’s a name value pair defined inside the servlet section of web.xml file 			ServletContext has application wide scope so define outside of servlet tag in web.xml file.
+so it has servlet wide scope	
+getServletConfig() method is used to get the config object							getServletContext() method is  used to get the context object.
+for example shopping cart of a user is a specific to particular user 				To get the MIME type of a file or application session related information is stored using servlet 	`	so here we can use servlet config													context object.
+	
+Session management
+Session is a conversational state between client and server and it can consists of multiple request and response between client and server. Since HTTP and Web Server both are stateless, the only way to maintain a session is when some unique information about the session (session id) is passed between server and client in every request and response.
+
+Some of the common ways of session management in servlets are:
+User Authentication
+HTML Hidden Field
+Cookies
+URL Rewriting
+Session Management AP
+
+
+
+

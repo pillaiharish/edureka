@@ -1,0 +1,110 @@
+Java Virtual Machine
+
+Java virtual machine is a platform-independent abstract machine that provides a runtime environment in which the Java byte code is executed. It is a part of Java runtime environment that converts the Java bytecode into machine-readable language. The main method that we have in a Java program is actually called by the Java virtual machine.
+
+Java Source Code---->Java compiler---->Java Bytecodes----->JVM----->OS---->Hardware
+															-
+															-															-
+														Libraries
+							
+Following are the tasks that Java virtual machine does :
+Loads the code
+Code verification
+Execution of the code
+It provides the run-time environment for the applications
+Memory area
+Register set
+Provides a garbage collection heap
+Reporting of the fatal errors
+Provides a class file format
+
+ClassLoader
+ClassLoader in Java is called by the Java Runtime Environment to dynamically load the classes whenever required by the application in the Java Virtual Machine. The major function includes initialization, linking and loading. Since ClassLoaders are a part of the Java Runtime Environment, the Java Virtual Machine will not have any idea about the underlying files and files systems. The following are the built-in classloaders in Java:
+
+Bootstrap ClassLoader – the Java Classes are loaded by an instance of  java.lang.ClassLoade. But, since ClassLoaders are classes, the Bootstrap ClassLoader is responsible to load the JDK internal classes. BootStrap ClassLoader is a machine code that starts the operation when JVM calls it and loads the classes from rt.jar. So, Bootstrap ClassLoader serves has no parent ClassLoader and is thus known as Primordial ClassLoader
+
+Extension ClassLoader – It loads the jar files located in the directory. Extension ClassLoader loads the extensions of the core Java classes from the JDK Extension library. It is a child of the Bootstrap ClassLoader.
+
+System/Application ClassLoader – It loads the classfiles from the classpath. The Application or the System ClassLoader is a child of the Extension ClassLoader
+
+Loading Operation – First the classLoader loads the .class files and generates the corresponding data in the binary format which is saved in the method area.
+
+Linking Operation – After loading it prepares, verifies and makes resolution. JVM allocates the memory for class variables and initializes the memory to default values. It ensures the correctness of the .class file and when the verification fails, we get the runtime exception error.
+
+Initialization – All static variables are assigned with their values defined in the code block in this phase.
+
+Principles of ClassLoader in Java : The set of rules based on which the Java ClassLoader works are the following three principles:
+
+Uniqueness Property : This property ensures that there is no repetition of classes and all the classes are unique. The uniqueness property also makes sure that classes are loaded by the parent ClassLoader are not loaded by the child ClassLoader. In a scenario, where the parent ClassLoader cannot find the class, then the current instance will attempt to do it by itself.
+
+Delegation Model : ClassLoader in Java work based on the set of operations given by the Delegation Model. So, whenever a request is generated to find a class or a resource, then a ClassLoader instance will delegate the search of the class or the resource to the parent ClassLoader.
+
+The set of operations based on which the ClassLoader works are as follows:
+The Java Virtual Machine check whether the class is loaded or not, whenever it comes across a class.
+In the case where the class is loaded JVM proceeds with execution of class, but in a scenario where the class is not loaded, then JVM asks the Java ClassLoader sub-system to load that particular class. After that, the ClassLoader sub-system gives control to Application ClassLoader.
+The Application ClassLoader then delegates the request to the Extension ClassLoader, which thereafter passes the request to the Bootstrap ClassLoader.
+Now, the Bootstrap ClassLoader searches in the Bootstrap classpath to check whether the class is available or not. If the class is available, then it is loaded, else the request is again passed to the Extension ClassLoader.
+The Extension ClassLoader checks for the class in the extension classpath. If the class is available, then it is loaded, else the request is again passed to the Application ClassLoader.
+Finally, the Application ClassLoader searches for the class in the application classpath. If the class is available, then is loaded, else we will see an exception of ClassNotFoundException.
+
+Visibility Principle : According to this principle, the children’s classes are visible to the classes loaded by its parent ClassLoaders, but the vice versa isn’t true. So, the classes loaded by the Application ClassLoader have visibility into the classes loaded by the Extension and Bootstrap ClassLoader.
+
+Methods of ClassLoader in Java
+loadClass(String name, boolean resolve) : public Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {}
+defineClass() : protected final Class<?> defineClass(String name, byte[] b, int off, int len) throws ClassFormatError{}
+findClass(String name) : protected Class<?> findClass(String name) throws ClassNotFoundException{}
+Class.forName(String name, boolean initialize, ClassLoader loader) : public static Class<?> forName(String name, boolean initialize, ClassLoader loader)throws ClassNotFoundException{}
+getParent() : public final ClassLoader getParent(){}
+getResource() : public URL getResource(String name){}
+Custom ClassLoader in Java : If we want to load the classes out of the local hard drive then we need to make use of custom ClassLoaders. To create a custom ClassLoader, you need to extend the ClassLoader class and override the findClass() method.
+
+JVM Memory
+Method Area – It stores the structures for each class like the code, field data, runtime constant pool, method data, etc.
+
+Heap – Objects are allocated at the runtime in the heap.
+
+JVM Language Stacks – It stores local variables and results. It plays an important role in invoking and returning results. Whenever a method is invoked a frame is created and is destroyed as soon as the invocation ends or completes.
+
+PC Registers – It has the address or location of the JVMinstruction that is being executed.
+
+Native Method Stacks – All the native methods used in the applications are present in the native method stacks.
+
+
+Execution Engine – An execution engine contains a virtual processor, an interpreter and a JIT compiler.
+
+Native Method Interface – It is a framework that provides.
+
+Execution Process 
+The following steps take place while the execution and compilation of a Java code:
+The main method is stored in a single file and other methods are stored in different files.
+After the compilation, it will provide corresponding .class files that will have the byte code without any linking, unlike C.
+During the execution, the class files are verified for any breaches using the Classloader.
+After this, the bytecode is converted into the corresponding native machine code. This is also the reason why Java is comparatively slower.
+
+Difference Between JDK, JRE, And JVM
+JDK is for development whereas JRE is for the run time environment.
+JVM is an essential part of JDK and JRE to run any Java program.
+JVM is an integral part of Java programming and provides platform independence.
+
+Java JIT Compiler
+The Just-In-Time compiler is one of the integral parts of the Java Runtime Environment. It is mainly responsible for performance optimization of Java-based applications at run time or execution time.
+
+Interpreter in Java
+An Interpreter in Java is a computer program that helps to convert a high-level program statement into a machine code comprising source code, pre-compiled code, and scripts. An Interpreter converts the code into machine code when the program is run.
+
+Interpreter												Compiler
+Translates Program Line by Line							Translates entire program together
+Compile-time is Less but Execution is Slower			Compile-time is More but Execution is Faster
+Will not generate Intermediate Object Code				Generates Intermediate Object Code
+Program is Compiled until an Error is found				Error is displayed at the end of Compilation
+Python, PHP, Perl, Ruby use Interpreter	 				C, C++, Scala, Java use Compilers
+
+Bytecode in Java
+Bytecode in Java is the reason java is platform-independent, as soon as a  Java program is compiled bytecode is generated. To be more precise a Java bytecode is the machine code in the form of a .class file. A bytecode in Java is the instruction set for Java Virtual Machine and acts similar to an assembler.
+
+How does Bytecode Work
+When a Java program is executed, the compiler compiles that piece of code and a Bytecode is generated for each method in that program in the form of a .class file. We can run this bytecode on any other platform as well. But the bytecode is a non-runnable code that requires or relies on an interpreter. This is where JVM plays an important part. The bytecode generated after the compilation is run by the Java virtual machine. Resources required for the execution are made available by the Java virtual machine for smooth execution which calls the processor to allocate the resources.
+
+Bytecode vs Machine code
+The main difference between the machine code and the bytecode is that the machine code is a set of instructions in machine language or binary which can be directly executed by the CPU.
+While the bytecode is a non-runnable code generated by compiling a source code that relies on an interpreter to get executed.

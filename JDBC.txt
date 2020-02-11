@@ -1,0 +1,150 @@
+Need for Advance Java
+Client-Server architecture 
+J2EE is platform Independent, Java Centric environment for developing, building & deploying Web-based applications online.
+Web and Application Servers support 
+Advance Java frameworks like Spring, JSF, Struts etc
+To work and understand the hot technologies like Hadoop and Cloud services
+
+JDBC Architecture	:	The JDBC API supports both two-tier and three-tier processing models for database access
+JDBC API: This provides the application-to-JDBC Manager connection. The JDBC API uses a driver manager and database-specific drivers to provide transparent connectivity to heterogeneous databases
+JDBC Driver API: This supports the JDBC Manager-to-Driver Connection. The JDBC driver manager ensures that the correct driver is used to access each data source. The driver manager is capable of supporting multiple concurrent drivers connected to multiple heterogeneous databases.
+
+Application
+-----------
+JDBC Driver
+-----------
+Database
+
+Common JDBC Components
+
+DriverManager is used to manage a list of database drivers. The first driver that recognizes a certain subprotocol under JDBC will be used to establish a database Connection. It can be used to register and unregister drivers. It provides factory method that returns the instance of Connection.
+
+Driver is an interface that handles the communications with the database server. It also abstracts the details associated with working with Driver objects.
+
+Connection is an interface that consists all the methods required to connect to a database. The connection object represents communication context, i.e., all communication with the database is through connection object only.
+
+Steps to create JDBC Application
+
+Import the packages
+
+Register the JDBC driver
+This step causes the JVM to load the desired driver implementation into memory so that it can fulfill your JDBC requests.There are two ways :
+1. Use Java’s forName()method to dynamically load the driver’s class file into memory, which automatically registers it. This method is preferable because it allows us to make the driver
+registration configurable and portable.
+Class.forName("oracle.jdbc.driver.OracleDriver");
+2. Driver myDriver = new oracle.jdbc.driver.OracleDriver();
+DriverManager.registerDriver( myDriver );
+
+Database URL Formulation and Open a connection
+we can establish a connection using the DriverManager.getConnection() method. DriverManager.getConnection() methods are−
+getConnection(String url)
+getConnection(String url, Properties prop)
+getConnection(String url, String user, String password)
+A Properties object holds a set of keyword-value pairs. It is used to pass the driver properties to the driver during a call to the getConnection() method
+
+Execute a query
+
+Extract data from result set
+
+Close connection and Clean up the environment
+
+JDBC Driver Types
+JDBC drivers implement the defined interfaces in the JDBC API, for interacting with your database server. A JDBC driver do three things:
+1. Establish a connection with a data source.
+2. Send queries and update statements to the data source.
+3. Process the results.
+
+Type 1: JDBC-ODBC Bridge Diver
+A JDBC bridge accesses ODBC drivers installed on each client machine. Further, ODBC configures Data Source Name (DSN) that represents the target database
+
+Type 2: JDBC-Native API
+A JDBC API calls are converted into native C/C++ API calls, which are unique to the databas. The vendor-specific driver must be installed on each client machine.
+
+Type 3: JDBC-Net pure Java
+A three-tier approach is used to access databases. The JDBC clients use standard network sockets to communicate with a middleware application server. 
+The socket information is then translated by the middleware application server into the call format required by the DBMS and forwarded to the database serve.
+It requires no code installed on the client and a single driver can actually provide access to multiple databases. Some knowledge of the application server’s configuration required.
+
+Type 4: 100% Pure Java
+A pure Java-based driver communicates directly with the vendor’s database through a socket connection. This is the highest performance driver available for the database and extremely flexible and no need to install special software on the client or server. Further, these drivers can be downloaded dynamically and It is provided by the vendor itself.
+
+For accessing one type of database, the preferred driver type is 4.
+For accessing multiple type of database, the preferred driver type is 3.
+
+CallingJavaApplication 
+-----------------------
+JDBC API
+-----------------------
+JDBC Driver Manager
+-----------------------
+JDBC-ODBC Bridge
+-----------------------
+ODBC Driver
+-----------------------
+Database Library APIS
+-----------------------
+Database
+
+JDBC Connection interface
+The Connection interface maintains a session with the database. It can be used for transaction management. It provides factory methods that returns the instance of Statement, PreparedStatement, CallableStatement and DatabaseMetaData
+
+ResultSet interface
+The ResultSet object represents a row of a table. It can be used to change the cursor pointer and get the information from the database. The ResultSet interface provides methods for retrieving and manipulating the results of executed queries, and ResultSet objects can have different functionality and characteristics. These characteristics are type, concurrency, and cursor holdability.
+
+ResultSetMetaData interface
+The ResultSetMetaData interface returns the information of table such as total number of columns, column name, column type etc.
+
+DatabaseMetaData interface
+The DatabaseMetaData interface returns the information of the database such as username, driver name, driver version, number of tables, number of views etc
+
+batch processing
+Batch processing helps us to group related SQL statements into a batch and execute them instead of executing a single query
+
+Execute
+Statement execute(String query) is used to execute any SQL query and it returns TRUE if the result is an ResultSet such as running Select queries. The output is FALSE when there is no ResultSet object such as running Insert or Update queries. We can use getResultSet() to get the ResultSet and getUpdateCount() method to retrieve the update count.
+
+ExecuteQuery
+Statement executeQuery(String query) is used to execute Select queries and returns the ResultSet. ResultSet returned is never null even if there are no records matching the query. 
+When executing select queries we should use executeQuery method so that if someone tries to execute insert/update statement it will throw java.sql.SQLException with message “executeQuery method can not be used for update”.
+
+ExecuteUpdate
+Statement executeUpdate(String query) is used to execute Insert/Update/Delete (DML) statements or DDL statements that returns nothing. The output is int and equals to the row count for SQL Data Manipulation Language (DML) statements. For DDL statements, the output is 0.
+
+JDBC Statements
+JDBC statements are basically the statements which are used to send SQL commands to the database and retrieve data back from the database
+
+JDBC supports 3 types of statements:
+Statement: Used for general purpose access to the database and executes a static SQL query at runtime.
+PreparedStatement: Used to provide input parameters to the query during execution.
+CallableStatement: Used to access the database stored procedures and helps in accepting runtime parameters.
+
+RowSet
+The RowSet object holds tabular data in a way that makes it more flexible and easier to use than a result set. All RowSet objects are derived from the ResultSet interface and therefore share its capabilities and have some extra capabilities :
+
+1.Function as JavaBeans Component :All RowSet objects are JavaBeans components. This means that they have the following:
+Properties	:	A property is a field that has corresponding getter and setter methods
+JavaBeans Notification Mechanism	:	RowSet objects use the JavaBeans event model, in which registered components are notified when certain events occur. For all RowSet objects, three events trigger notifications:
+A cursor movement
+The update, insertion, or deletion of a row
+A change to the entire RowSet contents
+
+2.Add Scrollability or Updatability
+
+JdbcRowSet	:	It is a connected RowSet object: JdbcRowSet. Always being connected to a database, a JdbcRowSet object is most similar to a ResultSet object and is often used as a wrapper to make an otherwise non-scrollable and read-only ResultSet object scrollable and updatable.
+Disconnected RowSet Objects are :
+
+CachedRowSet	:	A CachedRowSet object has all the capabilities of a JdbcRowSet object plus it can also do the following:
+Obtain a connection to a data source and execute a query
+Read the data from the resulting ResultSet object and populate itself with that data
+Manipulate data and make changes to data while it is disconnected
+Reconnect to the data source to write changes back to it
+Check for conflicts with the data source and resolve those conflicts
+
+WebRowSet	:	object has all the capabilities of a CachedRowSet object plus it can also do the following:
+Write itself as an XML document
+Read an XML document that describes a WebRowSet object
+
+JoinRowSet	:	A JoinRowSet object has all the capabilities of a WebRowSet object plus it can also do following:Form the equivalent of a SQL JOIN without having to connect to a data source
+
+FilteredRowSet	:	A FilteredRowSet object likewise has all the capabilities of a WebRowSet object plus it can also do the following: 
+Apply filtering criteria so that only selected data is visible. This is equivalent to executing a query on a RowSet object without having to use a query language or connect to a data source.

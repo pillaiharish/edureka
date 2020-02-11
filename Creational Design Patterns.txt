@@ -1,0 +1,349 @@
+Design Patterns
+
+Need
+A design pattern systematically names, motivates and explains a general design that addresses a recurring design problem in object-oriented systems. Design patterns are needed to represent some of the best practices followed and adopted in software development
+
+Design Patterns
+Software Design Pattern can be defined as a software template or a description to solve a problem that occurs in multiple instances while designing a Software Application or a Software Framework.Gang of Four (GOF)
+
+Types of Design Patterns
+Creational Design Patterns : Creational Design Patterns are concerned with the method of creating Objects.
+Structural Design Patterns : Structural Design Patterns deal with the composition of classes and objects which form larger structures.
+Behaviour Design Patterns : Behaviour Design Patterns are concerned with the responsibility and interaction between the objects.
+JEE Design Patterns : JEE Design Patterns are concerned with providing solutions to the Java EE-based software applications and frameworks.
+
+Creational Design Patterns : Creational Design Patterns are concerned with the method of creating Objects. Creational Design Patterns are preferred during the process of class initiation. The Creational Design Patterns are further classified as follows:
+Factory Pattern
+Abstract Factory Pattern
+Singleton Pattern
+Prototype Pattern
+Builder Pattern.
+Object Pool Pattern
+
+Factory Design Pattern: It follows the principle of “Define an interface or abstract class for creating an object but let the subclasses decide which class to instantiate“. The Factory Method Pattern is also known as Virtual Constructor.
+
+Advantages:
+It is designed to allow all the sub-classes to choose the type of objects so as to create them.
+
+Example: We have three Cellular Network Plan which describes the call cost per minute. Here we have three different networks namely, abcNetwork, pqrNetwork, and xyzNetwork along with their charges per minute. Let us find out the cost of a certain number of minutes on each network.
+
+//cellular plan
+package FactoryDesignPattern;
+ 
+abstract class cellularplan {
+         protected double rate;
+         abstract void getRate();
+         public void processBill(int minutes){
+                System.out.println(minutes*rate);
+         }
+}
+//abcNetwork
+package FactoryDesignPattern;
+ 
+public class abcNetwork extends cellularplan{
+       public void getRate(){
+              rate=1.50;
+      }
+}
+//pqrNetwork
+package FactoryDesignPattern;
+ 
+public class pqrNetwork extends cellularplan{
+        public void getRate(){
+               rate=1.75;
+        }
+}
+//xyzNetwork
+package FactoryDesignPattern;
+ 
+public class xyzNetwork extends cellularplan{
+       public void getRate(){
+            rate=1.50;
+       }
+}
+//SelectNetworkFactory
+package FactoryDesignPattern;
+ 
+public class SelectNetworkFactory {
+     public cellularplan getPlan(String planType){
+          if(planType == null){
+                  return null;
+          }
+          if(planType.equalsIgnoreCase("abcNetwork")) {
+                  return new abcNetwork();
+          }
+          else if(planType.equalsIgnoreCase("xyzNetwork")){
+                  return new xyzNetwork();
+          }
+          else if(planType.equalsIgnoreCase("pqrNetwork")) {
+                  return new pqrNetwork();
+          }
+     return null;
+     }
+}
+//PhoneBill
+package FactoryDesignPattern;
+import java.io.*;
+ 
+public class phoneBill {
+      public static void main(String args[])throws IOException{
+            SelectNetworkFactory planFactory = new SelectNetworkFactory();
+            System.out.print("Enter the name of network for which the bill will be generated: ");
+            BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+            String networkName=br.readLine();
+            System.out.print("Enter the number of minutes for bill will be calculated: ");
+            int minutes=Integer.parseInt(br.readLine());
+            cellularplan p = planFactory.getPlan(networkName);
+            System.out.print("Bill amount for "+networkName+" of "+minutes+" units is: ");
+            p.getRate();
+            p.processBill(minutes);
+      }
+}
+
+Singleton Design Pattern: It follows “define a class that has only one instance and provides a global point of access to it“. The class must ensure that only a single instance should be created and a single object can be used by all other classes.
+
+Advantages:
+It is designed to save memory.
+The object is not created on every request, instead, a single instance is reused.
+
+Example: We have a MySQL Database. Let us insert data into the database using one single object instance. Here, we have 4 different operations that are performed onto the database and all of those operations use one single object instance.
+
+package Singleton;
+ 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+ 
+class JDBCSingleton {
+      private static JDBCSingleton jdbc;
+      private JDBCSingleton() { }
+      public static JDBCSingleton getInstance() {
+             if (jdbc==null){
+                    jdbc=new JDBCSingleton();
+             }
+             return jdbc;
+      }
+      private static Connection getConnection()throws ClassNotFoundException, SQLException{
+             Connection con=null;
+             Class.forName("com.mysql.cj.jdbc.Driver");
+             con= DriverManager.getConnection("jdbc:<a href="mysql://localhost:3306/edureka?serverTimezone=Asia/Calcutta">mysql://localhost:3306/edureka?serverTimezone=Asia/Calcutta</a>", "root", "");
+             return con;
+      }
+      public int insert(String name, String pass, String id) throws SQLException{
+              Connection c=null;
+              PreparedStatement ps=null;
+              int recordCounter=0;
+      try {
+                    c=this.getConnection();
+                    ps=c.prepareStatement("insert into employee(uid,uname,upassword)values(?,?,?)");
+                    ps.setString(1, id);
+                    ps.setString(2, name);
+                    ps.setString(3, pass);
+                    recordCounter=ps.executeUpdate(); 
+      } 
+      catch (Exception e) { 
+                    e.printStackTrace(); 
+      } 
+      finally{
+                    if (ps!=null){
+                             ps.close();
+                    }
+                    if(c!=null){
+                             c.close();
+                    }
+      }
+      return recordCounter;
+	}
+ 
+	public void view(String name) throws SQLException{
+		  Connection con = null;
+		  PreparedStatement ps = null;
+		  ResultSet rs = null;
+		  try {
+					   con=this.getConnection();
+					   ps=con.prepareStatement("select * from employee where uname=?");
+					   ps.setString(1, name);
+					   rs=ps.executeQuery();
+					   while (rs.next()) {
+								System.out.println("Name= "+rs.getString(2)+"t"+"Paasword= "+rs.getString(3));
+				}
+		  } 
+		  catch (Exception e) { 
+				 System.out.println(e);
+				}
+		  finally{
+				if(rs!=null){
+					   rs.close();
+				}
+				if (ps!=null){
+					   ps.close();
+				}
+				if(con!=null){
+					   con.close();
+				}
+		   }
+	}																													
+	public int update(String name, String password) throws SQLException {
+		   Connection c=null;
+		   PreparedStatement ps=null;
+		   int recordCounter=0;
+		   try {
+					  c=this.getConnection();
+					  ps=c.prepareStatement(" update employee set upassword=? where uname='"+name+"' ");
+					  ps.setString(1, password);
+					  recordCounter=ps.executeUpdate();
+				 } 
+		   catch (Exception e) { 
+					  e.printStackTrace(); 
+				 } 
+		   finally{
+					  if (ps!=null){
+							 ps.close();
+					   }
+					  if(c!=null){
+							 c.close();
+					   }
+				 }
+		   return recordCounter;
+	}
+	public int delete(int userid) throws SQLException{
+		   Connection c=null;
+		   PreparedStatement ps=null;
+		   int recordCounter=0;
+		   try {
+					   c=this.getConnection();
+					   ps=c.prepareStatement(" delete from employee where uid='"+userid+"' ");
+					   recordCounter=ps.executeUpdate();
+			  }
+			  catch (Exception e) { 
+					   e.printStackTrace(); 
+			  }
+			 finally{
+					  if (ps!=null){
+							 ps.close();
+					  }
+					  if(c!=null){
+							 c.close();
+					  }
+			  }
+			return recordCounter;
+		 }
+	}
+	
+package Singleton;
+ 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+class JDBCSingletonDemo{
+static int count=1;
+static int choice;
+public static void main(String[] args) throws IOException {
+          JDBCSingleton jdbc= JDBCSingleton.getInstance();
+          BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+          do{
+                   System.out.println("DATABASE OPERATIONS");
+                   System.out.println(" --------------------- ");
+                   System.out.println(" 1. Insertion ");
+                   System.out.println(" 2. View ");
+                   System.out.println(" 3. Delete ");
+                   System.out.println(" 4. Update ");
+                   System.out.println(" 5. Exit ");
+                   System.out.print("n");
+                   System.out.print("Please enter the choice what you want to perform in the database: ");
+                   String input=br.readLine();
+                   if(input != null) {
+                           choice=Integer.parseInt(input);
+                   }
+          else{
+                   return;
+                 } 
+          switch(choice) {
+                   case 1:{ 
+                                System.out.print("Enter the username you want to insert data into the database: ");
+                                String username=br.readLine();
+                                System.out.print("Enter the password you want to insert data into the database: ");
+                                String password=br.readLine();
+                                System.out.print("Enter the ID you want to insert data into the database: ");
+                                String eid=br.readLine();
+                                try {
+                                       int i= jdbc.insert(username, password, eid);
+                                       if (i>0) {
+                                                System.out.println((count++) + " Data has been inserted successfully");
+                                            }
+                                       else{
+                                                System.out.println("Data has not been inserted ");
+                                            }
+                                       } catch (Exception e) {
+                                               System.out.println(e);
+                                             }
+                                       System.out.println("Press Enter key to continue...");
+                                       br.readLine();
+                              }
+                              break;
+                   case 2:{
+                                System.out.print("Enter the username : ");
+                                String username=br.readLine();
+                                try {
+                                       jdbc.view(username);
+                                } 
+                                catch (Exception e) {
+                                       System.out.println(e);
+                                }
+                                System.out.println("Press Enter key to continue...");
+                                br.readLine();
+                              }
+                              break;
+                  case 3:{
+                               System.out.print("Enter the userid, you want to delete: ");
+                               int userid=Integer.parseInt(br.readLine());
+                               try {
+                                      int i= jdbc.delete(userid);
+                                      if (i>0) {
+                                                System.out.println((count++) + " Data has been deleted successfully");
+                                      }
+                                      else{
+                                               System.out.println("Data has not been deleted");
+                                             }
+                                      } 
+                                      catch (Exception e) {
+                                               System.out.println(e);
+                                      }
+                                      System.out.println("Press Enter key to continue...");
+                                      br.readLine();
+                               }
+                               break;
+                   case 4:{
+                                System.out.print("Enter the username, you want to update: ");
+                                String username=br.readLine();
+                                System.out.print("Enter the new password ");
+                                String password=br.readLine();
+                                try {
+                                      int i= jdbc.update(username, password);
+                                      if (i>0) {
+                                               System.out.println((count++) + " Data has been updated successfully");
+                                             }
+                                } 
+                                catch (Exception e) {
+                                      System.out.println(e);
+                                      }
+                                       System.out.println("Press Enter key to continue...");
+                                       br.readLine();
+                                }
+                                break;
+                   default: return;
+              } 
+         } while (choice!=5);
+     }
+}
+

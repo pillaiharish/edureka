@@ -1,0 +1,211 @@
+Structural Design Patterns deal with the composition of classes and objects which form larger structures. They simplify the structure by identifying the relationship between the classes and objects. The Structural Design Patterns are further classified as follows:
+
+Facade Pattern
+Bridge Pattern
+Composite Pattern
+Decorator Pattern
+Adapter Pattern
+Flyweight Pattern
+Proxy Pattern
+Filter Pattern
+
+Facade Design Pattern: Describes a higher-level interface that makes the subsystem easier to use. Every Abstract Factory is a Facade Design Pattern.
+
+Advantages:
+It protects the end-users from the complex sub-system components.
+
+Example: Now, let us use the Facade Design pattern to find out the cost of the franchise you wish to buy
+
+//Franchise
+package FacadeDesignPattern;
+ 
+public interface Franchise {
+      public void Option();
+      public void Cost();
+}
+//KFC
+public class KFC implements Franchise {
+        public void Option() {
+               System.out.println("KFC");
+        }
+public void Cost() {
+        System.out.println("Rs 1,00,00,000");
+        }
+}
+//McDonalds
+package FacadeDesignPattern;
+ 
+public class McDonalds implements Franchise {
+       public void Option() {
+             System.out.println("McDonalds");
+       }
+public void Cost() {
+             System.out.println("Rs 90,00,000");
+       }
+}
+//Dominos
+package FacadeDesignPattern;
+ 
+public class Dominos implements Franchise {
+       public void Option() {
+            System.out.println("Dominos");
+       }
+public void Cost() {
+            System.out.println("Rs 80,00,000");
+       }
+}
+//FranchiseServiceReg
+package FacadeDesignPattern;
+ 
+public class FranchiseServiceReg {
+       private Franchise KFC;
+       private Franchise McDonalds;
+       private Franchise Dominos;
+       public FranchiseServiceReg(){
+              KFC = new KFC();
+              McDonalds = new McDonalds();
+              Dominos = new Dominos();
+       }
+       public void BuyKFCFranchise(){
+              KFC.Option();
+              KFC.Cost();
+       } 
+       public void BuyMcDonaldsFranchise(){
+              McDonalds.Option();
+              McDonalds.Cost();
+       }
+       public void BuyDominosFranchise(){
+              Dominos.Option();
+              Dominos.Cost();
+       }
+}
+//Client
+package FacadeDesignPattern;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+ 
+public class Client {
+         private static int choice;
+         public static void main(String args[]) throws NumberFormatException, IOException{
+                   do{
+                              System.out.print("Welcome to Franchise Service Registration...!n");
+                              System.out.print(" 1. KFC n");
+                              System.out.print(" 2. McDonalds n");
+                              System.out.print(" 3. Dominos n");
+                              System.out.print(" 4. EXIT n");
+                              System.out.print("Please Enter your Franchise Option Number: ");
+                   BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+                   choice=Integer.parseInt(br.readLine());
+                   FranchiseServiceReg sp=new FranchiseServiceReg();
+ 
+         switch (choice) {
+                   case 1: {
+                           sp.BuyKFCFranchise();
+                   }
+                   break;
+                  case 2: {
+                          sp.BuyMcDonaldsFranchise();
+                  }
+                  break;
+                   case 3: {
+                          sp.BuyDominosFranchise();
+                  }
+                  break;
+                  default: {
+                          System.out.println("Please Check the input and try again");
+                  }
+          return;
+          }
+ 
+       }while(choice!=4);
+    }
+}
+
+Adapter Design Pattern: Provides the interface according to client requirement while using the services of a class with a different interface. The Adapter Pattern is also known as Wrapper.
+
+Advantages:
+It is designed to enable two or more previously incompatible objects to interact with each other.
+
+Example: Here is a simple Library Card example which is designed to issue a Library card to a new user of the library which includes all the details like a book holder ID, Account number and many more. Let us execute this using Adapter Design Pattern.
+
+Design-Patterns-in-Java-Edureka
+
+UML Diagram:
+
+Java-Design-Pattern-Adapter-Edureka//Adapter
+
+package AdapterDesignPattern;
+ 
+public class Adapter {
+       public static void main(String args[]){
+             LibraryCard targetInterface=new BookHolder();
+             targetInterface.giveLibraryDetails();
+             System.out.print(targetInterface.getLibraryCard());
+        }
+}
+//BookHolder
+package AdapterDesignPattern;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+ 
+public class BookHolder extends LibraryDetails implements LibraryCard{
+          public void giveLibraryDetails(){
+          try{
+                    BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+                    System.out.print("Enter the Library account holder name :");
+                    String readername=br.readLine();
+                    System.out.print("n");
+                    System.out.print("Enter the account number of the library:");
+                    long accno=Long.parseLong(br.readLine());
+                    System.out.print("n");
+                    System.out.print("Enter the Library name :");
+                    String libraryname=br.readLine();
+                    setAccHolderName(readername);
+                    setAccNumber(accno);
+                    setLibraryName(libraryname);
+          }
+          catch(Exception e){
+                    e.printStackTrace();
+          }
+     }
+     public String getLibraryCard() {
+          long accno=getAccNumber();
+          String accholdername=getAccHolderName();
+          String lname=getLibraryName();
+          return ("The Account number "+accno+" of "+accholdername+" in "+lname+ " Library is valid and authenticated for issuing the Library card. ");
+      }
+}
+//LibraryCard
+package AdapterDesignPattern;
+ 
+public interface LibraryCard {
+      public void giveLibraryDetails();
+      public String getLibraryCard();
+}
+//library details
+package AdapterDesignPattern;
+ 
+public class LibraryDetails {
+      private String LibraryName;
+      private String BookHolderName;
+      private long BookHolderID;
+      public String getLibraryName() {
+             return LibraryName;
+       }
+       public void setLibraryName(String LibraryName) {
+             this.LibraryName = LibraryName;
+       }
+       public String getAccHolderName() {
+             return BookHolderName;
+       }
+       public void setAccHolderName(String BookHolderName) {
+             this.BookHolderName = BookHolderName;
+       }
+       public long getAccNumber() {
+             return BookHolderID;
+       }
+       public void setAccNumber(long BookHolderID) {
+             this.BookHolderID = BookHolderID;
+       }
+}

@@ -1,0 +1,314 @@
+Behavioural Design Patterns are concerned with the responsibility and interaction between the objects. These Design Patterns make sure the objects are loosely coupled, yet, can easily communicate with each other. Behavioural Design Patterns are further classified as follows:
+
+Chain Of Responsibility Pattern
+Strategy Pattern------
+Interpreter Pattern
+Iterator Pattern
+Mediator Pattern
+Memento Pattern
+Command Pattern--------
+State Pattern
+Observer Pattern-------
+Template Pattern
+Visitor Pattern
+
+Strategy Design Pattern: It defines a family of functionality and encapsulates each one, and make them interchangeable. The Strategy Pattern is also known as Policy.
+
+Advantages:
+It is designed to provide a substitute for sub-classes.
+
+Example: we are going to consider a simple example of a calculator. We need to perform five different operations. We shall encapsulate all those five operations into Calculator class and execute the program using the Strategy Design Pattern.
+
+strategy//Calculator
+package StrategyDesignPattern;
+ 
+public interface Calculator {
+       public float calculation(float a, float b);
+}
+//Add
+package StrategyDesignPattern;
+ 
+public class add implements Calculator{
+       public float calculation(float a, float b) {
+              return a+b;
+       }
+}
+//Sub
+package StrategyDesignPattern;
+ 
+public class sub implements Calculator{
+       public float calculation(float a, float b) {
+             return a-b;
+      }
+}
+//Mul
+package StrategyDesignPattern;
+ 
+public class mul implements Calculator{
+       public float calculation(float a, float b) {
+             return a*b;
+       }
+}
+//Div
+package StrategyDesignPattern;
+ 
+public class div implements Calculator{
+      public float calculation(float a, float b) {
+            return a/b;
+      }
+}
+//Mod
+package StrategyDesignPattern;
+ 
+public class mod implements Calculator{
+        public float calculation(float a, float b) {
+              return a%b;
+        }
+}
+//Query
+package StrategyDesignPattern;
+ 
+public class Query {
+      private Calculator calci;
+      public Query(Calculator calci){
+               this.calci = calci;
+      }
+      public float executeStrategy(float num1, float num2){
+               return calci.calculation(num1, num2);
+      }
+}
+//Strategy
+package StrategyDesignPattern;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+ 
+public class Strategy {
+         public static void main(String[] args) throws NumberFormatException, IOException {
+                  BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+                  System.out.print("Enter the first value: ");
+                  float value1=Float.parseFloat(br.readLine());
+                  System.out.print("Enter the second value: ");
+                  float value2=Float.parseFloat(br.readLine());
+                  Query query = new Query(new add());
+                  System.out.println("Addition = " + query.executeStrategy(value1, value2));
+                  query = new Query(new sub());
+                  System.out.println("Subtraction = " + query.executeStrategy(value1, value2));
+                  query = new Query(new mul());
+                  System.out.println("Multiplication = " + query.executeStrategy(value1, value2));
+                  query = new Query(new div());
+                  System.out.println("Multiplication = " + query.executeStrategy(value1, value2));
+                  query = new Query(new mod());
+                  System.out.println("Multiplication = " + query.executeStrategy(value1, value2));
+        }
+}
+
+Command Design Pattern: It encapsulates a request under an object as a command and passes it to the invoker object. Invoker object looks for the appropriate object which can handle this command and pass the command to the corresponding object and that object executes the command. It is also known as Action or Transaction.
+
+Advantages:
+It separates the object that invokes the operation with the object that actually performs the operation.
+
+Example: This example demonstrates a simple command execution cycle where the user requires to exhibit switching on and off the various electronic devices in his houses like a bulb and stereo player. He invokes the command through an invoker object called a simple remote control.
+
+command//Command
+package CommandDesignPattern;
+ 
+interface Command {
+       public void execute();
+}
+//Light
+package CommandDesignPattern;
+ 
+class Light {
+       public void on() {
+             System.out.println("Light is on");
+       }
+	   public void off() {
+			 System.out.println("Light is off");
+       }
+}
+//LightOnCommand
+package CommandDesignPattern;
+ 
+class LightOnCommand implements Command {
+         Light light;
+         public LightOnCommand(Light light) {
+                 this.light = light;
+         }
+         public void execute() {
+                 light.on();
+         }
+}
+//LightOffCommand
+package CommandDesignPattern;
+ 
+class LightOffCommand implements Command {
+       Light light;
+       public LightOffCommand(Light light) {
+              this.light = light;
+       }
+       public void execute() {
+              light.off();
+       }
+}
+//Stereo
+package CommandDesignPattern;
+ 
+class Stereo {
+       public void on() {
+              System.out.println("Stereo is on");
+       }
+       public void off() {
+              System.out.println("Stereo is off");
+       }
+       public void setCD() {
+              System.out.println("Stereo is set " + "for CD input");
+       }
+       public void setDVD() {
+             System.out.println("Stereo is set" + " for DVD input");
+       }
+       public void setRadio() {
+             System.out.println("Stereo is set" + " for Radio");
+       }
+       public void setVolume(int volume) {
+             System.out.println("Stereo volume set" + " to " + volume);
+       }
+}
+//StereoOffCommand
+package CommandDesignPattern;
+ 
+class StereoOffCommand implements Command {
+      Stereo stereo;
+      public StereoOffCommand(Stereo stereo) {
+             this.stereo = stereo;
+      }
+      public void execute() {
+             stereo.off();
+      }
+}
+//StereoOnWithCDCommand
+package CommandDesignPattern;
+ 
+class StereoOnWithCDCommand implements Command {
+         Stereo stereo;
+         public StereoOnWithCDCommand(Stereo stereo) {
+               this.stereo = stereo;
+         }
+         public void execute() {
+               stereo.on();
+               stereo.setCD();
+               stereo.setVolume(11);
+         }
+}
+//SimpleRemoteControl
+package CommandDesignPattern;
+ 
+class SimpleRemoteControl {
+       Command slot;
+       public SimpleRemoteControl() {
+       }
+       public void setCommand(Command command) {
+               slot = command;
+       }
+       public void buttonWasPressed() {
+               slot.execute();
+       }
+}
+//RemoteControlTest
+package CommandDesignPattern;
+ 
+class RemoteControlTest {
+        public static void main(String[] args) {
+               SimpleRemoteControl remote = new SimpleRemoteControl();
+               Light light = new Light();
+               Stereo stereo = new Stereo();
+               remote.setCommand(new LightOnCommand(light));
+               remote.buttonWasPressed();
+               remote.setCommand(new StereoOnWithCDCommand(stereo));
+               remote.buttonWasPressed();
+               remote.setCommand(new StereoOffCommand(stereo));
+               remote.buttonWasPressed();
+       }
+}
+
+Observer Design Pattern: It defines a one-to-one dependency so that when one object changes state, all its dependents are notified and updated automatically. The Memento pattern is also known as Dependents or Publish-Subscribe.
+
+Advantages:
+
+It illustrates the coupling between the objects and the observer.
+It provides support for broadcast-type communication.
+
+Example: We are going to execute a program using the Observer Design Pattern to display the current average score and the current predictable score of a cricket match.
+
+observer//Cricket Data
+
+package ObserverDesignPattern;
+ 
+class CricketData{
+       int runs, wickets;
+       float overs;
+       CurrentScoreDisplay currentScoreDisplay;
+       AverageScoreDisplay averageScoreDisplay;
+       public CricketData(CurrentScoreDisplay currentScoreDisplay, AverageScoreDisplay averageScoreDisplay){
+              this.currentScoreDisplay = currentScoreDisplay;
+              this.averageScoreDisplay = averageScoreDisplay;
+       }
+       private int getLatestRuns(){
+              return 90;
+       }
+       private int getLatestWickets(){
+              return 2;
+       }
+       private float getLatestOvers(){
+             return (float)10.2;
+       }
+       public void dataChanged(){
+             runs = getLatestRuns();
+             wickets = getLatestWickets();
+             overs = getLatestOvers();
+             currentScoreDisplay.update(runs,wickets,overs);
+             averageScoreDisplay.update(runs,wickets,overs);
+       }
+}
+//Average Score Display
+package ObserverDesignPattern;
+ 
+class AverageScoreDisplay{
+        private float runRate;
+        private int predictedScore;
+        public void update(int runs, int wickets, float overs){
+                this.runRate = (float)runs/overs;
+                this.predictedScore = (int) (this.runRate * 50);
+                display();
+        }
+        public void display(){
+                System.out.println("nAverage Score Display:n" + "Average Run Rate: " + runRate + "nPredictable Score: " + predictedScore);
+        }
+}
+//Current Score Display
+package ObserverDesignPattern;
+ 
+class CurrentScoreDisplay{
+     private int runs, wickets;
+     private float overs;
+     public void update(int runs,int wickets,float overs){
+            this.runs = runs;
+            this.wickets = wickets;
+            this.overs = overs;
+            display();
+     }
+public void display(){
+            System.out.println("nCurrent Score Display: n" + "Current Runs: " + runs +"nWickets Lost:" + wickets + "nOvers Played: " + overs );
+     }
+}
+//Main
+package ObserverDesignPattern;
+ 
+class Main{
+        public static void main(String args[]){
+               AverageScoreDisplay averageScoreDisplay = new AverageScoreDisplay();
+               CurrentScoreDisplay currentScoreDisplay = new CurrentScoreDisplay();
+               CricketData cricketData = new CricketData(currentScoreDisplay, averageScoreDisplay);
+               cricketData.dataChanged();
+        }
+}

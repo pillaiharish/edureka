@@ -1,0 +1,170 @@
+this keyword in Java
+this keyword in Java represents the current instance of a class. It is mainly used to access other members of the same class. With the help of this keyword, we can access methods, fields, and constructors of the same class within the class.
+
+Why use this keyword in Java?
+The main motto of using this keyword is to differentiate the formal parameter and data members of the class. If in case, the formal parameter and data members of the class are the same, then it leads to ambiguity. So, in order to differentiate between formal parameter and data member of the class, the data member of the class must be preceded by the “this” keyword.
+
+Basically, “this” keyword can be used in two ways.
+1. this. 
+It can be used to differentiate variable of the class and formal parameters of method or constructor. Not only that,  it always points to the current class object. Syntax of this keyword is as shown below : Syntax    this.data member of the current class
+Note: If there is any variable which is preceded by “this”, then JVM treats that variable as a class variable.
+
+2. this() 
+It can be used to call one constructor within another without creating the objects multiple times for the same class.
+Syntax
+this(); // call no parametrized or default constructor
+this(value1,value2,.....) //call parametrized constructors
+
+Uses of this keyword : There are 6 ways where this keyword can be used in Java. They are as follows :
+1.  this keyword can be used with a field / Variable Hiding
+this keyword can be very helpful in Variable Hiding. we cannot create two instances/local variables with the same name. However, it is possible to create one instance variable and one local variable with the same name. In this case, the local variable will be able to hide the instance variable. This is called Variable Hiding.
+package Edureka;
+import java.util.*;
+public class field {
+	int j, n;
+	// Parameterized constructor
+	Test(int j, int n){
+		this.j = j;
+		this.n = n;
+	}
+	void display(){
+		//Displaying value of variables j and n
+		System.out.println("j = " + j + " n = " + n);
+	}
+	public static void main(String[] args) {
+		field obj = new field(27, 01);
+		obj.display();
+	}
+}
+Output
+j = 27 n = 01
+2. this keyword can be used to invoke a constructor
+this() constructor call can be used to call the current class constructor. It can be also used to reuse the constructor. we can also call this technique as constructor chaining. 
+package Edureka;
+import java.util.*;
+public class Example {
+	int j, n;
+	
+	//Default constructor
+	Example() {
+		this(27, 01);
+		System.out.println("Inside default constructor n");
+	}
+	 
+	//Parameterized constructor
+	Example(int j, int n) {
+		this.j = j;
+		this.n = n;
+		System.out.println("Inside parameterized constructor");
+	}
+	 
+	public static void main(String[] args) {
+		Example obj = new Example();
+	}
+}
+Output
+Inside parameterized constructor
+Inside  default constructor
+3. this keyword can be used to return the current class instance
+we can return this keyword as a statement from the method. In this case, return type of the method must be the class type. 
+public class Edureka {
+	int j, int n;
+	//Default constructor
+	Edureka(){
+		j = 100;
+		n = 200;
+	}
+	//Method that returns current class instance
+	Edureka get() {
+		return this;
+	}
+	//Displaying value of variables j and n
+	void display() {
+		System.out.println("j = " + j + " n = " + n);
+	}
+	public static void main(String[] args) {
+		Edureka obj = new Edureka();
+		obj.get().display();
+	}
+}
+Output:
+j = 100, n = 200
+4. this keyword can be used as a method parameter
+this keyword can be used inside the method in order to call another method from same class.
+public class Edureka {
+	int j, n;
+	// Default constructor
+	Edureka(){
+		j = 100;
+		n = 200;
+	}
+	// Method that receives 'this' keyword as parameter
+	void display(Edureka obj) {
+		System.out.println("j = " + j + " n = " + n);
+	}
+	// Method that returns current class instance
+	void get(){
+		display(this);
+	}
+	public static void main(String[] args) {
+		Edureka obj = new Edureka();
+		obj.get();
+	}
+}
+Output:
+j = 100, n = 200
+5. this keyword used as a current class method
+this keyword can be used to invoke the method of the current class.
+pubic class Edureka {
+	void display(){
+		//calling fuction show()
+		this.show();
+		System.out.println("Inside display function");
+	}
+	void show() {
+		System.out.println("Inside show funcion");
+	}
+	public static void main(String args[]) {
+		Edureka j = new Edureka();
+		j.display();
+	}
+}
+Output:
+Inside show funcion
+Inside display function
+6. this keyword is used as an argument in the constructor call
+You can pass this keyword in the constructor also. It is useful if you have to use one object in multiple classes.
+public class Y{
+	X obj;	 
+	// Parameterized constructor with object of X
+	// as a parameter
+	Y(X obj) {
+		this.obj = obj;
+		// calling display method of class X
+		obj.display();
+	}
+}
+class X{
+	int x = 45;
+	// Default Contructor that create a object of Y
+	// with passing this as an argument in the
+	// constructor
+	X(){
+		Y obj = new Y(this);
+	}
+	// method to show value of x
+	void display(){
+		System.out.println("Value of x in Class X : " + x);
+	}
+	 
+	public static void main(String[] args) {
+		X obj = new X();
+	}
+}
+Output:
+Value of x in Class X : 45
+So, this is how you can use this keyword as an argument in the constructor call
+
+Important factors of this keyword:
+We can’t use super and this keyword in a static method and in a static initialization block even though you are referring static members.
+We should call super() and this() calling statements inside the constructors only and they must be the first statement in the constructors.

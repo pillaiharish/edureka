@@ -1,0 +1,210 @@
+Java Server Pages
+
+JSP or Java Server Pages is a technology that is used to create web application just like Servlet technology. It is an extension to Servlet – as it provides more functionality than servlet such as expression language, JSTL, etc. A JSP page consists of HTML tags and JSP tags. The JSP pages are easier to maintain than Servlet because we can separate designing and development. It provides some additional features such as Expression Language, Custom Tags, etc.
+
+Various features of JSP are given below :
+
+Portable: JSP tags will process and execute by the server side web container, So that these are browser independent and J2EE server independent
+Powerful: JSP consists of bytecode so that all Java features are applicable in case of JSP like robust, dynamic, secure, platform independent.
+Flexible: It allows to define custom tags so that the developer can fill conferrable to use any kind, framework based markup tags in JSP.
+Fast Development: If JSP page is modified, we don’t need to recompile and redeploy the project. The Servlet code needs to be updated and recompiled if we have to change the look and feel of the application.
+Tracking the User: JSP allows us to track the selections made by the user during user interaction with the website by maintaining the information in the session or cookies
+Easy: JSP is easy to learn, easy to understand and easy to develop. JSPs are more convenient to write than Servlets because they allow us to embed Java code directly into your HTML pages.
+
+JSP											Servlets
+Extension to Servlet						Not an extension to servlet
+Easy to Maintain							Bit complicated
+No need to recompile or redeploy			The code needs to be recompiled
+Less code than a servlet					More code compared to JSP
+
+Life Cycle of JSP	:	The JSP pages follow these phases	:
+
+Translation of JSP Page
+Compilation of JSP Page
+Classloading (the classloader loads class file)
+Instantiation (Object of the Generated Servlet is created)
+Initialization ( the container invokes jspInit())
+Request processing ( the container invokes _jspService())
+Destroy ( the container invokes jspDestroy())
+
+A JSP page is translated into Servlet by the help of JSP translator. And then, JSP translator is a part of the web server which is responsible for translating the JSP page into Servlet. After that, Servlet page is compiled by the compiler and gets converted into the class file. Moreover, all the processes that happen in Servlet are performed on JSP later, like initialization, committing response to the browser and destroy.
+
+JSP Scripting Elements: The scripting elements provide the ability to insert java code inside the JSP. There are three types of scripting elements:
+
+scriptlet tag –  A scriptlet tag is used to execute Java source code in JSP.
+Syntax is: <%  java source code %>
+
+index.html
+<html>
+<body>
+<form action="welcome.jsp">
+<input type="text" name="uname">
+<input type="submit" value="go">
+</form>
+</body>
+</html>
+File: welcome.jsp
+<html>
+<body>
+<% String name=request.getParameter("uname"); print("welcome "+name); %>
+</form>
+</body>
+</html>
+
+expression tag – The code placed within JSP expression tag is written to the output stream of the response. So we need not write out.print() to write data. It is mainly used to print the values of variable or method.
+Syntax : <%=  statement %>
+
+index.jsp
+<html>
+<body>
+Current Time: <%= java.util.Calendar.getInstance().getTime() %>
+</body>
+</html>
+
+declaration tag – The JSP declaration tag is used to declare fields and methods. The code written inside the JSP declaration tag is placed outside the service() method of an auto-generated servlet. So it doesn’t get memory at each request.
+Syntax: <%!  field or method declaration %>
+
+index.jsp
+<html>
+<body>
+<%! int cube(int n){ return n*n*n*; } %>
+<%= "Cube of 3 is:"+cube(3) %>
+</body>
+</html>
+
+JSP comments
+<% -- JSP Comments %>
+
+Features of JSP technology
+1. Easy coding : JSP allows tag-based programming. Hence, there is no need for expertise in the Java language. HTML tags are easy to use, hence the code is easily readable.
+
+2. Interactive web pages : The building of dynamic web pages that are able to interact with the users in a real-time environment.
+
+3. Easy connection to a database : It allows us an easy connection to the database as it mainly connects with the server.
+
+Methods																											Description
+public void jspInit()																							It is invoked only once, same as init method of servlet.
+public void _jspService(ServletRequest request,ServletResponse)throws ServletException,IOException				It is invoked at each request, same as service() method of servlet.
+public void jspDestroy()																						It is invoked only once, same as destroy() method of servlet.
+
+JSP implicit objects : JSP provides 9 implicit objects by default. They are as follows:
+	Object				Type
+1) 	out	 				JspWriter
+2) 	request	 			HttpServletRequest
+3) 	response	 		HttpServletResponse
+4) 	config	 			ServletConfig
+5) 	session	 			HttpSession
+6) 	application	 		ServletContext
+7) 	pageContext	 		PageContext
+8) 	page	 			Object
+9) 	exception	 		Throwable
+
+include directive														include action
+The include directive includes the content at page translation time.	The include action includes the content at request time.
+The include directive includes the original content of the page 		The include action doesn’t include the original content rather invokes the include() method of Vendor provided class.
+so page size increases at runtime.	
+It’s better for static pages.	 										It’s better for dynamic pages.
+
+To disable caching on back button of the browser
+<%
+response.setHeader(“Cache-Control”,”no-store”);
+response.setHeader(“Pragma”,”no-cache”);
+response.setHeader (“Expires”, “0”);                    //prevents caching at the proxy server
+%>
+
+The different tags provided in JSTL : There are 5 type of JSTL tags.
+
+core tags
+sql tags
+xml tags
+internationalization tags
+functions tags
+
+To disable session in JSP
+<%@ page session=“false” %> 
+
+To delete a Cookie in a JSP : The following code explains how to delete a Cookie in a JSP :
+
+Cookie mycook = new Cookie("name1","value1");
+response.addCookie(mycook1);
+ 
+Cookie killmycook = new Cookie("mycook1","value1");
+killmycook . set MaxAge ( 0 );
+killmycook . set Path ("/");
+killmycook . addCookie ( killmycook 1 );
+
+The jspDestroy() method.
+jspDestry() method is invoked from javax.servlet.jsp.JspPage interface whenever a JSP page is about to be destroyed. Servlets destroy methods can be easily overridden to perform cleanup, like when closing a database connection.
+
+JSP are document-centric, whereas servlets are programs. We don’t need to configure JSP standard tags in web.xml. We don’t need to configure JSP standard tags in web.xml
+
+How will you use JSP EL in order to get the HTTP method name?
+Using pageContext JSP EL implicit object you can get the request object reference and make use of the dot operator to retrieve the HTTP method name in the JSP page. The JSP EL code for this purpose will look like ${pageContext.request.method}.
+
+Web is a system of Internet servers that supports formatted documents. The documents are formatted using a markup language called HTML (HyperText Markup Language) that supports links to other documents like graphics, audio, and video files etc. 
+a website is a collection of static files i.e. web pages like HTML pages, images, graphics etc. And, the Web application is a website with dynamic functionality on the server
+
+HTTP (Hypertext Transfer Protocol)
+HTTP is used by clients and servers to communicate on the web. It is considered as a stateless protocol because it supports only one request per connection. With HTTP the clients connect to the server to send one request and then disconnect. And this mechanism allows more users to connect to a given server over a period of time. Here, the client sends an HTTP request and the server answers with an HTML page to the client, using HTTP
+
+GenericServlet Example
+1. index.html
+<html>
+<title>Generic Servlet Demo</title>
+</head>
+<body>
+<a href="welcome">Click here to call Generic Servlet</a>
+</body>
+</html>
+
+2.Java class file generic.java
+package EdurekaGeneric;
+import java.io.*;
+importjavax.servlet.*;
+public class generic extends GenericServlet{
+	public void service(ServletRequest req,ServletResponse res) throws IOException,ServletException{
+		res.setContentType("text/html");
+		PrintWriter pwriter=res.getWriter();
+		pwriter.print("<html>");
+		pwriter.print("<body>");
+		pwriter.print("<h2>Generic Servlet Example</h2>");
+		pwriter.print("Welcome to Edureka YouTube Channel");
+		pwriter.print("</body>");
+		pwriter.print("</html>");
+	}
+}
+
+3.Web.xml
+<servlet>
+<servlet-name>MyGenericServlet</servlet-name>
+<servlet-class>EdurekaGeneric.generic</servlet-class>
+</servlet>
+<servlet-mapping>
+<servlet-name>MyGenericServlet</servlet-name>
+<url-pattern>/welcome</url-pattern>
+</servlet-mapping>
+
+JSP Request Objects
+JSP request is an implicit object of type HttpServletRequest that is created for each JSP request by the web container. It can be used to get request information such as a parameter, header information, remote address, server name, server port, content type, character encoding etc. It can also be used to set, get and remove attributes from the JSP request scope.
+
+File: index.html
+<form action="welcome.jsp">
+<input type="text" name="uname">
+<input type="submit" value="go">
+</form>
+
+File: welcome.jsp
+<% String name=request.getParameter("uname"); 
+print("welcome "+name); %>
+
+JSP Response Objects
+In JSP, the response is an implicit object of type HttpServletResponse. The instance of HttpServletResponse is created by the web container for each JSP request. It can be used to add or manipulate responses such as redirect response to another resource, send error etc
+
+index.html
+<form action="welcome.jsp">
+<input type="text" name="uname">
+<input type="submit" value="go">
+</form>
+
+File: welcome.jsp
+<% sendRedirect("<a href="http://www.google.com">http://www.google.com</a>"); %>

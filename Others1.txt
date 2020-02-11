@@ -1,0 +1,526 @@
+Method Overloading in Java
+Like other static methods, the main() method can also be overloaded.compile-time polymorphism
+
+Method Overriding in Java
+Whenever both the parent and child classes classes contain methods with the same name and arguments or parameters it is certain that one of the methods will override the other method during execution. The method that will be executed depends on the object. If the child class object calls the method, the child class method will override the parent class method. Otherwise, if the parent class object calls the method, the parent class method will be executed
+
+Rules For Method Overriding
+The access modifier can only allow more access for the overridden method.
+A final method does not support method overriding.
+A static method cannot be overridden.
+Private methods cannot be overridden.
+The return type of the overriding method must be the same.
+We can call the parent class method in the overriding method using the super keyword.
+A constructor cannot be overridden because a child class and a parent class cannot have the constructor with the same name.
+
+Method Overloading																		Method Overriding
+It is used to increase the readability of the program									Provides a specific implementation of the method already in the parent class
+It is performed within the same class													It involves multiple classes
+Parameters must be different in case of overloading										Parameters must be same in case of overriding
+Is an example of compile-time polymorphism												It is an example of runtime polymorphism
+Return type can be different but you must change the parameters as well.				Return type must be same in overriding
+Static methods can be overloaded														Overriding does not involve static methods
+
+Instance variable in Java
+Instance variables in Java are non-static variables which are defined in a class outside any method, constructor or a block. Each instantiated object of the class has a separate copy or instance of that variable. An instance variable belongs to a class.
+
+Features of an instance variable : 
+Instance Variable can be used only by creating objects
+Every object will have its own copy of Instance variables
+Initialization of instance variable is not compulsory. The default value is zero
+The declaration is done in a class outside any method, constructor or block 
+Instance variables are used when the variable has to be known to different methods in a class
+Access modifiers can be assigned to instance variables
+
+Instance Variable																		Class Variable
+Every object will have its own copy of instance variables, hence changes 				Class variables are common to all objects of a class, if any changes
+made to these variables through one object will not reflect in another object.			are made to these variables through object, it will reflect in other objects as well.
+Instance variables are declared without static keyword.									Class variables are declared with keyword static
+Instance variables can be used only via object reference.								Class variables can be used through either class name or object reference.
+
+Class variables − Class variables also known as static variables are declared with the static keyword in a class, but outside a method, constructor or a block. There would only be one copy of each class variable per class, regardless of how many objects are created from it.
+
+Comparable in Java																		Comparator in Java
+Comparable interface is used to sort the objects with natural ordering.					Comparator in Java is used to sort attributes of different objects.
+Comparable interface compares “this” reference with the object specified.				Comparator in Java compares two different class objects provided.
+Comparable is present in java.lang package.												A Comparator is present in the java.util package.
+Comparable affects the original class, i.e., the actual class is modified.				Comparator doesn’t affect the original class
+Comparable provides compareTo() method to sort elements.								Comparator provides compare() method, equals() method to sort elements.
+
+Java Comparable example
+public class Student implements Comparable {
+	private String name;
+	private int age;
+	public Student(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+	public int getAge() {
+		return this.age;
+	}
+	public String getName() {
+		return this.name;
+	}
+	@Override
+	public String toString() {
+		return "";
+	}
+	@Override
+	public int compareTo(Student per) {
+		if(this.age == per.age)
+			return 0;
+		else
+			return this.age > per.age ? 1 : -1;
+	}
+	 
+	public static void main(String[] args) {
+		Person e1 = new Person("Adam", 45);
+		Person e2 = new Person("Steve", 60);
+		int retval = e1.compareTo(e2);
+		 
+		switch(retval) {
+		case -1: {
+			System.out.println("The " + e2.getName() + " is older!");
+			break;
+		}
+		 
+		case 1: {
+			System.out.println("The " + e1.getName() + " is older!");
+			break;
+		}
+		 
+		default:
+			System.out.println("The two persons are of the same age!");		 
+		}
+	}
+}
+Output The Steve is older
+
+implement Comparator in Java
+import java.util.Comparator;
+ 
+public class School {
+	private int num_of_students;
+	private String name;
+	public Company(String name, int num_of_students) {
+		this.name = name;
+		this.num_of_students = num_of_students;
+	}
+	public int getNumOfStudents() {
+		return this.num_of_students;
+	}
+	public String getName() {
+		return this.name;
+	}
+}
+public class SortSchools implements Comparator {
+	@Override
+	public int compare(School sch1, School sch2) {
+		if(sch1.getNumOfStudents()== sch2.getNumOfStudents())
+			return 0;
+		else
+			return sch1.getNumOfStudents() > sch2.getNumOfStudents() ? 1 : -1;
+	}
+	public static void main(String[] args) {
+		School sch1 = new School("sch1", 20);
+		School sch2 = new School("sch2", 15);
+		SortSchools sortSch = new SortSchools();
+		int retval = sortSch.compare(sch1, sch2);
+		switch(retval) {
+			case -1: {
+				System.out.println("The " + sch2.getName() + " is bigger!");
+				break;
+			}
+			case 1: {
+				System.out.println("The " + sch1.getName() + " is bigger!");
+				break;
+			}
+			default:
+				System.out.println("The two schools are of the same size!");
+		}
+	}
+}
+Output:
+The sch1 is bigger!
+
+An Error is used by the Java run-time system (JVM) to indicate errors that are associated with the run-time environment (JRE). StackOverflowError is an example of such an error. Whereas Exception is used for exceptional conditions that user programs should catch. NullPointerException is an example of such an exception.
+
+Errors												Exceptions
+Impossible to recover from an error	 				Possible to recover from exceptions
+Errors are of type ‘unchecked’	 					Exceptions can be either ‘checked’ or ‘unchecked’
+Occur at runtime	 								Can occur at compile time or run time
+Caused by the application running environment	 	Caused by the application itself
+
+Checked Exception
+It is an exception that occurs at compile time, also called compile time exceptions. If some code within a method throws a checked exception, then the method must either handle the exception or it must specify the exception using throws keyword.
+
+Unchecked Exception
+It is an exception that occurs at the time of execution. These are also called Runtime Exceptions. In C++, all exceptions are unchecked, so it is not forced by the compiler to either handle or specify the exception. It is up to the programmers to specify or catch the exceptions.
+
+Types of Exceptions
+
+Built-in Exceptions
+Built-in Exceptions							Description
+ArithmeticException							It is thrown when an exceptional condition has occurred in an arithmetic operation.
+ArrayIndexOutOfBoundsException				It is thrown to indicate that an array has been accessed with an illegal index. The index is either negative or greater than or equal to the 
+											size of the array.
+ClassNotFoundException						This exception is raised when we try to access a class whose definition is not found.
+FileNotFoundException						An exception that is raised when a file is not accessible or does not open.
+IOException									It is thrown when an input-output operation is failed or interrupted.
+InterruptedException						It is thrown when a thread is waiting, sleeping, or doing some processing, and it is interrupted.
+NoSuchFieldException						It is thrown when a class does not contain the field (or variable) specified.
+
+User-Defined Exceptions
+Sometimes, the built-in exceptions in Java are not able to describe a certain situation. In such cases, a user can also create exceptions which are called ‘User-Defined Exceptions’.
+A user-defined exception must extend Exception class.
+The exception is thrown using throw keyword
+
+Example:
+class MyException extends Exception{ 
+ String str1;
+ MyException(String str2) {str1=str2;}
+  public String toString(){
+   return ("MyException Occurred: "+str1);
+ }
+}
+class Example1{
+public static void main(String args[]){
+ try{
+      System.out.println("Start of try block");
+      throw new MyException(“Error Message");
+    }
+    catch(MyException exp){System.out.println("Catch Block");
+    System.out.println(exp);
+ }
+}
+
+try block
+The try block contains a set of statements where an exception can occur. It is always followed by a catch block, which handles the exception that occurs in the associated try block. A try block must be followed by catch blocks or finally block or both.
+
+class Exception{
+  public static void main(String args[]){
+    try{
+      try{
+          System.out.println("going to divide");
+          int b=59/0;
+         }catch(ArithmeticException e){System.out.println(e);}
+      try{
+          int a[]=new int[5];
+         a[5]=4;
+         }
+        catch(ArrayIndexOutOfBoundsException e) {System.out.println(e);}
+            System.out.println("other statement);
+        }catch(Exception e)
+         {System.out.println("Exception handeled");}
+       System.out.println("casual flow");
+    }
+}
+catch block
+A catch block is where we handle the exceptions. This block must follow the try block and a single try block can have several catch blocks associated with it. we can catch different exceptions in different catch blocks. When an exception occurs in a try block, the corresponding catch block that handles that particular exception executes. 
+
+Multi-catch block : If we have to perform various tasks at the occurrence of various exceptions, we can use the multi-catch block.
+
+public class SampleMultipleCatchBlock{
+ public static void main(String args[]){
+    try{
+       int a[]=new int[5];
+       a[5]=30/0;
+      }
+      catch(ArithmeticException e)
+        {System.out.println("task1 is completed");}
+      catch(ArrayIndexOutOfBoundsException e)
+        {System.out.println("task 2 completed");}
+      catch(Exception e)
+        {System.out.println("task 3 completed");}
+      System.out.println("remaining code");
+  }
+}
+finally block
+A finally block contains all the crucial statements that must be executed whether an exception occurs or not. The statements present in this block will always execute, regardless an exception occurs in the try block or not such as closing a connection, stream etc.
+
+class SampleFinallyBlock{
+ public static void main(String args[]){
+   try{
+     int data=55/5;
+     System.out.println(data);
+    }
+    catch(NullPointerException e)
+       {System.out.println(e);} 
+    finally {System.out.println("finally block is executed");}
+    System.out.println("remaining code");
+  }
+}
+
+Finalize Method
+Finalize is a protected non-static method that is defined in the Object class and thus is available for any and all the objects in Java. This method is called by the garbage collector before an object is completely destroyed. As sometimes, an object might have to complete some important task like closing an open connection, freeing up a resource, etc before it gets destroyed. If these tasks are not done, it might decrease the efficiency of the program. Thus, the garbage collector calls it for the objects that aren’t referenced anymore and have been marked for garbage collection
+
+final														finally											finalize
+It is a keyword.											It is a block.									It is a method.
+
+Used to apply restrictions on class, methods & variables.	Used to place an important code.				Used to perform clean-up processing just before the object is garbage collected.
+
+final class can’t be inherited, method can’t be overridden	It will be executed whether the 				Finalize method helps in clean up activities for the object before it is 
+& the variable value can’t be changed. 						exception is handled or not.					destroyed by the garbage collector
+
+It is executed when it is invoked by the compiler			Executes right after the execution of 			It executes just before an object is destroyed
+															try-catch block
+
+Final in Java is used with variables, methods, 				Finally block is used along with a try     		Finalize method in Java is used with objects which are no longer in use
+and classes to set access permissions						and catch block
+
+Final Variable
+Whenever the final keyword in Java is used with a variable, field or parameter it means that once the reference is passed on or the instantiation is done then its value cannot be changed throughout the execution of the program. In case a variable without any value has been declared as final then it is known as blank/uninitialized final variable and can be initialized only through a constructor.
+
+public class A {
+	int var1 = 123;
+	//declaring final variables
+	final int var2 = 345;
+	final int var3;
+	 
+	//Trying to initialize a blank final variable
+	var = 555; //Error
+	 
+	A (){
+		var1 = 111; //No Error
+		var2 = 333; //Compilation Error
+		 
+		//Initializing a blank final variable
+		var3 = 444; //No Error
+	}
+	 
+	//passing final parameters
+	void avg(int param1, final int param2){
+		param1 = 2345; //No Error
+		param2 = 1223; //Compilation Error
+	}
+	 
+	//declaring final fields
+	void show(){
+		final int fieldVal = 300000;
+		fieldVal = 400000; //Error
+	} 
+}
+
+Final Method
+In Java, whenever a method is declared as final it cannot be overridden by any child class throughout the execution of the program.
+
+//FINAL METHOD
+class A {
+	final void method_abc(){
+		System.out.println("This is a Final method and cannot be overridden");
+	}
+	 
+	void method_xyz(){
+		System.out.println("This is a normal method and can be overridden");
+	}
+}
+	 
+class B extends A {
+	void method_abc{
+		//Compile Time Error
+	}
+	 
+	void method_xyz(){
+		System.out.println("This is an overridden method in class B");
+	}
+}
+
+Final Class
+In Java, whenever a class is declared as final, it cannot be inherited by any subclass. This is because, once a class is declared as final, all the data members and methods contained within the class will be implicitly declared as final. Also, once a class is declared as final it can no longer be declared as abstract. In other words, a class can be either of the two, final or abstract.
+
+//FINAL CLASS
+final class A {
+	//class body
+}
+ 
+class B extends A{ //Compilation Error
+	//class body
+}
+
+throw																throws
+Used to explicitly throw an exception	 							Used to declare an exception
+Checked exceptions cannot be propagated using throw only	 		Checked exceptions can be propagated
+Followed by an instance	 											Followed by a class
+Used within a method	 											Used with a method signature
+Cannot throw multiple exceptions	 								Can declare multiple exceptions
+
+//Java throw example
+void a() {
+  throw new ArithmeticException("Incorrect");
+}
+//Java throws example
+void a()throws ArithmeticException {
+  //method code
+}
+//Java throw and throws example
+void a()throws ArithmeticException {
+  throw new ArithmeticException("Incorrect");
+}
+
+volatile keyword
+A volatile keyword is used to modify the value of a variable by different threads. It is also used to make classes thread-safe. It means that multiple threads can use a method and instance of the classes at the same time without any problem. The volatile keyword can be used either with primitive type or objects.
+
+class Test
+{
+static int var=5;
+}
+In the above example, assume that two threads are working on the same class. Both threads run on different processors where each thread has its local copy of var. If any thread modifies its value, the change will not reflect in the original one in the main memory. It leads to data inconsistency because the other thread is not aware of the modified value.
+
+class Test
+{
+static volatile int var =5;
+}
+In the above example, static variables are class members that are shared among all objects. There is only one copy in the main memory. The value of a volatile variable will never be stored in the cache. All read and write will be done from and to the main memory
+
+public class VolatileTest {
+	private static final Logger LOGGER = MyLoggerFactory.getSimplestLogger();
+	private static volatile int MY_INT = 0;
+	public static void main(String[] args) {
+		new ChangeListener().start();
+		new ChangeMaker().start();	
+}
+static class ChangeListener extends Thread {
+	@Override
+	public void run() {
+		int local_value = MY_INT;
+		while ( local_value < 5){
+			if( local_value!= MY_INT){
+				LOGGER.log(Level.INFO,"Got Change for MY_INT : {0}", MY_INT);
+			local_value= MY_INT;
+			}
+		}
+	}
+}
+static class ChangeMaker extends Thread{
+	@Override
+	public void run() {
+		int local_value = MY_INT;
+		while (MY_INT <5){
+			LOGGER.log(Level.INFO, "Incrementing MY_INT to {0}", local_value+1);
+			MY_INT = ++local_value;
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace(); 
+			}
+		}
+	}	
+}
+
+Garbage Collection in Java
+The Garbage Collector free heap memory by destroying the objects doesn’t contain a reference. The technique is known as Garbage Collection. It is also considered as a program that helps to perform automatic memory management. When Java programs are run on the JVM, objects are created on the heap, which is actually a portion of memory that is dedicated to the program
+An object is said to be eligible for garbage collection if it is unreachable
+Programs that do not de-allocate memory can eventually break when there is no memory left in the system to allocate. All these programs are said to have memory leaks.
+Garbage collection in Java happens automatically during the lifetime of a program, eliminating the necessity to de-allocate memory and therefore avoiding memory leaks
+
+How does Garbage Collection work
+Garbage Collection is a process of working with the Heap memory and also mark or identify the unreachable objects and destroy them with compaction.
+1.In the very first step, unreferenced objects are identified and marked as ready for garbage collection
+2.the marked objects are deleted. Optionally, memory can be compacted after the garbage collector deletes objects, so remaining objects are in a contiguous block at the start of the heap. The compaction process makes it easier to allocate memory to new objects sequentially after the block of memory allocated to existing objects
+
+All of HotSpot’s garbage collectors implement a generational collection strategy that categorizes objects by age. The reasion behind generational garbage collection is that most objects are short-lived and will be ready for garbage collection soon after creation
+
+Types of Garbage Collector : The JVM provides four different garbage collectors :
+Serial Garbage Collector (GC): All the garbage collection events are conducted serially in one single thread. Compaction is executed after each garbage collection.
+
+Parallel/throughput GC: Multiple threads are used for minor/small garbage collection. A single thread is used for major garbage collection and Old Generation compaction. Also, the Parallel variant uses multiple threads for major garbage collection and Old Generation compaction.
+
+CMS Collector: Multiple threads are used for small/minor garbage collection using the same algorithm as Parallel. Majority of the garbage collection is multi-threaded, but CMS runs concurrently along with the application processes to minimize application events. No compaction is performed.
+
+G1 Collector: This garbage collector is basically intended as a replacement for CMS. It is parallel and concurrent like CMS.
+
+Advantages
+The biggest benefit of Java garbage collection is that it automatically handles the deletion of unused objects or some objects that are inaccessible to free up memory resources.
+It makes Java memory-efficient. It is because the garbage collector removes the unreferenced objects from heap memory.
+It is automatically done by the garbage collector which is a part of JVM.
+
+What is Java EnumSet
+EnumSet is an implementation of the Set collections to work with the enum type. EnumSet extends from the AbstractSet and implements the Set interface
+public abstract class EnumSet<E extends Enum<E>> 
+
+Advantages
+Contains only enum values which belong to the same enumeration type
+It is a member of the Java collections framework
+Provides high performance set implementation and is not synchronized
+It does not allow the user to add NULL values and throws a NullPointerException
+Elements are stored in the order of which they are saved
+Uses a fail-safe iteration, which can be used to make sure that ConcurrentModificationException is thrown
+
+Transient keyword in Java
+Transient is basically a variables modifier that used for serialization. Serialization in Java is a mechanism that is used in converting the state of an object into a byte stream. At the time of serialization, if we don’t want to save the value of a particular variable in a file, then use the transient keyword.
+We can use this transient keyword to indicate to the Java virtual machine that the transient variable is not part of the persistent state of an object.
+
+private transient <member variable>;
+transient private <member variable>;
+
+In case you define any data member as transient, it will not be serialized. This is because every field marked as transient will not be serialized. You can use this transient keyword to indicate the Java virtual machine (JVM) that the transient variable is not part of the persistent state of an object.
+
+Use it with fields which are not marked as “Serializable” inside JDK or application code. This is because classes which do not implement Serializable interface are referenced within any serializable class and cannot be serialized and will throw “java.io.NotSerializableException” exception
+
+private String
+firstName;
+private String
+lastName;
+ 
+//final field 1
+public final transient String pass= "password";
+ 
+//final field 2
+public final transient Lock lock = Lock.getLock("demo");
+
+Transient with Final keyword
+We have marked the “pass” to transient, and still that field was serialized. For a similar declaration, lock was not serialized. The reason is, whenever any final field is evaluated as a constant expression, it is serialized by the JVM ignoring the presence of transient keyword.
+
+Difference between Transient and Volatile
+Volatile and Transient are two completely different keywords that are used in Java. A Transient keyword is used during serialization of Java object. Volatile is related to the visibility of variables modified by multiple threads
+
+Static Block In Java
+Java provides the user with a block known as static block, which is mainly used for the static initializations of a class. The block consists of a set of statements which are executed before the execution of the main method. This is due to the fact that the class has to be loaded into the main memory before its usage, and static block is executed during the loading of the class. On defining a number of static blocks in a program, the blocks execute from the top to the bottom.
+
+The static blocks are executed before constructors
+class Stat {
+	static int p;
+	int q;
+	static {
+		p = 18;
+		System.out.println("This is a static block!");
+	}
+	Stat(){
+		System.out.println("Constructor!");
+	}
+}
+public class Main {
+	public static void main(String args[]) {
+		// Even though we have two objects, static block is executed only once.
+		Stat s1 = new Stat();
+		Stat s2 = new Stat();
+	}
+}
+Output:
+This is a static block!
+Constructor!
+Constructor!
+
+Multiple Static Blocks
+class Static {
+	static int p;
+	int q;
+	// creating the static block
+	static {
+		p = 18;
+		System.out.println("This is the static block!");
+	}
+	static {
+		System.out.println("This is the second static block!");
+	}
+	// end of static block
+}
+public class Main {
+	public static void main(String args[]) {
+		// Accessing p without creating an object
+		System.out.println(Static.p);
+	}
+}
+Output:
+This is the static block!
+18
