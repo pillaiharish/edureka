@@ -1,0 +1,350 @@
+Access Modifier
+
+Visible to the package, the default. No modifiers are needed. The default modifier is more restrictive than protected.
+Visible to the class only (private).
+Visible to the world (public).
+Visible to the package and all subclasses (protected)
+
+Private
+Methods, variables, and constructors that are declared private can only be accessed within the declared class itself.
+Private access modifier is the most restrictive access level. Class and interfaces cannot be private.
+Variables that are declared private can be accessed outside the class, if public getter methods are present in the class.
+Using the private modifier is the main way that an object encapsulates itself and hides data from the outside world.
+If a class has a private constructor then you cannot create the object of that class from outside the class.
+Class or Interface cannot be declared as private
+
+Public
+Public methods and variables of a class are inherited by its subclasses.
+
+Protected
+The methods or data members and constructors declared as protected are accessible within the same package or subclasses in a different package.
+Protected members can be accessed only in the child or derived classes.
+
+Access Control and Inheritance : The following rules for inherited methods are enforced −
+Methods declared public in a superclass also must be public in all subclasses.
+Methods declared protected in a superclass must either be protected or public in subclasses; they cannot be private.
+Methods declared private are not inherited at all, so there is no rule for them.
+
+The static modifier for creating class methods and variables.
+The final modifier for finalizing the implementations of classes, methods, and variables.
+The abstract modifier for creating abstract classes and methods.
+The synchronized and volatile modifiers, which are used for threads
+
+Aggregation
+
+Association in Java
+Association is referred as a relation between two separate classes which establishes through their Objects. It can be one-to-one, one-to-many, many-to-one, many-to-many.
+package Edureka;
+class School {
+	private static String name;
+	 
+	// bank name
+	School(String name) {
+		this.name = name;
+	}
+	 
+	public static String getSchoolName() {
+		return name;
+	}
+}
+ 
+// employee class
+class Student {
+	private String name;
+	 
+	// employee name
+	Student(String name) {
+		this.name = name;
+	}
+	 
+	public String getStudentName() {
+		return this.name;
+	}
+}
+ 
+// Association between both the
+// classes in main method
+public class Association {
+	public static void main (String[] args) {
+		School newSchool = new School("Java Class");
+		Student stu = new Student("Vian");
+		System.out.println(stu.getStudentName() + " is a student of " + School.getSchoolName());
+	}
+}
+Output: Vian is a student of Java Class
+
+Aggregation in Java.
+Aggregation is actually a special form of association. This means that it is referred as the relationship between two classes like Association. However, it’s a directional association, which means it strictly follows a one-way association. This represents a HAS-A relationship.
+
+package Edureka;
+ 
+class Address {
+	int streetNum;
+	String city;
+	String state;
+	String country;
+	Address(int street, String c, String st, String coun) {
+		this.streetNum=street;
+		this.city =c;
+		this.state = st;
+		this.country = coun;
+	}
+}
+class Employee {
+	int EmployeeID;
+	String EmployeeName;
+	//Creating HAS-A relationship with Address class
+	Address EmployeeAddr;
+	Employee(int ID, String name, Address addr){
+		this.EmployeeID=ID;
+		this.EmployeeName=name;
+		this.EmployeeAddr = addr;
+	}
+}
+public class Aggregation {
+	public static void main(String args[]){
+		Address ad = new Address(2, "Bangalore", "Karnataka", "India");
+		Employee obj = new Employee(1, "Suraj", ad);
+		System.out.println(obj.EmployeeID);
+		System.out.println(obj.EmployeeName);
+		System.out.println(obj.EmployeeAddr.streetNum);
+		System.out.println(obj.EmployeeAddr.city);
+		System.out.println(obj.EmployeeAddr.state);
+		System.out.println(obj.EmployeeAddr.country);
+	}	
+}
+
+Virtual Function In Java
+The behavior of a virtual function can be overridden with the inheriting class function with the same name. Virtual function in Java is expected to be defined in the derived class. We can call the virtual function by referring to the object of the derived class using the reference or pointer of the base class.
+Every non-static method in Java is by default a virtual method. Java does not have a virtual keyword like C++, but we can define them and use them for concepts like run-time polymorphism.
+class Vehicle{
+	void make(){
+		System.out.println("heavy duty");
+	}
+}
+public class Trucks extends Vehicle{
+	void make(){
+		System.out.println("Transport vehicle for heavy duty");
+	}
+	public static void main(String args[]){
+		Vehicle ob1 = new Trucks();
+		ob1.make();
+	}
+}
+Output: Transport vehicle for heavy duty
+Every non-static method in Java is a virtual function except for final and private methods. The methods that cannot be used for the polymorphism is not considered as a virtual function
+
+A static function is not considered a virtual function because a static method is bound to the class itself. So we cannot call the static method from object name or class for polymorphism. Even when we override the static method it does not resonate with the concept of polymorphism.
+
+Virtual Function With Interfaces
+All Java interfaces are virtual, they rely on the implementing classes to provide method implementations. The code for execution is selected at run-time. 
+interface Car{
+	void applyBrakes();
+}
+interface Audi implements Car{
+	void applyBrakes(){
+		System.out.println("breaks Applied");
+	}
+}
+Here applyBreaks() is virtual because functions in interfaces are designed to be overridden.
+
+For a virtual function in Java, we do not need an explicit declaration. It is any function that we have in a base class and redefined in the derived class with the same name.
+The base class pointer can be used to refer to the object of the derived class.
+During the execution of the program, the base class pointer is used to call the derived class functions
+
+Pure Virtual Function
+Pure virtual function is a virtual function for which we don’t have implementations. An abstract method in Java can be considered as a pure virtual function
+abstract class Dog{
+	final void bark(){
+		System.out.println("woof");
+	}
+	abstract void jump(); //this is a pure virtual function
+}
+class MyDog extends Dog{
+	void jump(){
+		System.out.println("Jumps in the air");
+	}
+}
+public class Runner{
+	public static void main(String args[]){
+		Dog ob1 = new MyDog();
+		ob1.jump();
+	}
+}
+Output: Jumps in the air
+
+Static methods have following rules in terms of overloading and overriding.
+Can be overloaded by another static method.
+Can not be overridden by another static method in sub-class. The reason behind this is that sub-class only hides the static method but not overrides it.
+Following example demonstrates the same.
+
+Example
+Live Demo
+
+class SuperClass {
+   public static void display() {
+      System.out.println("SuperClass.display()");
+   }
+
+   //Method overloading of static method
+   public static void display(int a) {
+      System.out.println("SuperClass.display(int): " + a);
+   }
+}
+
+class SubClass extends SuperClass {
+   //Not method overriding but hiding
+   public static void display() {
+      System.out.println("SubClass.display()");
+   }
+}
+
+public class Tester {
+   public static void main(String[] args) {
+      SuperClass object = new SubClass();
+
+      //SuperClass display method is called
+      //although object is of SubClass.
+      object.display();        
+      object.display(1);    
+   }
+}
+Output
+SuperClass.display()
+SuperClass.display(int): 1
+
+Notes : The static method is resolved at compile time cannot be overridden by a subclass. An instance method is resolved at runtime can be overridden.
+A static method can be overloaded.
+
+Join Method in Java
+Join method in Java allows one thread to wait until another thread completes its execution. In simpler words, it means it waits for the other thread to die. It has a void type and throws InterruptedException. Joining threads in Java has three functions namely:
+
+public final void join()											Waits for this thread to die
+public final void join(long millis, int nanos)						Waits at most millis milliseconds plus nano nanoseconds for this thread to die
+public final void join(long millis)									Waits at most millis milliseconds for this thread to die
+
+Method Hiding in Java
+Method hiding is functionally very similar to methods overriding. In overriding if we create a method in sub-class with the same type and signature in super-class then it allows calling of methods based on the type of instance.
+In the case of static methods with the same type and signature in superclass and sub-class then, then the method in the subclass hides the method in the superclass.
+Method hiding means subclass has defined a class method with the same signature as a class method in the superclass. In that case the method of superclass is hidden by the subclass
+
+package com.test;
+ 
+class Parent {
+ 
+    public static void foo() {
+        System.out.println("Inside foo method in parent class");
+    }
+ 
+    public void bar() {
+        System.out.println("Inside bar method in parent class");
+    }
+}
+ 
+class Child extends Parent {
+    // Hiding
+    public static void foo() {
+        System.out.println("Inside foo method in child class");
+    }
+ 
+    // Overriding
+    public void bar() {
+        System.out.println("Inside bar method in child class");
+    }
+}
+ 
+public class Code {
+ 
+    public static void main(String[] args) {
+        Parent p = new Parent();
+        Parent c = new Child();
+        System.out.println("****************Method Hiding*******************");
+        p.foo(); // This will call method in parent class
+        c.foo(); // This will call method in parent class
+        System.out.println("****************Method overriding*******************");
+        p.bar(); // This will call method in parent class
+        c.bar(); // This will call method in child class 
+    }
+}
+Output:
+****************Method Hiding*******************
+Inside foo method in parent class
+Inside foo method in parent class
+Inside foo method in child class
+****************Method overriding*******************
+Inside bar method in parent class
+Inside bar method in child class
+
+In the above example, the sub-class Child has static method foo () having the same name and signature as a static method in super-class Parent. When we call p.foo() and c.foo() it calls foo () method in parent class. unlike in method overriding where p.bar() is calling the method in the parent class and c.bar() calls the method in child class.
+The method in the super class will be hidden by the one that is in the sub class. This mechanism is known as method hiding.
+
+Static Binding in Java
+Also known as Early Binding, it is a binding that is resolved by the compiler at compile time.
+It must be noted that the binding of private, final and static methods is done during compile time. This is due to the fact that static binding provides a better performance. The compiler is aware that these methods cannot be overridden and are always accessed by the object of local class. Thus, the object of the class(local class) is determined easily by the compiler.
+
+public class Main
+{
+public static class superclass
+{
+static void print()
+{
+System.out.println("This is the superclass");
+}
+}
+public static class subclass extends superclass
+{
+static void print()
+{
+System.out.println("This is the subclass");
+}
+}
+public static void main(String[] args)
+{
+superclass sup = new superclass();
+superclass sub = new subclass();
+sup.print();
+sub.print();
+}
+}
+The print method of superclass is static, and the compiler is aware that it cannot be overridden in the subclass.
+Output:
+This is the superclass
+This is the superclass
+
+Dynamic Binding In Java
+In this type of binding, the method to be called is not decided by the compiler. An appropriate example for dynamic binding is Overriding.
+
+public class Main
+{
+public static class superclass
+{
+void print()
+{
+System.out.println("This is superclass");
+}
+}
+public static class subclass extends superclass
+{
+@Override
+void print()
+{
+System.out.println("This is subclass");
+}
+}
+public static void main(String[] args)
+{
+superclass sup = new superclass();
+superclass sub = new subclass();
+sup.print();
+sub.print();
+}
+}
+The compiler is unaware about the print that is to be called. The compiler works by referencing variables and not by the type of objects. Due to this, binding is deferred to runtime.
+Output: 
+This is superclass
+This is subclass
+
+Static Binding 																	Dynamic Binding
+The static binding is used by private, static and final members. 				For the virtual methods in Java, the binding is done at the run time in accordance with the run time object.
+While static binding uses Type information 										dynamic binding makes use of Objects for binding.
+Static supports Overloading														Dynamic Binding supports Overriding

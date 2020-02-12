@@ -1,0 +1,236 @@
+Inner Class In Java
+
+1.Nested Inner Class
+This class has the access to any private instance value of the outer class. Writing one class within another class is also allowed in Java. The class written within is known nested class and the class that holds the inner class is known as outer class.
+class Outer_place {
+	int num;
+	private class Inner_place {
+		public void print() {
+			System.out.println("It is an inner class");
+		}
+	}
+	void display_Inner() {
+		Inner_place inner = new Inner_place();
+		inner.print();
+	}
+}
+public class My_class {
+	public static void main(String args[]) {
+		Outer_place outer = new Outer_place();
+		outer.display_Inner();
+	}
+}
+Output : It is an inner class
+
+2.Accessing private Members
+Inner classes are used for accessing the private members of the class too. Suppose there is a class having private members to access them. Now write an inner class within the class and access the private members from a method within the inner class.
+class Outer_place {
+	private int num = 162;
+	class Inner_place {
+		public int getNum() {
+			System.out.println("It is a getnum method of inner class:");
+			return num;
+		}
+	}
+}
+public class My_class {
+	public static void main(String args[]) {
+		Outer_place outer = new Outer_place();
+		Outer_place.Inner_place inner = outer.new Inner_place();
+		System.out.println(inner.getNum());
+	}
+}
+Output : 
+It is a getnum method of inner class:
+162
+
+3.Method Of Local Inner Classes
+In Java, We can write a class within the method and that will be known as local type. Like all the local variables, the scope of inner class is restricted within a method.
+public class Outerplace {
+	void my_Method() {
+		int num = 45;
+		class MethodInner_place {
+			public void print() {
+				System.out.println ("method for inner classes "+num);
+			}
+		}
+		MethodInner_place inner = new MethodInner_place();
+		inner.print();
+	}
+	public static void main(String args[]) {
+		Outerplace outer = new Outerplace();
+		outer.my_Method();
+	}
+}
+Output : method for inner classes 45.
+
+4.Anonymous Inner class
+Any inner class which is declared without the classname is called anonymous inner class. In the case of anonymous inner classes, we instantiate and declare it at the same time.
+Whenever we want to override the method of class or an interface, we use this class.
+abstract class AnonymousInner {
+	public abstract void mymethod();
+}
+public class Outer_class {
+	public static void main(String args[]) {
+		AnonymousInner inner = new AnonymousInner() {
+			public void mymethod() {
+				System.out.println(" example of anonymous inner class");
+			}
+		};
+		inner.mymethod();
+	}
+}
+Output : example of anonymous inner class
+
+5.As Argument Of Anonymous Inner Class
+In this , If a method accepts the object of the interface, of an abstract class , or the concrete class, then we are able to implement the interface ,pass the object to the method and extend the abstract class
+// interface
+interface Message {
+	String greet();
+}
+public class My_class {
+	//object of interface message is accepted by this method
+	public void displayMessage(Message m) {
+		System.out.println(m.greet() + ", example of anonymous inner class as argument");
+	}
+	public static void main(String args[]) {
+		//Instantiating of class
+		My_class obj = new My_class();
+		//Passing the anonymous inner class as argument
+		obj.displayMessage(new Message() {
+			public String greet() {
+				return "Hey";
+			}
+		});
+	}
+}
+Output : Hey example of anonymous inner class as argument
+
+6.Anonymous Inner Class Of A Specified Subclass
+class Demo {
+	void show() {
+		System.out.println("i was in show method of class");
+	}
+}
+class Flavor1Demo {
+	static Demo d = new Demo() {
+		void show() {
+			super.show();
+			System.out.println("i was present in Flavor1Demo class");
+		}
+	};
+	public static void main(String[] args) {
+		d.show();
+	}
+}
+Output : 
+i was in show method of class
+i was present in Flavor1Demo class
+
+7.Anonymous Inner Class as an Implementer of Specified Interface
+class Flavor2Demo {
+	//class which implements Hello interface
+	static Hello h = new Hello() {
+		public void show() {
+			System.out.println("i was present in anonymous class");
+		}
+	};
+	public static void main(String[] args) {
+		h.show();
+	}
+}
+interface Hello {
+	void show();
+}
+Output : i was present in anonymous class
+
+8.Static Nested Classes
+These classes are not technically known as an inner classes. These classes are similar to the static member of the outer class. A static nested class do not have any access to the variables and methods of outer class. We do not need to instantiate the outer class, It can be accessed directly using the static members.
+public class Outer {
+	static class Nested_Example {
+		public void my_method() {
+			System.out.println("It is the nested class");
+		}
+	}
+	public static void main(String args[]) {
+		Outer.Nested_Example nested = new Outer.Nested_Example();
+		nested.my_method();
+	}
+}
+Output : It is the nested class
+
+Daemon Thread in Java
+Daemon thread in Java provides service to the user thread which runs in the background. It is considered to be a low priority thread which is used to perform tasks such as garbage collection. In java, every thread has its priority and the one with higher priority tends to execute faster. Also, Java Virtual Machine(JVM) terminates this thread automatically. It can not prevent JVM from exiting when all the user threads finish their execution, even if daemon thread itself is running
+
+Daemon Threads																				User Threads (Non-daemon)
+Daemon threads are created by JVM															User threads are created by an application itself
+JVM does not wait for its execution															JVM waits until the execution completes
+Low Priority threads																		High priority threads
+Used for background tasks(not critical)														Used for foreground tasks(critical)
+Life is dependent on user threads															Life is independent
+
+public class ExampleThread extends Thread {
+       
+	@Override
+	public void run() { 
+		System.out.println("User Thread or Non-Daemon Thread"); 
+	}     
+	public static void main(String[] args) { 
+   
+		ExampleThread obj = new ExampleThread(); 
+		obj.start(); 
+	   
+		System.out.println("is " + obj.getName() + " a Daemon Thread: " + obj.isDaemon()); 
+   
+		System.out.println("is " + Thread.currentThread().getName() + " a Daemon Thread: " + Thread.currentThread().isDaemon()); 
+	} 
+}
+Output: 
+is Thread-0 a Daemon Thread: false
+User Thread or Non-Daemon Thread
+is main a Daemon Thread: false
+
+Methods in Java Daemon Thread : There are two main methods for a daemon thread in Java, namely:
+
+public void setDaemon(boolean status) 		: 			Marks this thread as either a daemon thread or a user thread(non-daemon thread).
+public boolean isDaemon() 					: 			Used to test if this thread is a daemon thread or not. Returns true if the thread is Daemon else false.
+
+public class Demothread extends Thread {
+   
+// Java program to demonstrate the usage of  
+// setDaemon() and isDaemon() method. 
+  public Demothread(String name){ 
+      super(name); 
+  } 
+ 
+  public void run() 
+  {  
+      // Checking whether the thread is Daemon or not 
+      if(Thread.currentThread().isDaemon()) {  
+          System.out.println(getName() + " is Daemon thread");  
+      }           
+      else {  
+          System.out.println(getName() + " is User thread");  
+      }  
+  }  
+  public static void main(String[] args) {  
+     
+	  Demothread thread1 = new Demothread("thread1"); 
+	  Demothread thread2 = new Demothread("thread2"); 
+	  Demothread thread3 = new Demothread("thread3"); 
+     
+      // Setting user thread thread1 to Daemon 
+      thread1.setDaemon(true); 
+             
+      // starting first 2 threads  
+      thread1.start();  
+      thread2.start(); 
+ 
+      // Setting user thread thread3 to Daemon 
+      thread3.setDaemon(true);  
+      thread3.start();         
+  }  
+}
+Output:
+thread2 is User thread
+thread1 is Daemon thread
