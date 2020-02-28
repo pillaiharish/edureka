@@ -1,0 +1,206 @@
+Legacy Classes in Java
+Earlier versions of Java did not include the Collections Framework. Only in from version 1.2, we could actually use this Legacy class. In this,  the original classes were reengineered to support the collection interface. These classes are also known as Legacy classes. All legacy classes and interfaces were redesigned by JDK 5 to support Generics. 
+
+Dictionary
+Dictionary is an abstract class. The main work is to hold the data as the key or value pair. It works in the form of Map Collection.
+
+Declaration : public abstract class Dictionary extends Object
+
+Constructor : Dictionary() constructor
+
+Methods of util.Dictionary Class are :
+
+Check the size of the dictionary
+size() : java.util.Dictionary.size() returns the number of key-value pairs in the Dictionary
+Syntax : public abstract int size()
+
+Add/ put values in dictionary
+put(K key, V value) : java.util.Dictionary.put(K key, V value) adds key-value pair to the dictionary
+Syntax : public abstract V put(K key, V value)
+
+Return values present in the dictionary
+elements() : java.util.Dictionary.elements() returns value representation in dictionary
+Syntax : public abstract Enumeration elements()
+
+Get method to fetch the values mapped with the key
+get(Object key) : java.util.Dictionary.get(Object key) returns the value that is mapped with the key in the dictionary
+Syntax : public abstract V get(Object key)
+
+Check if dictionary is empty
+isEmpty() : java.util.Dictionary.isEmpty() checks whether the dictionary is empty or not.
+Syntax : public abstract boolean isEmpty()
+Return true, if there is no key-value relation in the dictionary; else return false.
+
+Removing key value from dictionary in Java
+remove(Object key) : java.util.Dictionary.remove(Object key) removes the key-value pair mapped with the key.
+Syntax : public abstract V remove(Object key)
+
+import java.util.*; 
+public class My_Class 
+{ 
+    public static void main(String[] args) 
+    { 
+       // Initializing a Dictionary 
+        Dictionary edu = new Hashtable(); 
+       // put() method 
+        edu.put("1000", "Edureka"); 
+        edu.put("2000", "Platfrom"); 
+       // elements() method : 
+        for (Enumeration i = edu.elements(); i.hasMoreElements();) { 
+            System.out.println("Value in Dictionary : " + i.nextElement()); 
+        } 
+        // get() method : 
+        System.out.println("nValue at key = 3000 : " + edu.get("2000")); 
+        System.out.println("Value at key = 1000 : " + edu.get("2000")); 
+        // isEmpty() method : 
+        System.out.println("nThere is no key-value pair : " + edu.isEmpty() + "n"); 
+        // keys() method : 
+        for (Enumeration k = edu.keys(); k.hasMoreElements();) { 
+            System.out.println("Keys in Dictionary : " + k.nextElement()); 
+        } 
+       // remove() method : 
+        System.out.println("nRemove : " + edu.remove("1000")); 
+        System.out.println("Check the value of removed key : " + edu.get("1000")); 
+        System.out.println("nSize of Dictionary : " + edu.size()); 
+}
+ } 
+Output:
+
+Value in Dictionary : Edureka
+Value in Dictionary : Platform
+Value at key = 3000 : null
+Value at key = 1000 : Platform
+There is no key-value pair : false
+Keys in Dictionary : 1000
+Keys in Dictionary : 2000
+Remove : Edureka
+Check the value of removed key : null
+Size of Dictionary : 1
+
+Properties
+Properties class is a thread-safe i.e., multiple threads that can share single properties objects without external Synchronization. The set of properties in this class will be held in the key or value pair. Properties class extends the Hashtable class. 
+package lc;
+ 
+import java.util.Properties;
+import java.util.Set;
+ 
+public class Test {
+	public static void main(String[] args) {
+		Properties pr = new Properties();
+		pr.put("Joey", "Friends");
+		pr.put("Rachel", " Friends ");
+		pr.put("Phoebe", " Friends ");
+		pr.put("Chandler", " Friends ");
+		Set<?> creator = pr.keySet();
+		for (Object ob : creator) {
+			System.out.println(ob + " stars in " + pr.getProperty((String) ob));
+		}
+	}
+}
+Output:
+Chandler stars in Friends
+Phoebe stars in Friends
+Rachel stars in Friends
+Joey stars in Friends
+
+Legacy Class in Java: HashTable
+Hashtable is a part of Java.util package and it is a concrete class that extends the dictionary class. Hashtable is synchronized. From Java 1.2 framework onwards, hash table class implements the map interface and it is the part of the collection framework.
+
+import java.util.*;
+class HashTableDemo {
+	public static void main(String args[]) {
+		Hashtable<String,Integer>ht = new Hashtable<String,Integer>();
+		ht.put("a",new Integer(10));
+		ht.put("b",new Integer(20));
+		ht.put("c",new Integer(30));
+		ht.put("d",new Integer(40));
+		 
+		Set st = ht.entrySet();
+		Iterator itr=st.iterator();
+		while(itr.hasNext()) {
+			Map.Entry m=(Map.Entry)itr.next();
+			System.out.println(itr.getKey()+" "+itr.getValue());
+		}
+	}
+}
+Output:
+10
+20
+30
+40
+
+Legacy Class in Java: Vector
+Vector class is similar to the ArrayList class but there are certain differences. Vector is generally synchronized. It is used where the programmer doesn’t really have knowledge about the length of the Array. Methods offered by Vector are :
+
+Method							Description
+E elementAt(int index)			This method returns the element at the specified index
+E firstElement()				It helps to return the first element in the Vector
+Enumeration elements()			This helps to return an enumeration of the element in the vector
+E lastElement()					Returns the last element in the Vector
+void removeAllElements()		It helps in removing all the elements of the Vector
+
+public class Test {
+	public static void main(String[] args) {
+		Vector ve = new Vector();
+		ve.add(1);
+		ve.add(2);
+		ve.add(3);
+		ve.add(4);
+		ve.add(5);
+		ve.add(6);
+		Enumeration en = ve.elements();
+		while(en.hasMoreElements()) {
+			System.out.println(en.nextElement());
+		}
+	}
+}
+Output:
+1
+2
+3
+4
+5
+6
+
+Stack
+Stack represents LIFO. Stack class extends the Vector class. Whenever we create a Stack, initially it does not contain any item, i.e, the Stack is empty. Iterate Elements of a Java Stack:
+Iterate over a Stack using iterator()
+Iterate over a Stack using Java 8 forEach()
+Iterate over a Stack using listIterator() from Top to Bottom
+
+Methods of Stack Class in Java are :
+
+Methods				Description
+empty()				Checks if the stack is empty
+push()				Pust an item to the top of the stack
+pop()				Remove the object from the stack
+peek()				Looks at the object of a stack without removing it
+search()			Searches item in the stack to get its index
+
+class Stack {
+	public static void main(String args[]) {
+		Stack st = new Stack();
+		st.push(1);
+		st.push(2);
+		st.push(3);
+		st.push(4);
+		st.push(5);
+		Enumeration e1 = st.elements();
+		while(e1.hasMoreElements())
+		System.out.print(e1.nextElement()+" ");
+		st.pop();
+		st.pop();
+		System.out.println("nAfter popping out one element”);
+		Enumeration e2 = st.elements();
+		while(e2.hasMoreElements())
+		System.out.print(e2.nextElement()+" ");
+	}
+}
+Output:
+1 2 3 4 5
+After popping out one element:
+1 2 3 4
+
+Legacy Interface
+Enumeration:
+Enumeration interface is used to enumerate elements of Vector and all values of hashtable and properties of the properties class. Operations are cloned by the iterator interface and there are several more operations added like remove method and many more

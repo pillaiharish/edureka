@@ -1,0 +1,53 @@
+REST
+
+What is REST API?
+REST or RESTful stands for REpresentational State Transfer. It is an architectural style as well as an approach for communications purposes that is often used in various web services development. In simpler terms, it is an application program interface (API) that makes use of the HTTP requests to GET, PUT, POST and DELETE the data over WWW.
+
+REST architectural style helps in leveraging the lesser use of bandwidth which makes an application more suitable for the internet. It is often regarded as the “language of the internet”. It is completely based on the resources where each and every component is regarded as a component and a single resource is accessible through a common interface using the standard HTTP method.
+
+The REST API breaks down a transaction in order to create small modules. Now, each of these modules is used to address a specific part of the transaction. This approach provides more flexibility but requires a lot of effort to be built from the very scratch.
+
+The main functions used in any REST-based architecture are:
+
+GET − Provides read-only access to a resource.
+PUT − Creates a new resource.
+DELETE − Removes a resource.
+POST − Updates an existing resource or creates a new resource.
+But all who claims cannot be referred to as RESTful API. In order to be regarded as a RESTful API, your application must satisfy certain constraints or principles. In the next section of this article on Building a REST API using Node.js, I will be talking about these principles in detail.
+
+Principles of REST
+Well, there are six ground principles laid down by Dr. Fielding who was the one to define the REST API design in 2000. Below are the six guiding principles of REST:
+
+Stateless
+Requests sent from a client to the server contains all the necessary information that is required to completely understand it. It can be a part of the URI, query-string parameters, body, or even headers. The URI is used for uniquely identifying the resource and the body holds the state of the requesting resource. Once the processing is done by the server, an appropriate response is sent back to the client through headers, status or response body.
+
+Client-Server
+It has a uniform interface that separates the clients from the servers. Separating the concerns helps in improving the user interface’s portability across multiple platforms as well as enhance the scalability of the server components.
+
+Uniform Interface
+To obtain the uniformity throughout the application, REST has defined four interface constraints which are:
+Resource identification
+Resource Manipulation using representations
+Self-descriptive messages
+Hypermedia as the engine of application state
+
+Cacheable
+In order to provide a better performance, the applications are often made cacheable. It is done by labeling the response from the server as cacheable or non-cacheable either implicitly or explicitly. If the response is defined as cacheable, then the client cache can reuse the response data for equivalent responses in the future. It also helps in preventing the reuse of the stale data.
+
+Layered system
+The layered system architecture allows an application to be more stable by limiting component behavior.  This architecture enables load balancing and provides shared caches for promoting scalability. The layered architecture also helps in enhancing the application’s security as components in each layer cannot interact beyond the next immediate layer they are in.
+
+Code on demand
+Code on Demand is an optional constraint and is used the least. It permits a clients code or applets to be downloaded and extended via the interface to be used within the application. In essence, it simplifies the clients by creating a smart application which doesn’t rely on its own code structure
+
+C------>Create------->POST
+R------>Read--------->GET
+U------>Update------->PUT
+D------>Delete------->DELETE
+
+
+
+
+
+
+

@@ -1,0 +1,399 @@
+Explain public static void main(String args[]) in Java.
+main() in Java is the entry point for any Java program. It is always written as public static void main(String[] args).
+
+public: Public is an access modifier, which is used to specify who can access this method. Public means that this Method will be accessible by any Class.
+static: It is a keyword in java which identifies it is class-based. main() is made static in Java so that it can be accessed without creating the instance of a Class. In case, main is not made static then the compiler will throw an error as main() is called by the JVM before any objects are made and only static methods can be directly invoked via the class. 
+void: It is the return type of the method. Void defines the method which will not return any value.
+main: It is the name of the method which is searched by JVM as a starting point for an application with a particular signature only. It is the method where the main execution occurs.
+String args[]: It is the parameter passed to the main method
+
+Java is not 100% Object-oriented
+Java is not 100% Object-oriented because it makes use of eight primitive data types such as boolean, byte, char, int, float, double, long, short which are not objects.
+
+What is singleton class in Java and how can we make a class singleton
+Singleton class is a class whose only one instance can be created at any given time, in one JVM. A class can be made singleton by making its constructor private.
+
+What is the difference between equals() and == in Java
+Equals() method is defined in Object class in Java and used for checking equality of two objects defined by business logic.
+
+“==” or equality operator in Java is a binary operator provided by Java programming language and used to compare primitives and objects. public boolean equals(Object o) is the method provided by the Object class. The default implementation uses == operator to compare two objects. For example: method can be overridden like String class. equals() method is used to compare the values of two objects.
+
+What are the differences between Heap and Stack Memory in Java?
+The major difference between Heap and Stack memory are:
+
+Features			Stack																							Heap
+Memory				Stack memory is used only by one thread of execution.											Heap memory is used by all the parts of the application.
+Access				Stack memory can’t be accessed by other threads.												Objects stored in the heap are globally accessible.
+Memory Management	Follows LIFO manner to free memory.																Memory management is based on the generation associated with each object.
+Lifetime			Exists until the end of execution of the thread.												Heap memory lives from the start till the end of application execution.
+Usage				Stack memory only contains local primitive and reference variables to objects in heap space.	Whenever an object is created, it’s always stored in the Heap space.
+
+Why pointers are not used in Java
+Java doesn’t use pointers because they are unsafe and increases the complexity of the program. Since, Java is known for its simplicity of code, adding the concept of pointers will be contradicting. Moreover, since JVM is responsible for implicit memory allocation, thus in order to avoid direct access to memory by the user,  pointers are discouraged in Java.
+
+What is JIT compiler in Java
+JIT stands for Just-In-Time compiler in Java. It is a program that helps in converting the Java bytecode into instructions that are sent directly to the processor. By default, the JIT compiler is enabled in Java and is activated whenever a Java method is invoked. The JIT compiler then compiles the bytecode of the invoked method into native machine code, compiling it “just in time” to execute. Once the method has been compiled, the JVM summons the compiled code of that method directly rather than interpreting it. This is why it is often responsible for the performance optimization of Java applications at the run time.
+
+What are access modifiers in Java?
+In Java, access modifiers are special keywords which are used to restrict the access of a class, constructor, data member and method in another class. Java supports four types of access modifiers:
+
+Modifier								Default				Private				Protected			Public
+Same class								YES					YES					YES					YES
+Same Package subclass					YES					NO					YES					YES
+Same Package non-subclass				YES					NO					YES					YES
+Different package subclass				NO					NO					YES					YES
+Different package non-subclass			NO					NO					NO					YES
+
+Define a Java Class.
+A class in Java is a blueprint which includes all your data.  A class contains fields (variables) and methods to describe the behavior of an object. 
+
+What is an object in Java and how is it created?
+An object is a real-world entity that has a state and behavior. An object has three characteristics:
+State
+Behavior
+Identity
+An object is created using the ‘new’ keyword. For example :  ClassName obj = new ClassName()
+
+What is Object Oriented Programming
+Object-oriented programming or popularly known as OOPs is a programming model or approach where the programs are organized around objects rather than logic and functions. In other words, OOP mainly focuses on the objects that are required to be manipulated instead of logic. This approach is ideal for the programs large and complex codes and needs to be actively updated or maintained.
+
+What are the main concepts of OOPs in Java
+Object-Oriented Programming or OOPs is a programming style that is associated with concepts like:
+
+Inheritance: Inheritance is a process where one class acquires the properties of another.
+Encapsulation: Encapsulation in Java is a mechanism of wrapping up the data and code together as a single unit.
+Abstraction: Abstraction is the methodology of hiding the implementation details from the user and only providing the functionality to the users. 
+Polymorphism: Polymorphism is the ability of a variable, function or object to take multiple forms.
+
+What is final keyword in Java
+final is a special keyword in Java that is used as a non-access modifier. A final variable can be used in different contexts such as:
+
+final variable : When the final keyword is used with a variable then its value can’t be changed once assigned. In case the no value has been assigned to the final variable then using only the class constructor a value can be assigned to it.
+
+final method   : When a method is declared final then it can’t be overridden by the inheriting class.
+
+final class    : When a class is declared as final in Java, it can’t be extended by any subclass class but it can extend other class.
+
+Differentiate between the constructors and methods in Java
+Methods																Constructors
+Used to represent the behavior of an object							Used to initialize the state of an object
+Must have a return type												Do not have any return type
+Needs to be invoked explicitly										Is invoked implicitly
+No default method is provided by the compiler						A default constructor is provided by the compiler if the class has none
+Method name may or may not be same as class name					Constructor name must always be the same as the class name
+
+What is the difference between break and continue statements
+break																						continue
+Can be used in switch and loop (for, while, do while) statements							Can be only used with loop statements
+It causes the switch or loop statements to terminate the moment it is executed				It doesn’t terminate the loop but causes the loop to jump to the next iteration
+It terminates the innermost enclosing loop or switch immediately							A continue within a loop nested with a switch will cause the next loop iteration to execute
+
+for (int i = 0; i < 5; i++) {
+	if (i == 3) {
+		break;
+	}
+	System.out.println(i);
+}
+
+for (int i = 0; i < 5; i++) {
+	if(i == 2) {
+		continue;
+	}
+	System.out.println(i);
+}
+
+What is the difference between this() and super() in Java
+In Java, super() and this(), both are special keywords that are used to call the constructor. 
+
+this()																super()
+this() represents the current instance of a class					super() represents the current instance of a parent/base class
+Used to call the default constructor of the same class				Used to call the default constructor of the parent/base class
+Used to access methods of the current class							Used to access methods of the base class
+Used for pointing the current class instance						Used for pointing the superclass instance
+Must be the first line of a block									Must be the first line of a block
+
+What is Java String Pool
+Java String pool refers to a collection of Strings which are stored in heap memory. In this, whenever a new object is created, String pool first checks whether the object is already present in the pool or not. If it is present, then the same reference is returned to the variable else new object will be created in the String pool and the respective reference will be returned.
+
+Differentiate between static and non-static methods in Java.
+Static Method																	Non-Static Method
+The static keyword must be used before the method name							No need to use the static keyword before the method name
+It is called using the class (className.methodName) 							It is can be called like any general method
+They can’t access any non-static instance variables or methods					It can access any static method and any static variable without creating an instance of the class
+
+What is constructor chaining in Java
+In Java, constructor chaining is the process of calling one constructor from another with respect to the current object. Constructor chaining is possible only through legacy where a subclass constructor is responsible for invoking the superclass’ constructor first. There could be any number of classes in the constructor chain. Constructor chaining can be achieved in two ways:
+
+Within the same class using this()
+From base class using super()
+
+Difference between String, String Builder, and String Buffer.
+
+Factor					String					String Builder					String Buffer
+Storage Area			Constant String Pool	Heap Area						Heap Area
+Mutability				Immutable				Mutable							Mutable
+Thread Safety			Yes						Yes								No
+Performance				Fast					Slow							Fast
+
+Why Java Strings are immutable in nature
+In Java, string objects are immutable in nature which simply means once the String object is created its state cannot be modified. Whenever you try to update the value of that object instead of updating the values of that particular object, Java creates a new string object. Java String objects are immutable as String objects are generally cached in the String pool. Since String literals are usually shared between multiple clients, action from one client might affect the rest. It enhances security, caching, synchronization, and performance of the application. 
+
+What is the difference between an array and an array list
+Array																			ArrayList
+Cannot contain values of different data types									Can contain values of different data types.
+Size must be defined at the time of declaration									Size can be dynamically changed
+Need to specify the index in order to add data									No need to specify the index
+Arrays are not type parameterized												Arraylists are type 
+Arrays can contain primitive data types as well as objects						Arraylists can contain only objects, no primitive data types are allowed
+
+What is Polymorphism
+Polymorphism is briefly described as “one interface, many implementations”. Polymorphism is a characteristic of being able to assign a different meaning or usage to something in different contexts – specifically, to allow an entity such as a variable, a function, or an object to have more than one form. There are two types of polymorphism:
+Compile time polymorphism
+Run time polymorphism
+Compile time polymorphism is method overloading whereas Runtime time polymorphism is done using inheritance and interface.
+
+What is runtime polymorphism or dynamic method dispatch
+In Java, runtime polymorphism or dynamic method dispatch is a process in which a call to an overridden method is resolved at runtime rather than at compile-time. In this process, an overridden method is called through the reference variable of a superclass
+
+What is abstraction in Java
+Abstraction refers to the quality of dealing with ideas rather than events. It basically deals with hiding the details and showing the essential things to the user. Thus you can say that abstraction in Java is the process of hiding the implementation details from the user and revealing only the functionality to them. Abstraction can be achieved in two ways:
+
+Abstract Classes (0-100% of abstraction can be achieved)
+Interfaces (100% of abstraction can be achieved)
+
+What do you mean by an interface in Java
+An interface in Java is a blueprint of a class or you can say it is a collection of abstract methods and static constants. In an interface, each method is public and abstract but it does not contain any constructor. Thus, interface basically is a group of related methods with empty bodies. Example:
+
+public interface Animal {
+  public void eat();
+  public void sleep();
+  public void run();
+}
+
+What is the difference between abstract classes and interfaces
+Abstract Class																								Interfaces
+An abstract class can provide complete, default code and/or just the details that have to be overridden		An interface cannot provide any code at all, just the signature
+
+In the case of an abstract class, a class may extend only one abstract class								A Class may implement several interfaces
+
+An abstract class can have non-abstract methods																All methods of an Interface are abstract
+
+An abstract class can have instance variables																An Interface cannot have instance variables
+
+An abstract class can have any visibility: public, private, protected										An Interface visibility must be public (or) none
+
+If we add a new method to an abstract class then we have the option of providing 							If we add a new method to an Interface then we have to track down all the
+default implementation and therefore all the existing code might work properly								implementations of the interface and define implementation for the new method
+
+An abstract class can contain constructors																	An Interface cannot contain constructors
+
+Abstract classes are fast																					Interfaces are slow as it requires extra indirection to find the corresponding 
+																											method in the actual class
+
+What are the different types of inheritance in Java
+Java supports four types of inheritance which are:
+
+Single Inheritance: In single inheritance, one class inherits the properties of another i.e there will be only one parent as well as one child class.
+
+Multilevel Inheritance: When a class is derived from a class which is also derived from another class, i.e. a class having more than one parent class but at different levels, such type of inheritance is called Multilevel Inheritance.
+
+Hierarchical Inheritance: When a class has more than one child classes (subclasses) or in other words, more than one child classes have the same parent class, then such kind of inheritance is known as hierarchical.
+
+Hybrid Inheritance: Hybrid inheritance is a combination of two or more types of inheritance.
+
+What is method overloading and method overriding
+Method Overloading :
+In Method Overloading, Methods of the same class shares the same name but each method must have a different number of parameters or parameters having different types and order.
+Method Overloading is to “add” or “extend” more to the method’s behavior.
+It is a compile-time polymorphism.
+The methods must have a different signature.
+It may or may not need inheritance in Method Overloading.
+
+class Adder {
+	Static int add(int a, int b) {
+		return a+b;
+	}
+	Static double add( double a, double b) {
+		return a+b;
+	}
+	public static void main(String args[]) {
+		System.out.println(Adder.add(11,11));
+		System.out.println(Adder.add(12.3,12.6));
+	}
+}
+Method Overriding:  
+In Method Overriding, the subclass has the same method with the same name and exactly the same number and type of parameters and same return type as a superclass.
+Method Overriding is to “Change” existing behavior of the method.
+It is a run time polymorphism.
+The methods must have the same signature.
+It always requires inheritance in Method Overriding.
+
+class Car {
+	void run(){
+		System.out.println(“car is running”); 
+	}
+}
+Class Audi extends Car{
+	void run() {
+	S	ystem.out.prinltn("Audi is running safely with 100km");
+	}
+	public static void main( String args[]) {
+		Car b=new Audi();
+		b.run();
+	}
+}
+
+Can you override a private or static method in Java
+You cannot override a private or static method in Java. If you create a similar method with the same return type and same method arguments in child class then it will hide the superclass method; this is known as method hiding. Similarly, you cannot override a private method in subclass because it’s not accessible there. What you can do is create another private method with the same name in the child class. Let’s take a look at the example below to understand it better.
+
+class Base {
+	private static void display() {
+		System.out.println("Static or class method from Base");
+	}
+	public void print() {
+		System.out.println("Non-static or instance method from Base");
+	}
+}
+class Derived extends Base {
+	private static void display() {
+		System.out.println("Static or class method from Derived");
+	}
+	public void print() {
+		System.out.println("Non-static or instance method from Derived");
+	}
+}
+public class test {
+	public static void main(String args[]) {
+		Base obj= new Derived();
+		obj1.display();
+		obj1.print();
+	}
+}
+
+What is multiple inheritance? Is it supported by Java?
+MultipleInheritance - Java Interview Questions - EdurekaIf a child class inherits the property from multiple classes is known as multiple inheritance. Java does not allow to extend multiple classes.
+
+The problem with multiple inheritance is that if multiple parent classes have the same method name, then at runtime it becomes difficult for the compiler to decide which method to execute from the child class.
+
+Therefore, Java doesn’t support multiple inheritance. The problem is commonly referred to as Diamond Problem.
+
+What is encapsulation in Java
+Encapsulation is a mechanism where you bind your data(variables) and code(methods) together as a single unit. Here, the data is hidden from the outer world and can be accessed only via current class methods. This helps in protecting the data from any unnecessary modification. We can achieve encapsulation in Java by:
+
+Declaring the variables of a class as private.
+Providing public setter and getter methods to modify and view the values of the variables.
+
+What is an association
+Association is a relationship where all object have their own lifecycle and there is no owner. Let’s take the example of Teacher and Student. Multiple students can associate with a single teacher and a single student can associate with multiple teachers but there is no ownership between the objects and both have their own lifecycle. These relationships can be one to one, one to many, many to one and many to many.
+
+What do you mean by aggregation
+An aggregation is a specialized form of Association where all object has their own lifecycle but there is ownership and child object can not belong to another parent object. Let’s take an example of Department and teacher. A single teacher can not belong to multiple departments, but if we delete the department teacher object will not destroy. 
+
+What is composition in Java
+Composition is again a specialized form of Aggregation and we can call this as a “death” relationship. It is a strong type of Aggregation. Child object does not have their lifecycle and if parent object deletes all child object will also be deleted. Let’s take again an example of a relationship between House and rooms. House can contain multiple rooms there is no independent life of room and any room can not belongs to two different houses if we delete the house room will automatically delete.
+
+What is a marker interface
+A Marker interface can be defined as the interface having no data member and member functions. In simpler terms, an empty interface is called the Marker interface. The most common examples of Marker interface in Java are Serializable, Cloneable etc. The marker interface can be declared as follows.
+
+public interface Serializable{
+}
+
+What is object cloning in Java
+Object cloning in Java is the process of creating an exact copy of an object. It basically means the ability to create an object with a similar state as the original object. To achieve this, Java provides a method clone() to make use of this functionality. This method creates a new instance of the class of the current object and then initializes all its fields with the exact same contents of corresponding fields. To object clone(), the marker interface java.lang.Cloneable must be implemented to avoid any runtime exceptions. One thing you must note is Object clone() is a protected method, thus you need to override it.
+
+What is a copy constructor in Java
+Copy constructor is a member function that is used to initialize an object using another object of the same class. Though there is no need for copy constructor in Java since all objects are passed by reference. Moreover, Java does not even support automatic pass-by-value.
+
+What is a constructor overloading in Java
+In Java, constructor overloading is a technique of adding any number of constructors to a class each having a different parameter list. The compiler uses the number of parameters and their types in the list to differentiate the overloaded constructors.
+
+class Demo {
+	int i;
+	public Demo(int a) {
+		i=k;
+	}
+	public Demo(int a, int b) {
+		//body
+	}
+}
+
+What is the difference between Error and Exception
+An error is an irrecoverable condition occurring at runtime. Such as OutOfMemory error. These JVM errors we cannot repair them at runtime. Though error can be caught in the catch block but the execution of application will come to a halt and is not recoverable.
+
+While exceptions are conditions that occur because of bad input or human error etc. e.g. FileNotFoundException will be thrown if the specified file does not exist. Or a NullPointerException will take place if we try using a null reference. In most of the cases it is possible to recover from an exception (probably by giving the user feedback for entering proper values etc
+
+What are the differences between Checked Exception and Unchecked Exception
+
+Checked Exception
+The classes that extend Throwable class except RuntimeException and Error are known as checked exceptions. 
+Checked exceptions are checked at compile-time.
+Example: IOException, SQLException etc.
+Unchecked Exception
+
+The classes that extend RuntimeException are known as unchecked exceptions. 
+Unchecked exceptions are not checked at compile-time.
+Example: ArithmeticException, NullPointerException etc.
+
+What are the differences between throw and throws
+throw keyword																				throws keyword
+Throw is used to explicitly throw an exception.												Throws is used to declare an exception.
+Checked exceptions can not be propagated with throw only.									Checked exception can be propagated with throws.
+Throw is followed by an instance.															Throws is followed by class.
+Throw is used within the method.															Throws is used with the method signature.
+We cannot throw multiple exception															We can declare multiple exception e.g. public void method()throws IOException,SQLException.
+
+Important methods of Java Exception Class are : 
+Exception and all of it’s subclasses doesn’t provide any specific methods and all of the methods are defined in the base class Throwable : 
+String getMessage() – This method returns the message String of Throwable and the message can be provided while creating the exception through it’s constructor.
+
+String getLocalizedMessage() – This method is provided so that subclasses can override it to provide locale specific message to the calling program. Throwable class implementation of this method simply use getMessage() method to return the exception message.
+
+Synchronized Throwable getCause() – This method returns the cause of the exception or null id the cause is unknown.
+
+String toString() – This method returns the information about Throwable in String format, the returned String contains the name of Throwable class and localized message.
+
+void printStackTrace() – This method prints the stack trace information to the standard error stream, this method is overloaded and we can pass PrintStream or PrintWriter as an argument to write the stack trace information to the file or stream.
+
+public StackTraceElement[] getStackTrace() – This method returns an array containing each element on the stack trace. The element at index 0 represents the top of the call stack whereas the last element in the array represents the method at the bottom of the call stack.
+
+What are the differences between processes and threads
+				Process																						Thread
+Definition		An executing instance of a program is called a process.										A thread is a subset of the process.
+Communication	Processes must use inter-process communication to communicate with sibling processes.		Threads can directly communicate with other threads of its process.
+Control			Processes can only exercise control over child processes.									Threads can exercise considerable control over threads of the same process.
+Changes			Any change in the parent process does not affect child processes.							Any change in the main thread may affect the behavior of the other threads
+																											of the process.
+Memory			Run in separate memory spaces.																Run in shared memory spaces.
+Controlled by	Process is controlled by the operating system.												Threads are controlled by programmer in a program.
+Dependence		Processes are independent.																	Threads are dependent.
+
+Is there a case when finally will not execute
+Yes, finally will not be executed if the program exits either by calling System.exit() or by causing a fatal error that causes the process to abort
+
+What is synchronization?
+Synchronization refers to multi-threading. A synchronized block of code can be executed by only one thread at a time. As Java supports execution of multiple threads, two or more threads may access the same fields or objects. Synchronization is a process which keeps all concurrent threads in execution to be in sync. Synchronization avoids memory consistency errors caused due to inconsistent view of shared memory. When a method is declared as synchronized the thread holds the monitor for that method’s object. If another thread is executing the synchronized method the thread is blocked until that thread releases the monitor.
+
+Thread1-------------
+Thread2-------------Lock--------------------------------Resource Pool
+Thread3-------------
+
+What is OutOfMemoryError in Java
+OutOfMemoryError is the subclass of java.lang.Error which generally occurs when our JVM runs out of memory.
+
+What is a Thread
+A thread is the smallest piece of programmed instructions which can be executed independently by a scheduler. In Java, all the programs will have at least one thread which is known as the main thread. This main thread is created by the JVM when the program starts its execution. The main thread is used to invoke the main() of the program.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

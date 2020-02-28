@@ -1,0 +1,510 @@
+Spring Boot Microservices
+
+
+Why there is a need for Spring Boot?
+Spring Boot enables building production-ready applications quickly and provides non-functional features:
+
+Embedded servers which are easy to deploy with the containers
+It helps in monitoring the multiples components
+It helps in configuring the components externally
+So, let us see what are the challenges with Microservices Architecture
+
+Challenges With Microservice Architectures
+While developing a number of smaller microservices might look easy, but there are number of inherent complexities that are associated with microservices architectures. Let’s look at some of the challenges:
+
+Automating the Components: It becomes difficult to automate everything because there are a number of smaller components instead of a monolith, i.e. Builds, Deployment, Monitoring, etc.
+Perceptibility: There are number of small components to deploy and maintain which sometimes becomes difficult to monitor and identify problems. It requires great perceptibility around all the components.
+Configuration Management: There is a great need to maintain the configurations for the components across the various environments.
+Debugging: It becomes difficult to probe each and every service for an error. Centralized Logging and Dashboards are essential to make it easy to debug problems.
+Consistency: We cannot have a wide range of tools solving the same problem. While it is important to foster innovation, it is also important to have some decentralized governance around the languages, platforms, technology and tools used for implementing/deploying/monitoring microservices.
+
+Spring Boot Microservices: Building a Top Sports Brands Architecture with Spring Boot
+In this spring boot microservices example, we will be creating Top Sports Brands application which will be having 3 services:-
+
+Eureka Service–  This Service will register every microservice and then the client microservice will look up the Eureka server to get a dependent microservice to get the job done.This Eureka Server is owned by Netflix and in this, Spring Cloud offers a declarative way to register and invoke services by Java annotation.
+Item Catalog Service – This service will generate the list of Sports brands which are popular in the market. 
+Edge Service – It is similar to the standalone Item service created in Bootiful Development with Spring Boot and Angular. However, it will have fallback capabilities which prevent the client from receiving an HTTP error when the service is not available
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Why Microservices?
+The architecture that prevailed before microservices i.e. the Monolithic Architecture.
+In layman terms, we can say that its similar to a big container wherein all the software components of an application are assembled together and tightly packaged.
+
+Listed down are the challenges of Monolithic Architecture:
+Inflexible – Monolithic applications cannot be built using different technologies 
+Unreliable – Even if one feature of the system does not work, then the entire system does not work
+Unscalable – Applications cannot be scaled easily since each time the application needs to be updated, the complete system has to be rebuilt
+Blocks Continous Development – Many features of the applications cannot be built and deployed at the same time
+Slow Development – Development in monolithic applications take lot of time to be built since each and every feature has to be built one after the other
+Not Fit For Complex Applications – Features of complex applications have tightly coupled dependencies
+Agility: Assume that developers want to make immediate changes in the application. But, the problem here is that the developers have to rebuild the code for every small change.
+Hybrid Technologies: Suppose developers of this application are comfortable with various technologies but still they have to build large and complex applications on a single technology.
+Fault Tolerance: If a specific feature is not working in the application. The complete system goes down because of this problem.
+
+What Is Microservices?
+Microservices, aka Microservice Architecture, is an architectural style that structures an application as a collection of small autonomous services, modeled around a business domain.
+Microservices is an architecture wherein all the components of the system are put into individual components, which can be built, deployed, and scaled individually.
+In Microservice Architecture, each service is self-contained and implements a single business capability.
+
+The main difference we observe in Monolithic is that all the features initially were under a single instance sharing a single database. But with microservices, each feature was allotted a different microservice, handling their own data, and performing different functionalities. 
+
+Microservice Architecture 
+Different clients from different devices try to use different services like search, build, configure and other management capabilities
+All the services are separated based on their domains and functionalities and  are further allotted to individual microservices
+These microservices have their own load balancer and execution environment to execute their functionalities & at the same time captures data in their own databases
+All the microservices communicate with each other through a stateless server which is either REST or Message Bus
+Microservices know their path of communication with the help of Service Discovery and perform operational capabilities such as automation, monitoring
+Then all the functionalities performed by microservices are communicated to clients via API Gateway
+All the internal points are connected from the API Gateway. So, anybody who connects to the API Gateway automatically gets connected to the complete system
+
+Microservices Features
+Decoupling – Services within a system are largely decoupled. So the application as a whole can be easily built, altered, and scaled
+Componentization – Microservices are treated as independent components that can be easily replaced and upgraded
+Business Capabilities – Microservices are very simple and focus on a single capability 
+Autonomy – Developers and teams can work independently of each other, thus increasing speed
+Continous Delivery – Allows frequent releases of software, through systematic automation of software creation, testing, and approval 
+Responsibility – Microservices do not focus on applications as projects. Instead, they treat applications as products for which they are responsible 
+Decentralized Governance – The focus is on using the right tool for the right job. That means there is no standardized pattern or any technology pattern. Developers have the freedom to choose the best useful tools to solve their problems 
+Agility – Microservices support agile development. Any new feature can be quickly developed and discarded again
+
+Why Microservices
+1.Easy To Build & Maintain  Applications 
+Implementation of new features
+Fixing Bugs
+Changing existing features
+2.Provides Continous Delivery
+3.Flexibility to use various tools for the required task
+4.Offers cross-team coordination
+The traditional service-oriented architectures (SOA) involve heavyweight inter-process communications protocols.
+But, microservices, follow the concept of decentralization and decoupling the services so that they act as separate entities. So, in Microservices Architecture each team handles various entities and then communicate with each other to handle different functionalities.
+5.Provides high-quality code
+6.Provides granular scaling
+7.Reduces risk
+This reduces the risk of complete fall of our business application
+8.Promotes Big Data Practices
+Microservices own their private databases to collect, ingest, process and deliver the data to implement their respective business functionality.
+we can say that Microservices collaborate with the data pipeline architectures to align the way big data should be collected, ingested, processes and delivered to handle small tasks in the form of microservices.
+9.Use minimal resources with reduced the cost of ownership
+Multiple teams work on independent services so that they can be deployed easily. This increased efficiency of microservices reduces infrastructure costs, minimizes downtime, optimizes the resources and makes the code reusable
+
+
+Advantages Of Microservices
+Independent Development – All microservices can be easily developed based on their individual functionality
+Independent Deployment – Based on their services, they can be individually deployed in any application 
+Fault Isolation – Even if one service of the application does not work, the system still continues to function
+Mixed Technology Stack – Different languages and technologies can be used to build different services of the same application
+Granular Scaling –  Individual components can scale as per need, there is no need to scale all components together
+
+Best Practices To Design Microservices
+Separate Data Store for each Microservice
+Separate build for each Microservice
+Treat server as stateless
+
+The components of the microservice architecture are :
+Clients – Different users from various devices send requests. 
+Identity Providers – Authenticates user or clients identities and issues security tokens.
+API Gateway – Handles client requests.
+Static Content – Houses all the content of the system.
+Management –  Balances services on nodes and identifies failures.
+Service Discovery – A guide to find the route of communication between microservices.
+Content Delivery Networks – Distributed network of proxy servers and their data centers.
+Remote Service – Enables the remote access information that resides on a network of IT devices.
+
+Example : Mediamore company
+
+What are APIs
+Application Program Interface or most commonly known as APIs’ is a way through which we can make sure two or more applications communicate with each other to process the client request. So, we can understand APIS’ as a point of contact, through which all the services communicate with each other to process the client’s request and send the response.
+
+So, APIs’ are generally developed by using the RESTful style, and these methods are nothing but the methods of HTTP.
+
+Microservices vs API
+Microservices																								API
+An architectural style through which, we can build applications in the form of small autonomous services.	A set of procedures and functions which allow the consumer to use the underlying
+																											service of an application.
+																											
+APIs’ are a part of microservices and thus help these microservices in communicating with each other. However, while communicating with the other services, each service can have its own CRUD operations to store the relevant data in its database.
+
+Microservices Tools
+Operating System
+Programming Languages
+Spring Boot
+Elixir
+
+Tools for API Management & Testing
+Postman
+API Fortress
+API Fortress is both an API test and health tools which automates the process of load testing, health monitoring, and functional testing. This tool is code-free and is built around modern API architectural patterns and practices
+
+Tools for Messaging
+Microservices are a system, where autonomous services, communicate with each other or within themselves. To communicate with each other, microservices use the messaging queues. So, the tools used for messaging are as follows :
+Apache Kafka	
+RabbitMQ
+
+How Does Microservice Architecture Work?
+A typical Microservice Architecture (MSA) should consist of the following components :																 
+
+Clients : The architecture starts with different types of clients, from different devices trying to perform various management capabilities such as search, build, configure etc.
+
+Identity Providers : These requests from the clients are then passed on the identity providers who authenticate the requests of clients and communicate the requests to API Gateway. The requests are then communicated to the internal services via well-defined  API Gateway.
+
+API Gateway : Since clients don’t call the services directly, API Gateway acts as an entry point for the clients to forward requests to appropriate microservices.
+The advantages of using an API gateway include:
+
+All the services can be updated without the clients knowing.
+Services can also use messaging protocols that are not web-friendly.
+The API Gateway can perform cross-cutting functions such as providing security, load balancing etc.
+
+After receiving the requests of clients, the internal architecture consists of microservices which communicate with each other through messages to handle client requests.
+
+Messaging Formats : There are two types of messages through which they communicate:
+
+Synchronous Messages: In the situation where clients wait for the responses from a service, Microservices usually tend to use REST (Representational State Transfer) as it relies on a stateless, client-server, and the HTTP protocol. This protocol is used as it is a distributed environment each and every functionality is represented with a resource to carry out operations
+
+Asynchronous Messages: In the situation where clients do not wait for the responses from a service, Microservices usually tend to use protocols such as AMQP, STOMP, MQTT. These protocols are used in this type of communication since the nature of messages is defined and these messages have to be interoperable between implementations.
+
+Databases/Data Handling : Each Microservice owns a private database to capture their data and implement the respective business functionality. Also, the databases of Microservices are updated through their service API only.
+The services provided by Microservices are carried forward to any remote service which supports inter-process communication for different technology stacks.
+
+Static Content : After the Microservices communicate within themselves, they deploy the static content to a cloud-based storage service that can deliver them directly to the clients via Content Delivery Networks (CDNs).
+
+Management : This component is responsible for balancing the services on nodes and identifying failures.
+
+Service Discovery : Acts as a guide to Microservices to find the route of communication between them as it maintains a list of services on which nodes are located.
+
+Pros Of Microservice Architecture are :
+
+Freedom to use different technologies										
+Each microservice focuses on single business capability						
+Supports individual deployable units										
+Allows frequent software releases											
+Ensures security of each service											
+Multiple services are parallelly developed and deployed						
+
+Cons Of Microservice Architecture are :
+
+Increases troubleshooting challenges
+Increases delay due to remote calls
+Increased efforts for configuration and other operations
+Difficult to maintain transaction safety
+Tough to track data across various service boundaries
+Difficult to move code between services
+
+
+Monolithic vs Microservices vs SOA
+In layman terms,
+Monolithic is similar to a big container wherein all the software components of an application are assembled together and tightly packaged.
+
+A Service-Oriented Architecture is essentially a collection of services. These services communicate with each other. The communication can involve either simple data passing or it could involve two or more services coordinating some activity. Some means of connecting services to each other is needed.
+
+Microservices, aka Microservice Architecture, is an architectural style that structures an application as a collection of small autonomous services, modeled around a business domain.
+
+Microservices vs SOA
+When comparing Microservices vs SOA, they both rely on services as the main component but they vary greatly in terms of service characteristics.
+
+Service Oriented Architecture
+It defines 4 basic service types are :
+
+Business Services:
+They are coarse-grained services that define core business operations.
+Represented through XML, Business Process Execution Language (BPEL) and others.
+
+Enterprise Services:
+Implements the functionality defined by business services.
+They mainly rely on application services and infrastructure services to fulfill business requests.
+
+Application Services
+Fine-grained services that are confined to a specific application context.
+A dedicated user interface can directly invoke the services.
+
+Infrastructure Services
+Implements non-functional tasks such as authentication, auditing, security, and logging.
+They can be invoked from either application services or enterprise services.
+
+Microservices have limited service taxonomy. They consist of 2 service types are :
+
+Functional Services: 
+They Support specific business operations.
+Accessing of services is done externally and these services are not shared with other services.
+Infrastructure services
+As in SOA, infrastructure services implement tasks such as auditing, security, and logging.
+In this, the services are not unveiled to the outside world.
+
+Major differences between SOA and MSA Microservices vs SOA architecture - Microservices vs SOA - Edureka
+ 
+SOA																					MSA
+Follows “share-as-much-as-possible” architecture approach							Follows “share-as-little-as-possible” architecture approach
+Importance is on business functionality reuse										Importance is on the concept of “bounded context”
+They have common governance and standards											They focus on people collaboration and freedom of other options
+Uses Enterprise Service bus (ESB) for communication									Simple messaging system
+They support multiple message protocols												They use lightweight protocols such as HTTP/REST etc.
+Multi-threaded with more overheads to handle I/O									Single-threaded usually with the use of Event Loop features for non-locking I/O handling
+Maximizes application service reusability											Focuses on decoupling
+Traditional Relational Databases are more often used								Modern Relational Databases are more often used
+A systematic change requires modifying the monolith									A systematic change is to create a new service
+DevOps / Continuous Delivery is becoming popular, but not yet mainstream			Strong focus on DevOps / Continuous Delivery
+
+Major Differences Between Microservices and SOA in detail:
+
+Service Granularity: Service components within a microservices architecture are generally single-purpose services that do one thing really, really well. With SOA, service components can range in size anywhere from small application services to very large enterprise services. In fact, it is common to have a service component within SOA represented by a large product or even a subsystem.
+
+Component Sharing: Component sharing is one of the core tenets of SOA. As a matter of fact, component sharing is what enterprise services are all about. SOA enhances component sharing, whereas MSA tries to minimize on sharing through “bounded context.” 
+A bounded context refers to the coupling of a component and its data as a single unit with minimal dependencies. As SOA relies on multiple services to fulfill a business request, systems built on SOA are likely to be slower than MSA.
+
+Middleware vs API layer: The microservices architecture pattern typically has what is known as an API layer, whereas SOA has a messaging middleware component. The messaging middleware in SOA offers a host of additional capabilities not found in MSA, including mediation and routing, message enhancement, message, and protocol transformation. MSA has an API layer between services and service consumers.
+
+Remote services: SOA architectures rely on messaging (AMQP, MSMQ) and SOAP as primary remote access protocols. Most MSAs rely on two protocols – REST and simple messaging (JMS, MSMQ), and the protocol found in MSA is usually homogeneous.
+
+Heterogeneous interoperability: SOA promotes the propagation of multiple heterogeneous protocols through its messaging middleware component. MSA attempts to simplify the architecture pattern by reducing the number of choices for integration. If we would like to integrate several systems using different protocols in a heterogeneous environment, we need to consider SOA. If all our services could be exposed and accessed through the same remote access protocol, then MSA is a better option.
+
+In the end, We can say it is not that simple to tell which architecture is better than other. It mainly depends on the purpose of the application we are building. SOA is better suited for large and complex business application environments that require integration with many heterogeneous applications i.e. smaller applications are not a good fit for SOA as they don’t need a messaging middleware component. 
+Microservices, on the other hand, are better suited for smaller and well-partitioned, web-based systems in which microservices give us much greater control as a developer. The conclusion is that since they both have different architecture characteristics but it mainly depends on the purpose of the application we are building
+
+Principles Used to Design Microservice Architecture
+The principles used to design Microservices are as follows :
+
+Independent & Autonomous Services
+Scalability
+Decentralization
+Resilient Services
+Real-Time Load Balancing
+Availability
+Continuous delivery through DevOps Integration
+Seamless API Integration and Continuous Monitoring
+Isolation from Failures
+Auto -Provisioning
+
+Design Patterns of Microservices
+
+Aggregator
+API Gateway
+Chained or Chain of Responsibility
+Asynchronous Messaging
+Database or Shared Data
+Event Sourcing
+Branch
+Command Query Responsibility Segregator
+Circuit Breaker
+Decomposition
+
+Aggregator : This pattern proves to be beneficial when we need an output by combining data from multiple services. So, if we have two services each having their own database, then an aggregator having a unique transaction ID, would collect the data from each individual microservice, apply the business logic and finally publish it as a REST endpoint
+
+API Gateway : This microservice design pattern can also be considered as the proxy service to route a request to the concerned microservice. Being a variation of the Aggregator service, it can send the request to multiple services and similarly aggregate the results back to the composite or the consumer service. API Gateway also acts as the entry point for all the microservices and creates fine-grained APIs’ for different types of clients
+
+Microservices use Service Discovery which acts as a guide to find the route of communication between each of them. Microservices then communicate with each other via a stateless server i.e. either by HTTP Request/Message Bus.
+
+Chained or Chain of Responsibility Pattern : Chained or Chain of Responsibility Design Patterns produces a single output which is a combination of multiple chained output
+
+Asynchronous Messaging Design Pattern
+It is quite obvious that the client gets blocked or has to wait for a long time in synchronous messaging. But, if we do not want the consumer, to wait for a long time, then we can opt for the Asynchronous Messaging
+
+Database or Shared Data : we can go for database per service or we can choose shared databases per service, to align more than one database for each microservice will help us to gather data, for the monolithic applications which are broken down into microservices. But, we have to keep in mind that, we have to limit these databases to 2-3 microservices; else, scaling these services will be a problem
+
+Event Sourcing Design Pattern
+
+Branch Pattern : Branch microservice design pattern is a design pattern in which we can simultaneously process the requests and responses from  two or more independent microservices
+
+Challenges associated with microservices architectures are :
+
+Automating the Components: It becomes difficult to automate everything because there are a number of smaller components instead of a monolith, i.e. Builds, Deployment, Monitoring, etc.
+Perceptibility: There are number of small components to deploy and maintain which sometimes becomes difficult to monitor and identify problems. It requires great perceptibility around all the components.
+Configuration Management: There is a great need to maintain the configurations for the components across the various environments.
+Debugging: It becomes difficult to probe each and every service for an error. Centralized Logging and Dashboards are essential to make it easy to debug problems.
+Consistency: We cannot have a wide range of tools solving the same problem. While it is important to foster innovation, it is also important to have some decentralized governance around the languages, platforms, technology and tools used for implementing/deploying/monitoring microservices.
+
+Spring Boot Microservices: Creating an Item Catalog Service
+
+Actuator: features to help you monitor and manage your application
+Eureka Discovery: for service registration
+JPA: to save/retrieve data
+H2: an in-memory database
+Rest Repositories: to expose JPA repositories as REST endpoints
+Web: Spring MVC and embedded Tomcat
+DevTools: to auto-reload the application when files change
+Lombok: to reduce boilerplate code
+
+Spring Boot Microservices: Creating an Edge Service
+It is similar to the standalone Item service created in Bootiful Development with Spring Boot and Angular. However, it will have fallback capabilities which prevent the client from receiving an HTTP error when the service is not available.
+
+Eureka Discovery: for service registration
+Feign: a declarative web service client
+Zuul: provides intelligent routing
+Rest Repositories: to expose JPA repositories as REST endpoints
+Web: Spring MVC and embedded Tomcat
+Hystrix: a circuit breaker to stop cascading failure and enable resilience
+Lombok: to reduce boilerplate code
+
+
+Best practices for microservices security
+The best practices to improve security in microservices are as follows:
+
+Defense in Depth Mechanism
+The Defense in Depth mechanism is basically a technique through which we can apply layers of security countermeasures to protect the sensitive services.
+
+Tokens and API Gateway
+User credentials will be stored and a session will be created using cookies
+
+Tokens
+Tokens are used to easily identify the user and are stored in the form of cookies. Now, each time a client requests a web page, the request is forwarded to the server, and then, the server determines whether the user has access to the requested resource or not.
+
+API Gateways
+API Gateways add as an extra element to secure services through token authentication. The API Gateway acts an entry point to all the client requests and efficiently hides the microservices from the client. So, the client has no direct access to microservices and thus in that way, no client can exploit any of the services.
+
+Distributed Tracing and Session Management
+
+Distributed Tracing
+When we have to monitor a humongous amount of services simultaneously, then that becomes a problem. Distributed tracing is a method to pinpoint the failures and identify the reason behind it. Not only this, but we can also identify the place at which failure is happening. So, it is very easy to track down, which microservice is facing a security issue.
+
+Session Management
+Session Management is an important parameter that we have to consider while securing microservices.  Now, a session is created whenever a user comes on to an application.
+
+First session and Mutual SSL
+
+The idea of the first session is very simple. Users need to login to the application once, and then they can access all the services in the application. But, each user has to initially communicate with an authentication service.
+
+Mutual SSL or mutual authentication between microservices. With this, the data transferred between the services will be encrypted. The only problem with this method is that, when the number of microservices increase, then since each and every service will have its own TLS certificate, it will be very tough for the developers to update the certificates.
+
+3rd party application access
+Usage of OAuth
+The solution is to use OAuth. When we use OAuth, the application prompts the user to authorize the 3rd party applications, to use the required information and generate a token for it. Generally, an authorization code is used to request the token to make sure that the user’s callback URL is not stolen.
+So, while mentioning the access token the client communicates with the authorization server, and this server authorizes the client to prevent others from forging the client’s identity.  So, when we use Microservices with OAuth, the services act as a client in the OAuth architecture, to simplify the security issues.
+
+What is Cohesion
+The degree to which the elements inside a module belong together is said to be cohesion.
+
+What is Coupling
+The measure of the strength of the dependencies between components is said to be coupling. A good design is always said to have High Cohesion and Low Coupling.
+
+What is REST/RESTful and what are its uses
+Representational State Transfer (REST)/RESTful web services are an architectural style to help computer systems communicate over the internet. This makes microservices easier to understand and implement.
+
+Microservices can be implemented with or without RESTful APIs, but it’s always easier to build loosely coupled microservices using RESTful APIs.
+
+What is an actuator in Spring boot
+Spring Boot actuator provides restful web services to access the current state of running an application in the production environment. With the help of actuator, we can check various metrics and monitor our application.
+
+What is Spring Cloud?
+Spring Cloud provides tools for developers to quickly build some of the common patterns in distributed systems (e.g. configuration management, service discovery, circuit breakers, intelligent routing, leadership election, distributed sessions, cluster state).
+
+What problems are solved by Spring Cloud?
+While developing distributed microservices with Spring Boot we face few issues which are solved by Spring Cloud.
+
+The complexity associated with distributed systems – This includes network issues, Latency overhead, Bandwidth issues, security issues.
+Ability to handle Service Discovery – Service discovery allows processes and services in a cluster to find each other and communicate.
+Solved redundancy issues – Redundancy issues often occur in distributed systems.
+Load balancing – Improves the distribution of workloads across multiple computing resources, such as a computer cluster, network links, central processing units.
+Reduces performance issues – Reduces performance issues due to various operational overheads.
+
+Can you give a gist about Rest and Microservices
+REST
+Though we can implement microservices in multiple ways, REST over HTTP is a way to implement Microservices. REST is also used in other applications such as web apps, API design, and MVC applications to serve business data.
+
+Microservices
+Microservices is an architecture wherein all the components of the system are put into individual components, which can be built, deployed, and scaled individually. There are certain principles and best practices of Microservices that help in building a resilient application.
+
+In a nutshell, we can say that REST is a medium to build Microservices.
+
+What are different types of Tests for Microservices
+While working with microservices, testing becomes quite complex as there are multiple microservices working together. So, tests are divided into different levels.
+
+At the bottom level, we have technology-facing tests like- unit tests and performance tests. These are completely automated.
+At the middle level, we have tests for exploratory testing like the stress tests and usability tests.
+At the top level, we have acceptance tests that are few in number. These acceptance tests help stakeholders in understanding and verifying software features.
+
+What do you understand by Distributed Transaction
+Distributed Transaction is any situation where a single event results in the mutation of two or more separate sources of data which cannot be committed atomically. In the world of microservices, it becomes even more complex as each service is a unit of work and most of the time multiple services have to work together to make a business successful.
+
+What is an Idempotence and where it is used
+Idempotence is the property of being able to do something twice in such a way that the end result will remain the same i.e. as if it had been done once only.
+
+Usage: Idempotence is used at the remote service, or data source so that, when it receives the instruction more than once, it only processes the instruction once.
+
+What is Bounded Context
+Bounded Context is a central pattern in Domain-Driven Design. It is the focus of DDD’s strategic design section which is all about dealing with large models and teams. DDD deals with large models by dividing them into different Bounded Contexts and being explicit about their inter-relationships.
+
+What is Two Factor Authentication
+Two-factor authentication enables the second level of authentication to an account log-in process.
+So suppose a user has to enter only username and password, then that’s considered a single-factor authentication
+
+
+What are Client certificates
+A type of digital certificate that is used by client systems to make authenticated requests to a remote server is known as the client certificate. Client certificates play a very important role in many mutual authentication designs, providing strong assurances of a requester’s identity.
+
+ What is the use of PACT in Microservices architecture
+PACT is an open source tool to allow testing interactions between service providers and consumers in isolation against the contract made so that the reliability of Microservices integration increases.
+Usage in Microservices:
+Used to implement Consumer Driven Contract in Microservices.
+Tests the consumer-driven contracts between consumer and provider of a Microservice.
+
+What is OAuth
+OAuth stands for open authorization protocol. This allows accessing the resources of the resource owner by enabling the client applications on HTTP services such as third-party providers Facebook, GitHub, etc. So with this, we can share resources stored on one site with another site without using their credentials.
+
+What is Conway’s law
+“Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization’s communication structure.” – Mel Conway
+
+This law basically tries to convey the fact that, in order for a software module to function, the complete team should communicate well. Therefore the structure of a system reflects the social boundaries of the organization(s) that produced it.
+
+What do you understand by Contract Testing
+According to Martin Flower, contract test is a test at the boundary of an external service which verifies that it meets the contract expected by a consuming service.
+
+Also, contract testing does not test the behavior of the service in depth. Rather, it tests that the inputs & outputs of service calls contain required attributes and the response latency, throughput is within allowed limits.
+
+What is End to End Microservices Testing?
+End-to-end testing validates each and every process in the workflow is functioning properly. This ensures that the system works together as a whole and satisfies all requirements.
+
+In layman terms, we can say that end to end testing is a kind of tests where everything is tested after a particular period
+
+What is the use of Container in Microservices
+Containers are a good way to manage microservice based application to develop and deploy them individually. We can encapsulate our microservice in a container image along with its dependencies, which then can be used to roll on-demand instances of microservice without any additional efforts required.
+
+What is DRY in Microservices architecture
+DRY stands for Don’t Repeat Yourself. It basically promotes the concept of reusing the code. This results in developing and sharing the libraries which in turn result in tight coupling.
+
+What is a Consumer-Driven Contract (CDC)
+This is basically a pattern for developing Microservices so that they can be used by external systems. When we work on microservices, there is a particular provider who builds it and there are one or more consumers who use Microservice.
+
+Generally, providers specify the interfaces in an XML document. But in Consumer Driven Contract, each consumer of service conveys the interface expected from the Provider.
+
+What is the role of Web, RESTful APIs in Microservices
+A microservice architecture is based on a concept wherein all its services should be able to interact with each other to build a business functionality. So, to achieve this, each microservice must have an interface. This makes the web API a very important enabler of microservices. Being based on the open networking principles of the Web, RESTful APIs provide the most logical model for building interfaces between the various components of a microservice architecture.
+
+What do you understand by Semantic monitoring in Microservices architecture
+Semantic monitoring, also known as synthetic monitoring combines automated tests with monitoring the application in order to detect business failing factors.
+
+How can we perform Cross-Functional testing
+Cross-functional testing is a verification of non-functional requirements, i.e. those requirements which cannot be implemented like a normal feature.
+
+What is the difference between Mock or Stub?
+Stub
+A dummy object that helps in running the test.
+Provides fixed behavior under certain conditions which can be hard-coded.
+Any other behavior of the stub is never tested.
+For example, for an empty stack, we can create a stub that just returns true for empty() method. So, this does not care whether there is an element in the stack or not.
+
+Mock
+A dummy object in which certain properties are set initially.
+The behavior of this object depends on the set properties.
+The object’s behavior can also be tested.
+For example, for a Customer object, we can mock it by setting name and age. we can set age as 12 and then test for isAdult() method that will return true for age greater than 18. So, your Mock Customer object works for the specified condition.
+
+What do you know about Mike Cohn’s Test Pyramid
+Mike Cohn provided a model called Test Pyramid. This describes the kind of automated tests required for software development
+
+As per pyramid, the number of tests at first layer should be highest. At service layer, the number of tests should be less than at the unit test level, but more than at the end-to-end level.
+
+What is the purpose of Docker
+Docker provides a container environment that can be used to host any application. In this, the software application and the dependencies which support it are tightly-packaged together.
+
+So, this packaged product is called a Container and since it is done by Docker, it is called Docker container!
+
+What is Canary Releasing
+Canary Releasing is a technique to reduce the risk of introducing a new software version in production. This is done by slowly rolling out the change to a small subset of users before giving it out to the entire infrastructure, i.e. making it available to everybody.
+
+What do you mean by Continuous Integration (CI)
+Continuous Integration (CI) is the process of automating the build and testing of code every time a team member commits changes to version control. This encourages developers to share code and unit tests by merging the changes into a shared version control repository after every small task completion.
+
+What is Continuous Monitoring
+Continuous monitoring gets into the depth of monitoring coverage, from in-browser front-end performance metrics, through application performance, and down to host virtualized infrastructure metrics.
+
+What are Reactive Extensions in Microservices
+Reactive Extensions also are known as Rx. It is a design approach in which we collect results by calling multiple services and then compile a combined response. These calls can be synchronous or asynchronous, blocking or non-blocking. Rx is a very popular tool in distributed systems which works opposite to legacy flows.

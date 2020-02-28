@@ -1,0 +1,449 @@
+Spring Introduction
+
+Frameworks are fast, efficient and light-weight
+
+What Is Spring Framework
+
+Spring is a powerful lightweight application development framework used for Java Enterprise Edition (JEE). In a way, it is a framework of frameworks because it provides support to various frameworks such as Struts, Hibernate, Tapestry, EJB, JSF etc. The framework in broader sense can be defined as a structure using which you can solve many technical problems. You can say that, the Spring Framework is a comprehensive tool for supporting applications using Java programming language
+
+The core features of the Spring Framework can be used in developing any Java application. It can be described as complete and modular framework. The Spring Framework can be used for all layer implementations of a real time application. It can also be used for the development of particular layer of a real time application unlike Struts and Hibernate, but with Spring we can develop all layers.
+
+
+There are generally three main reasons for Spring Framework’s popularity are :
+
+Simplicity: Spring Framework is simple because its non-invasive as it uses POJO and POJI models.<>
+
+POJO (Plain Old Java Objects): A Java class not coupled with any technology or any framework is called “POJO”.
+POJI (Plain Old Java Interfaces): A Java interface not coupled with any technology or any frame work is called “POJI”.
+
+Testablity: For writing the Spring application, server is not mandatory. But for struts and EJB applications, you need a server, if you want to test the application. It may need lot of changes in the source and to view those changes, each time you have to restart the server. This becomes tedious and time consuming. In case of Spring Framework, it has it’s own container to run the applications.ioc 
+
+Loose Coupling : Spring Framework is loosely coupled because it has concepts like Dependency Injection, AOP etc. These features help in reducing dependency and increasing the modularity within the code. 
+
+public interface Bike {
+	public void start();
+}
+
+class Rider {
+	Bike b;
+	public void setBike(Bike b) {
+		this.b = b;
+	}
+	void ride() {
+		b.start();
+	}
+}
+
+Now the Spring Framework container can inject an object of any class that implements Bike interface, according to the requirement. This is how loose coupling works. 
+
+Spring Framework Architecture
+Spring has a layered architecture consisting of different modules which have their own functionality. These modules are generalized into following layers :
+
+Core Container
+Data Access/ Integration
+Web
+AOP (Aspect Oriented Programming)
+Instrumentation
+Test.
+
+Spring Framework’s advantage of having layered architecture are :
+
+Spring Framework effectively organizes our middle tier objects.
+Irrespective of the runtime environment, Spring Framework’s configuration management services can be used in any architectural layer.
+Spring Framework handles the configuration in a consistent way throughout the application. This eliminates the need to use a variety of custom-property file formats.
+Spring Framework is designed in such a way that applications built with it will depend on as few of its APIs as possible.
+Because of the use of interfaces, Spring Framework facilitates good programming practice.
+
+To create simple Spring Framework Application follow the five simple steps:
+
+Step I: Creating the Bean class
+package org.edureka.firstSpring;
+ 
+public class StudentBean { 
+	 String name; 
+	 public String getName() { 
+		return name; 
+	 } 
+	 public void setName(String name) { 
+		this.name = name; 
+	 } 
+	 public void displayInfo() { 
+		System.out.println("Hello: "+ name); 
+	 } 
+}
+
+Step II: Create an XML file
+
+<xml version="1.0" encoding="UTF-8">
+<beans xmlns="<a href="http://www.springframework.org/schema/beans">http://www.springframework.org/schema/beans</a>" xmlns:xsi="<a href="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</a>" xmlns:p="<a href="http://www.springframework.org/schema/p">http://www.springframework.org/schema/p</a>" xsi:schemaLocation="<a href="http://www.springframework.org/schema/beans">http://www.springframework.org/schema/beans</a> <a href="http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</a>"> 
+<bean id="studentbean" class="org/edureka/firstSpring/StudentBean"> 
+<property name="name" value="Edureka"></property>
+</bean>
+</beans>
+
+The <bean> tag is used to define the bean for the given class.
+The <property> tag is a subelement of bean, and specifies the property of the Student class. The value specified in the property element will be set in the Student class object by the IoC container.
+
+Step III: Create the main class
+
+package org.edureka.firstSpring;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+public class StudentDemo {
+	public static void main(String[] args) {
+		ApplicationContext appCon=new ClassPathXmlApplicationContext("StudentConfig.xml");
+		StudentBean factory=(StudentBean)appCon.getBean("studentbean");
+		factory.displayInfo();
+	}
+}
+
+Step IV: Load the jar files
+
+Load the following jar files :
+
+Course Curriculum
+Spring Framework Certification Training
+Weekday / Weekend Batches
+commons-logging-1.2.jar 
+javax.servlet-api-3.1.0.jar 
+jstl-1.2.jar
+spring-aop-4.2.2.RELEASE.jar 
+spring-beans-4.2.2.RELEASE.jar 
+spring-context-4.2.2.RELEASE.jar 
+spring-core-4.2.2.RELEASE.jar
+spring-expression-4.2.2.RELEASE.jar
+spring-web-4.2.2.RELEASE.jar 
+spring-webmvc-4.2.2.RELEASE.jar
+NOTE: In case you need the jar files, comment below.
+
+Step V: Run the program
+
+Run the program on your server to test the application.
+
+Output ; Hello Edureka
+
+
+Features Of Spring Framework
+
+Lightweight: Spring Framework is lightweight with respect to size and transparency. 
+Inversion Of Control (IOC): In Spring Framework, loose coupling is achieved using Inversion of Control. The objects give their own dependencies instead of creating or looking for dependent objets.
+Aspect Oriented Programming (AOP): By separating application business logic from system services, Spring Framework supports Aspect Oriented Programming and enables cohesive development.
+Container: Spring Framework creates and manages the life cycle and configuration of application objects.
+MVC Framework: Spring Framework is a MVC web application framework. This framework is configurable via interfaces and accommodates multiple view technologies.
+Transaction Management: For transaction management, Spring framework provides a generic abstraction layer. It is not tied to J2EE environments and Spring’s transaction support can be used in container-less environments.
+JDBC Exception Handling: The JDBC abstraction layer of the Spring Framework offers an exception hierarchy, which simplifies the error handling strategy
+
+
+Advantages Of Using Spring Framework : 
+Because of Spring Frameworks layered architecture, we can use what we need and leave which we don’t.
+It is open-source and has no vendor lock-in
+Works on POJOs (Plain Old Java Object) which makes your application lightweight.
+Spring Framework enables POJO (Plain Old Java Object) Programming which in turn enables continuous integration and testability.
+Provides predefined templates for JDBC, Hibernate, JPA etc., thus reducing our effort of writing too much code.
+Because of dependency injection feature, our code becomes loosely coupled.
+JDBC is simplified due to Dependency Injection and Inversion of Control.
+Using Spring Framework, the development of Java Enterprise Edition (JEE) applications became faster.
+It also provides strong abstraction to Java Enterprise Edition (JEE) specifications. 
+It provides declarative support for transactions, validation, caching and formatting.
+
+Spring Framework Architecture
+Spring Framework architecture is an arranged layered architecture which consists of different modules. All the modules have their own functionalities that are utilized to build an application. There are around 20 modules which are generalized into Core Container, Data Access/ Integration, Web, AOP (Aspect Oriented Programming), Instrumentation, and Test. Here, developer is free to choose the required module. It’s modular architecture enables integration with other frameworks without much hassle.
+
+Core Container
+This container has the following four modules :
+
+Spring Core: This module is the core of the Spring Framework. It provides implementation for features like  IoC (Inversion of Control) and Dependency Injection with singleton design pattern.
+Spring Bean: This module provides implementation for the factory design pattern through BeanFactory.
+Spring Context: This module is built on the solid base provided by the Core and the Beans modules and is a medium to access any object defined and configured.
+Spring Expression Languages (SpEL): This module is an extension to expression language supported by Java server pages. It provides a powerful expression language for querying and manipulating an object graph, at runtime.
+
+Spring Data Access/ Integration
+It consists of the following five modules:
+
+JDBC: This module provides JDBC abstraction layer which eliminates the need of repetitive and unnecessary exception handling overhead.
+ORM: ORM stands for Object Relational Mapping. This module provides consistency/ portability to our code regardless of data access technologies based on object oriented mapping concept.
+OXM: OXM stands for Object XML Mappers. It is used to convert the objects into XML format and vice versa. The Spring OXM provides an uniform API to access any of these OXM frameworks.
+JMS: JMS stands for Java Messaging Service. This module contains features for producing and consuming messages among various clients.
+Transaction: This module supports programmatic and declarative transaction management for classes that implement special interfaces and for all your POJOs. All the enterprise level transaction implementation concepts can be implemented in Spring by using this module.
+
+Spring Web
+Web layer includes the following modules:
+
+Web: This module using servlet listeners and a web-oriented application context, provides basic web-oriented integration features like multi-part file upload functionality and the initialization of the IoC container.
+Web-Servlet: This module contains Model-View-Controller (MVC) based implementation for web applications. It provides all other features of MVC, including UI tags and data validations. 
+Web-Socket: This module provides support for WebSocket based and two-way communication between the client and the server in web applications.
+Web-Portlet: This module is also known as Spring-MVC-Portlet module. It provides the support for Spring based Portlets and mirrors the functionality of a Web-Servlet module.
+
+Aspect Oriented Programming (AOP)
+AOP language is a powerful tool which allows developers to add enterprise functionality to the application such as transaction, security etc. It allows us to write less code and separate the code logic. AOP uses cross-cutting concerns.
+
+Instrumentation
+This module provides class instrumentation support and class loader implementations that are used in certain application servers.
+
+Test
+This module supports the testing of Spring components with JUnit or TestNG. It provides consistent loading of Spring ApplicationContexts and caching of those contexts. It also provides mock objects that we can use to test our code in isolation.
+
+
+IOC Container
+At the core of the Spring Framework, lies the Spring container. The container creates the object, wires them together, configures them and manages their complete life cycle. The Spring container makes use of Dependency Injection to manage the components that make up an application. The container receives instructions for which objects to instantiate, configure, and assemble by reading the configuration metadata provided. This metadata can be provided either by XML, Java annotations or Java code.
+
+The important tasks performed by the IoC container are:
+Instantiating the bean
+Wiring the beans together
+Configuring the beans
+Managing the bean’s entire life-cycle
+
+The IoC container receives metadata from either an XML file, Java annotations, or Java code and works accordingly. IoC adds the flexibility and control of application, and provides a central place of configuration management for Plain Old Java Objects (POJO) of our application. Spring makes use of Java POJO classes and configuration metadata to produce a fully configured and executable system or application
+
+BeanFactory
+BeanFactory is like a factory class that contains a collection of beans. It instantiates the bean whenever asked for by clients
+It is an interface defined in org.springframework.beans.factory.BeanFactory.
+Bean Factory provides the basic support for Dependency Injection.
+It is based on factory design pattern which creates the beans of any type.
+BeanFactory follows lazy-initialization technique which means beans are loaded as soon as bean factory instance is created but the beans are created only when getBean() method is called.
+The XmlBeanFactory is the implementation class for the BeanFactory interface. To use the BeanFactory, we need to create the instance of XmlBeanFactory class as shown below: 
+
+BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("beans.xml"));
+
+ApplicationContext
+It is an interface defined in org.springframework.context.ApplicationContext.
+It is the advanced Spring container and is built on top of the BeanFactory interface.
+ApplicationContext supports the features supported by Bean Factory but also provides some additional functionalities.
+ApplicationContext follows eager-initialization technique which means instance of beans are created as soon as we create the instance of Application context.
+The ClassPathXmlApplicationContext class is the implementation class of ApplicationContext interface. we need to instantiate the ClassPathXmlApplicationContext class to use the ApplicationContext as shown below:
+
+ApplicationContext context=new ClassPathXmlApplicationContext("beans.xml");
+
+Dependency Injection
+Dependency Injection is also one of the core concepts of Spring Framework. It is a design pattern that removes the dependency from the code. That is, the Spring Framework provides the dependencies of the class itself so that it can be easy to manage and test the application. we can provide information from external source such as XML file. Here, we do not create the objects instead we just define how they should be created and IoC container will create the objects for us.
+
+n Dependency Injection We don’t connect our components and services together in the code directly, but describe which services are needed by which components in the configuration file. The IoC container will wire them up together.
+
+In Spring, dependencies can be injected in two ways:
+
+By constructor
+By setter method
+Interface injection(but not used)
+
+By Constructor
+By default when the Spring container loads the bean, it instantiates the bean with the default constructor. But we can also define a constructor argument in bean definition, using an argument constructor.
+
+The <constructor-arg> subelement of <bean> is used for constructor injection. e.g : <constructor-arg value="101" type="int"></constructor-arg>
+
+By setter method
+Setter-based Dependency Injection is accomplished by the container calling setter methods on our beans after invoking a no-argument.
+
+The <property> subelement of <bean> is used for setter injection.e.g : <property name="id" value="101"></property>
+
+What is Dependency Injection
+Dependency Injection is the ability of an object to supply dependencies of another object.
+
+Dependency in programming is an approach where a class uses specific functionalities of another class. So, for example, If we consider two classes A and B, and say that class A uses functionalities of class B, then its implied that class A has a dependency of class B. Now, if we are coding in Java then we must know that, we have to create an instance of class B before the objects are being used by class A.
+
+The process of creating an object for some other class and let the class directly using the dependency is called Dependency Injection. It mainly has three classes involved:
+
+Client Class: This is the dependent class and is dependent on the Service class.
+
+Service Class: This class provides a service to the client class.
+
+Injector Class: This class is responsible for injecting the service class object into the client class
+
+The principle on which Dependency Injection is based on IoC
+
+Types of Dependency Injection
+There are mainly three types of Dependency Injection:
+
+Constructor Injection: In this type of injection, the injector supplies dependency through the client class constructor.
+
+Setter Injection / Property Injection: In this type of injection, the injector method injects the dependency to the setter method exposed by the client.
+
+Interface Injection: In this type of injection, the injector uses Interface to provide dependency to the client class. The clients must implement an interface that will expose a setter method which accepts the dependency.
+
+Dependency Injection is responsible to create objects, understand which classes require those objects and finally provide those classes with the objects. 
+
+Benefits of Dependency Injection :
+Enables an easy way to interconnect the components
+Application can be easily extended
+Unit testing made much easier
+Reduction of Boiler plate code 
+
+Inversion of Control
+Inversion of Control is a principle based on which, Dependency Injection is made. Also, as the name suggests, Inversion of Control is basically used to invert different kinds of additional responsibilities of a class rather than the main responsibility.
+
+An example, wherein we have the ability to cook. According to the IoC principle,  we can invert the control, so instead of cooking food, we can just directly order from outside, wherein we receive food at our doorstep. Thus the process of food delivered to us at our doorstep is called the Inversion of Control.
+
+we do not have to cook ourself, instead, we can order the food and let a delivery executive, deliver the food for us. In this way, we do not have to take care of the additional responsibilities and just focus on the main work.
+
+
+exception of No qualifying bean of type. This is because the customer class which we have defined is not a Spring Bean i.e. is not a Spring Object	: @Component
+Null Pointer Exception. This is because now the Customer class is Dependent on the Technologies class and yet it does not know the existence of the Technologies class. : @Autowired
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+AOP (Aspect Oriented Programming)
+Aspect-oriented programming (AOP) is a programming approach that allows global properties of a program to determine how it is compiled into an executable program. AOP compliments OOPs in the sense that it also provides modularity. But here, the key unit of modularity is an aspect rather than a class. AOP breaks down the logic of program into distinct parts called concerns. This increases modularity by cross-cutting concerns.
+
+
+A cross-cutting concern is a concern that affects the whole application and is centralized in one location in code like transaction management, authentication, logging, security etc
+
+AOP can also be considered as a dynamic decorator design pattern. The decorator pattern allows additional behavior to be added to an existing class by wrapping the original class and duplicating its interface and then delegating to the original. We can say that Spring AOP hijacks the executing method, and adds extra functionality before or after the method execution.
+
+Core AOP Concepts 
+There are mainly seven core concepts in Aspect Oriented Programming are :
+Aspect : An aspect is a class that implements the JEE application concerns which cuts through multiple classes, such as transaction management, security etc. Aspects can be a normal class configured through Spring XML configuration. It can also be regular classes annotated using @Aspect annotation.
+
+Joinpoint : A joinpoint is a candidate point in the program execution of an application where an aspect can be plugged in. This point could be a method being called, an exception being thrown, or even a field being modified.
+
+Advice: Advices are the actual actions taken for a particular joinpoint. Basically, they are the methods that get executed when a certain joinpoint meets a matching pointcut in the application.
+
+Pointcut:  Pointcut are expressions that are matched with join points to determine whether advice needs to be executed or not.
+
+Target Object: They are the object on which advices are applied. In Spring AOP, a subclass is created at runtime where the target method is overridden and advices are included based on their configuration.
+
+Proxy: A proxy is an object that is created after applying advice to the target object. In terms of client, the objects, the target object and the proxy object are same.
+
+Weaving: Weaving is the process of linking an aspect with other application types or objects to create an advised object
+
+AOP Advice Types
+Before: These types of advices execute before the joinpoint methods. They are configured using @Before annotation mark.
+
+After returning: These types of advices execute after the joinpoint methods complete executing normally. They are configured using @AfterReturning annotation mark.
+
+After throwing: These types of advices execute only when joinpoint method exits by throwing an exception. They are configured using @AfterThrowing annotation mark.
+
+After (finally): These types of advices execute after a joinpoint method executes, regardless of the method’s exit (whether normal or exceptional return). They are configured using @After annotation mark.
+
+Around: These types of advices execute before and after a join point and are configured using @Around annotation mark.
+
+Cross Cutting Concerns 
+Cross-cutting concern is the one that affects the whole application and should be centralized under the same block in the code, such as transaction management, authentication, logging, security etc. As we know Spring AOP enables Aspect-Oriented Programming in spring applications. Here, aspects enable the modularization of concerns such as transaction management, logging or security that cut across multiple types and objects (often termed crosscutting concerns). In this case, AOP provides a way to dynamically add the cross-cutting concern before, after or around the actual logic using simple pluggable configurations. By doing this, it makes easy to maintain code in the present and future as well. So, we can add/remove c/concerns without recompiling complete source code simply by changing configuration files (if we are applying aspects suing XML configuration).
+
+Why AOP
+The most important functionality is AOP provides the pluggable way to dynamically add the additional concern before, after or around the actual logic. Suppose there are 10 methods and there are 5 methods that start from a, 2 methods that start from b and 3 methods that starts from c.
+
+First, let’s understand Scenario- Here, We have to maintain a log and send notification after calling methods that start from m. So what is the problem without AOP? Here, We can call methods (that maintains a log and sends notification) from the methods starting with a. In such a scenario, we need to write the code in all the 5 methods. But, in case if a client says in future, I don’t have to send a notification, we need to change all the methods. It leads to a maintenance problem. So with AOP, we have below solution.
+
+The solution with AOP–  we don’t have to call methods from the method. We can simply define the additional concern like maintaining a log, sending notification etc. in the method of a class. Its entry is given in the XML file. Suppose in future, if a client says to remove the notifier functionality, we need to change only in the XML file. So, maintenance is easy in AOP.
+
+That’s the whole concept of why we need Aspect Oriented Programming in Springs. 
+
+AspectJ Concepts
+The important aspect of Spring is the Aspect-Oriented Programming (AOP) framework. As we all know,  the key unit of modularity in OOP(Object Oriented Programming) is the class, similarly, in AOP the unit of modularity is the aspect. Aspects enable the modularization of concerns such as transaction management that cut across multiple types and objects. To implement these concerns, AspectJ comes into the picture. AspectJ, a compatible extension to the Java programming language, is one implementation of AOP. It has grown into a complete and popular AOP framework. Since AspectJ annotations are supported by more and more AOP frameworks, AspectJ-style aspects are more likely to be reused in other AOP frameworks that support AspectJ.
+
+Pointcut
+The pointcut is an expression language of Spring AOP. @Pointcut annotation defines the pointcut. Here, we can refer the pointcut expression by its name also. 
+@Pointcut("execution(*Operation.*(..))")
+private void dotask() {}
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Spring MVC (Model-View-Controller)
+Spring MVC helps in building flexible and loosely coupled web applications. The Model-View-Controller design pattern helps in separating the business logic, presentation logic and navigation logic. Spring MVC provides provides an elegant/dignified solution to use MVC in Spring Framework with the help of DispatcherServlet. It is a Java framework which is used to build web applications. It follows the Model-View-Controller design pattern. Not just that, it also implements all the basic features of a core Spring Framework like Inversion of Control, Dependency Injection. In this case, DispatcherServlet is a class that receives the incoming request and maps it to the right resource such as Controllers, Models, and Views.
+
+When a request is sent to the Spring MVC Framework, the following takes place.
+A request is received by DispatcherServlet.
+The DispatcherServlet communicates with HandlerMapping and calls the Controller associated with the request.
+The request is processed by the Controller by calling the appropriate service methods and a ModelAndView object to the DispatcherServlet is returned. 
+The view name is sent to a ViewResolver by the DispatcherServlet to find the actual View to invoke.
+Now the model object DispatcherServlet is passed to View to render the result.
+With the help of the model data, the View renders the result back to the user.
+
+Spring Web Model View Controller
+It comprises four main components :
+										Model						Model
+Web Browser---------->Front controller-------------->Controller------------------->View---------------------->Web Browser
+
+Model – Model contains the core data of the application. Data can either be a single object or a group of objects.
+Controller – It contains the business logic of an application. We can use @Controller annotation to mark the class as Controller.
+View – The View is used to represent the information in a particular format. Here, We can use JSP+JSTL to create a view page.
+Front Controller – In Spring Web MVC, the DispatcherServlet class works as the front Controller.
+
+Workflow of Spring MVC
+
+								HandlerMapping
+Request---->DispatcherServlet----------------->HandlerMapper----------------->DispatcherServlet
+
+DispatcherServlet-------->Controller---------->DispatcherServlet
+
+DispatcherServlet-------->ViewResolver------------->DispatcherServlet
+
+DispatcherServlet-------->View
+
+All the incoming requests are obstructed by the DispatcherServlet that works as the front Controller.
+This DispatcherServlet gets an entry of handler mapping from the XML file and forwards the request to the Controller.
+After that, the Controller returns an object of ModelAndView.
+Finally, the DispatcherServlet checks the entry of view resolver in the XML file and then invokes the specified view component
+
+
+The @Controller annotation marks this class as Controller.
+
+The @RequestMapping annotation is used to map the class with the specified URL name
+
+---------------------------------------------------------
+The web.xml file and provide entry for Controller class
+
+web.xm file, We am specifying the Servlet class which is DispatcherServlet that acts as the front Controller in Spring Web MVC. All the incoming requests for the HTML file will be forwarded to the DispatcherServlet. This file will take the mappings and the URL pattern for executing the program.
+
+<!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN" "<a href="http://java.sun.com/dtd/web-app_2_3.dtd">http://java.sun.com/dtd/web-app_2_3.dtd</a>" >
+<web-app>
+<display-name>Archetype Created Web Application</display-name>
+<servlet>
+<servlet-name>spring</servlet-name>
+<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+<load-on-startup>1</load-on-startup>
+</servlet>
+<servlet-mapping>
+<servlet-name>spring</servlet-name>
+<url-pattern>/add</url-pattern>
+</servlet-mapping>
+</web-app>
+
+-------------------------------------------------------------
+Define bean in an XML file
+This file is necessary to specify the View components. In this, the context:component-scan element defines the base-package where DispatcherServlet will search the Controller class. This file should be present inside the WEB-INF Directory.
+
+add-servlet.xml
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="<a href="http://www.springframework.org/schema/beans">http://www.springframework.org/schema/beans</a>" xmlns:ctx="<a href="http://www.springframework.org/schema/context">http://www.springframework.org/schema/context</a>" xmlns:xsi="<a href="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</a>" xmlns:mvc="<a href="http://www.springframework.org/schema/mvc">http://www.springframework.org/schema/mvc</a>" xsi:schemaLocation="<a href="http://www.springframework.org/schema/beans">http://www.springframework.org/schema/beans</a> <a href="http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">http://www.springframework.org/schema/beans/spring-beans-2.5.xsd</a> <a href="http://www.springframework.org/schema/mvc">http://www.springframework.org/schema/mvc</a> <a href="http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd</a> <a href="http://www.springframework.org/schema/context">http://www.springframework.org/schema/context</a> <a href="http://www.springframework.org/schema/context/spring-context-2.5.xsd">http://www.springframework.org/schema/context/spring-context-2.5.xsd</a> ">
+<ctx:annotation-config></ctx:annotation-config>
+<ctx:component-scan base-package="com.edureka">
+</ctx:component-scan>
+<mvc:annotation-driven/>
+</beans>
+
+-----------------------------------------------------------
+
+<html>
+<body>
+ 
+<form action ="add">
+Enter 1st number: <input type="text" name="num1">
+Enter 2nd number: <input type="text" name="num2">
+<input type ="submit">
+</form>
+ 
+</body>
+</html>
+
+-----------------------------------------------------------------
+
+Advantages of Spring MVC
+
+Lightweight: As Spring is a lightweight framework, there will not be any performance issues in Spring-based web application.
+
+High productive: Spring MVC can boost your development process and hence is highly productive.
+
+Secure: Most of the online banking web applications are developed using Spring MVC because it is highly secure. For enterprise-grade security implementation, Spring security is a great API.
+
+MVC Supported: As it is based on MVC, it is a great way to develop modular web applications.
+
+Role Separation: It comprises of a separate class for specific roles like Model, Command, Validator, etc.
+
+
+
+
+
+
+
+

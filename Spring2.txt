@@ -1,0 +1,591 @@
+Spring
+
+What are the major features in different versions of Spring Framework
+Version						Feature
+Spring 2.5	  - 	Spring Interview Questions - Edureka!	This version was released in 2007. It was the first version which supported annotations.
+Spring 3.0	  - 	Spring Interview Questions - Edureka!	This version was released in 2009. It made full-fledged use of improvements in Java5 and also provided support to JEE6.
+Spring 4.0	  - 	Spring Interview Questions - Edureka!	 This version was released in 2013. This was the first version to provide full support to Java 8.
+
+What is a Spring configuration file
+A Spring configuration file is an XML file. This file mainly contains the classes information. It describes how those classes are configured as well as introduced to each other. 
+
+What are the different components of a Spring application?
+A Spring application, generally consists of following components:
+
+Interface: It defines the functions.
+Bean class: It contains properties, its setter and getter methods, functions etc.
+Spring Aspect Oriented Programming (AOP): Provides the functionality of cross-cutting concerns.
+Bean Configuration File: Contains the information of classes and how to configure them.
+User program: It uses the function.
+
+What are the various ways of using Spring Framework
+Spring Framework can be used in various ways. They are listed as follows:
+As a Full-fledged Spring web application.
+As a third-party web framework, using Spring Frameworks middle-tier.
+For remote usage. 
+As Enterprise Java Bean which can wrap existing POJOs (Plain Old Java Objects)
+
+Differentiate between constructor injection and setter injection.
+Constructor Injection												Setter Injection
+There is no partial injection.										There can be partial injection.
+It doesn’t override the setter property.							It overrides the constructor property.
+It will create a new instance if any modification is done.			It will not create new instance if any modification is done.
+It works better for many properties.								It works better for few properties.
+
+Differentiate between BeanFactory and ApplicationContext.
+BeanFactory															ApplicationContext
+It is an interface defined in org.springframework.beans.factory.	BeanFactory	It is an interface defined in org.springframework.context.ApplicationContext
+It uses Lazy initialization											It uses Eager/ Aggressive initialization
+It explicitly provides a resource object using the syntax			It creates and manages resource objects on its own
+It doesn’t supports internationalization							It supports internationalization 
+It doesn’t supports annotation based dependency    					It supports annotation based dependency 
+
+Explain Spring Beans
+They are the objects that form the backbone of the user’s application.
+Beans are managed by the Spring IoC container.
+They are instantiated, configured, wired and managed by a Spring IoC container
+Beans are created with the configuration metadata that the users supply to the container.
+Meta Data------>IOC Container-------->Beans
+
+How configuration metadata is provided to the Spring container
+Configuration metadata can be provided to Spring container in following ways:
+
+XML-Based configuration: In Spring Framework, the dependencies and the services needed by beans are specified in configuration files which are in XML format. These configuration files usually contain a lot of bean definitions and application specific configuration options. They generally start with a bean tag. For example:
+
+<bean id="studentbean" class="org.edureka.firstSpring.StudentBean">
+ <property name="name" value="Edureka"></property>
+</bean>
+
+Annotation-Based configuration: Instead of using XML to describe a bean wiring, we can configure the bean into the component class itself by using annotations on the relevant class, method, or field declaration. By default, annotation wiring is not turned on in the Spring container. So, we need to enable it in our Spring configuration file before using it. For example:
+
+<beans>
+<context:annotation-config/>
+<!-- bean definitions go here -->
+</beans>
+
+Java-based configuration: The key features in Spring Framework’s new Java-configuration support are @Configuration annotated classes and @Bean annotated methods. 
+@Bean annotation plays the same role as the <bean/> element. 
+@Configuration classes allows to define inter-bean dependencies by simply calling other @Bean methods in the same class. 
+For example:
+
+@Configuration
+public class StudentConfig { 
+	@Bean
+	public StudentBean myStudent() {
+	 return new StudentBean(); 
+	}
+}
+
+How many bean scopes are supported by Spring?
+The Spring Framework supports five scopes. They are:
+
+Singleton: This provides scope for the bean definition to single instance per Spring IoC container.
+Prototype: This provides scope for a single bean definition to have any number of object instances.
+Request: This provides scope for a bean definition to an HTTP-request. 
+Session: This provides scope for a bean definition to an HTTP-session. 
+Global-session: This provides scope for a bean definition to an Global HTTP-session.
+
+What is the Bean life cycle in Spring Bean Factory Container?
+Bean life cycle in Spring Bean Factory Container is as follows:
+
+The Spring container instantiates the bean from the bean’s definition in the XML file.
+Spring populates all of the properties using the dependency injection, as specified in the bean definition.
+The factory calls setBeanName() by passing the bean’s ID, if the bean implements the BeanNameAware interface.
+The factory calls setBeanFactory() by passing an instance of itself, if the bean implements the BeanFactoryAware interface.
+preProcessBeforeInitialization() methods are called if there are any BeanPostProcessors associated with the bean.
+If an init-method is specified for the bean, then it will be called.
+Finally, postProcessAfterInitialization() methods will be called if there are any BeanPostProcessors associated with the bean
+	
+Instantiates the bean---------->Populates Properties------------>Call BeanNameAware's setBeanName()-------------->Call BeanFactoryAware's setBeanFactory()
+
+Call BeanFactoryAware's setBeanFactory()------------->Call ApplicationContextAware's setApplicationContext()------------->Preinitialize(BeanPostProcessors)
+
+Preinitialize(BeanPostProcessors)---------------->Call InitializingBean's afterPropertiesSet()-------------->Call custom-init()---------------->Post Initialization(BeanPostProcessors)
+
+Post Initialization(BeanPostProcessors)----------------->Bean Is Ready To Use
+
+
+Container is ShutDown------->Call DisposalbleBean's destroy()------------->Call custom-destroy()
+
+Explain inner beans in Spring.
+A bean can be declared as an inner bean only when it is used as a property of another bean. For defining a bean, the Spring’s XML based configuration metadata provides the use of <bean> element inside the <property> or <constructor-arg>. Inner beans are always anonymous and they are always scoped as prototypes. For example, let’s say we have one Student class having reference of Person class. Here we will be creating only one instance of Person class and use it inside Student.
+
+Here’s a Student class followed by bean configuration file:
+
+Student.java
+
+public class Student {
+	private Person person;
+	//Setters and Getters
+}
+public class Person {
+	private String name;
+	private String address;
+	//Setters and Getters
+}
+
+studentbean.xml
+
+<bean id=“StudentBean" class="com.edureka.Student">
+<property name="person">
+<!--This is inner bean -->
+<bean class="com.edureka.Person">
+<property name="name" value=“Scott"></property>
+<property name="address" value=“Bangalore"></property>
+</bean>
+</property>
+</bean>
+
+Define Bean Wiring.
+When beans are combined together within the Spring container, it’s called wiring or bean wiring. The Spring container needs to know what beans are needed and how the container should use dependency injection to tie the beans together, while wiring beans
+
+What do you understand by auto wiring and name the different modes of it
+The Spring container is able to autowire relationships between the collaborating beans. That is, it is possible to let Spring resolve collaborators for our bean automatically by inspecting the contents of the BeanFactory.
+Autowiring enables the programmer to inject the bean automatically. We don’t need to write explicit injection logic. Let’s see the code to inject bean using dependency injection.
+
+<bean id=“emp” class=“com.javatpoint.Employee” autowire=“byName” /> 
+
+Different modes of bean auto-wiring are:
+
+no: This is default setting which means no autowiring. This is the default mode, it means autowiring is not enabled. Explicit bean reference should be used for wiring.
+byName: It injects the object dependency according to name of the bean. Injects the bean based on the property name. It uses setter method. It matches and wires its properties with the beans defined by the same names in the XML file.
+byType: It injects the object dependency according to type. Injects the bean based on the property type. It uses setter method. It matches and wires a property if its type matches with exactly one of the beans name in XML file.
+constructor: It injects the dependency by calling the constructor of the class. It injects the bean using constructor It has a large number of parameters.
+autodetect: First the container tries to wire using autowire by constructor, if it can’t then it tries to autowire by byType
+
+What are the limitations with auto wiring?
+Following are some of the limitations we might face with auto wiring:
+
+Overriding possibility: We can always specify dependencies using <constructor-arg> and <property> settings which will override autowiring.
+Primitive data type: Simple properties such as primitives, Strings and Classes can’t be autowired.
+Confusing nature: Always prefer using explicit wiring because autowiring is less precise.
+
+What do you mean by  Annotation-based container configuration
+Instead of using XML to describe a bean wiring, the developer moves the configuration into the component class itself by using annotations on the relevant class, method, or field declaration. It acts as an alternative to XML setups. For example:
+
+@Configuration
+public class AnnotationConfig {
+	@Bean
+	public MyDemo myDemo() { 
+		return new MyDemoImpll(); 
+	}
+}
+
+How annotation wiring can be turned on in Spring
+By default, Annotation wiring is not turned on in the Spring container. Thus, to use annotation based wiring we must enable it in our Spring configuration file by configuring <context:annotation-config/> element. For example:
+
+<beans xmlns="<a href="http://www.springframework.org/schema/beans">http://www.springframework.org/schema/beans</a>" xmlns:xsi="<a href="http://www.w3.org/2001/XMLSchema-instance">http://www.w3.org/2001/XMLSchema-instance</a>" xmlns:context="<a href="http://www.springframework.org/schema/context">http://www.springframework.org/schema/context</a>">
+<context:annotation-config/>
+<beans ………… />
+</beans>
+
+What’s the difference between @Component, @Controller, @Repository & @Service annotations in Spring
+@Component: This marks a java class as a bean. It is a generic stereotype for any Spring-managed component. The component-scanning mechanism of spring now can pick it up and pull it into the application context.
+
+@Controller: This marks a class as a Spring Web MVC controller. Beans marked with it are automatically imported into the Dependency Injection container.
+
+@Service: This annotation is a specialization of the component annotation. It doesn’t provide any additional behavior over the @Component annotation. We can use @Service over @Component in service-layer classes as it specifies intent in a better way.
+
+@Repository: This annotation is a specialization of the @Component annotation with similar use and functionality. It provides additional benefits specifically for DAOs. It imports the DAOs into the DI container and makes the unchecked exceptions eligible for translation into Spring DataAccessException
+
+What do you understand by @Required annotation
+@Required is applied to bean property setter methods. This annotation simply indicates that the affected bean property must be populated at the configuration time with the help of an explicit property value in a bean definition or with autowiring. If the affected bean property has not been populated, the container will throw BeanInitializationException. For example :
+
+public class Employee {
+	private String name;
+	@Required
+	public void setName(String name) {
+		this.name=name; 
+	}
+	public string getName() {.
+		return name; 
+	}
+}
+
+What do you understand by @Autowired annotation
+The @Autowired annotation provides more accurate control over where and how autowiring should be done. This annotation is used to autowire bean on the setter methods, constructor, a property or methods with arbitrary names or multiple arguments. By default, it is a type driven injection. For Example :
+
+public class Employee {
+	private String name;
+	@Autowired
+	public void setName(String name) {
+		this.name=name; 
+	}
+	public string getName() { 
+		return name; 
+	}
+}
+
+What do you understand by @Qualifier annotation?
+When we create more than one bean of the same type and want to wire only one of them with a property we can use the @Qualifier annotation along with @Autowired to remove the ambiguity by specifying which exact bean should be wired.
+
+For example, here we have two classes, Employee and EmpAccount respectively. In EmpAccount, using @Qualifier its specified that bean with id emp1 must be wired. 
+
+Employee.java
+
+public class Employee {
+	private String name;
+	@Autowired
+	public void setName(String name) {
+		this.name=name; 
+	}
+	public string getName() {
+		return name; 
+	}
+}
+
+EmpAccount.java
+
+public class EmpAccount {
+	private Employee emp;
+	@Autowired
+	@Qualifier(emp1)
+	public void showName() {
+		System.out.println(“Employee name : ”+emp.getName);
+	}
+}
+
+Describe Spring DAO support
+The Data Access Object (DAO) support in Spring makes it easy to work with data access technologies like JDBC, Hibernate or JDO in a consistent way. This allows one to switch between the persistence technologies easily. It also allows us to code without worrying about catching exceptions that are specific to each of these technology
+
+Which classes are present in spring JDBC API
+Classes present in JDBC API are as follows:
+
+JdbcTemplate
+SimpleJdbcTemplate
+NamedParameterJdbcTemplate
+SimpleJdbcInsert
+SimpleJdbcCall
+
+What are the ways by which Hibernate can be accessed using Spring
+There are two ways by which we can access Hibernate using Spring:
+
+Inversion of Control with a Hibernate Template and Callback
+Extending HibernateDAOSupport and Applying an AOP Interceptor node
+
+Name the types of transaction management that Spring supports
+Two types of transaction management are supported by Spring. They are:
+
+Programmatic transaction management: In this, the transaction is managed with the help of programming. It provides you extreme flexibility, but it is very difficult to maintain.
+Declarative transaction management: In this, the transaction management is separated from the business code. Only annotations or XML based configurations are used to manage the transactions.
+
+Describe AOP.
+Aspect-oriented programming or AOP is a programming technique which allows programmers to modularize crosscutting concerns or behavior that cuts across the typical divisions of responsibility. Examples of cross-cutting concerns can be logging and transaction management. The core of AOP is an aspect. It encapsulates behaviors that can affect multiple classes into reusable modules.
+
+What do you mean by Aspect
+Aspect is a modularization of concern which cuts across multiple objects. Transaction management is a good example of a crosscutting concern in J2EE applications. Aspects are implemented using regular classes or regular classes annotated with the @Aspect annotation in Spring Framework.
+
+Explain JoinPoint.
+A point during the execution of a program is called JoinPoint, such as the execution of a method or the handling of an exception. In Spring AOP, a joinpoint always represents a method execution.
+
+What is an Advice
+An Action taken by an aspect at a particular joinpoint is known as an Advice. Spring AOP uses an advice as an interceptor, maintaining a chain of interceptors “around” the join point.
+
+What are the different types of Advices?
+Different types of Advices in Spring AOP are:
+
+Before: These types of advices execute before the joinpoint methods and are configured using @Before annotation mark.
+After returning: These types of advices execute after the joinpoint methods completes executing normally and are configured using @AfterReturning annotation mark.
+After throwing:  These types of advices execute only if joinpoint method exits by throwing an exception and are configured using @AfterThrowing annotation mark.
+After (finally): These types of advices execute after a joinpoint method, regardless of the method’s exit whether normally or exceptional return and are configured using @After annotation mark.
+Around: These types of advices execute before and after a joinpoint and are configured using @Around annotation mark
+
+Point out the difference between concern and cross-cutting concern in Spring AOP
+The concern is the behavior we want to have in a particular module of an application. It can be defined as a functionality we want to implement. 
+
+The cross-cutting concern is a concern which is applicable throughout the application. This affects the entire application. For example, logging, security and data transfer are the concerns needed in almost every module of an application, thus they are the cross-cutting concerns.
+
+What are the different AOP implementations?
+Different AOP implementations are :
+Spring AOP
+Apache AOP
+JBoss AOP
+
+What are the difference between Spring AOP and AspectJ AOP?
+Spring AOP										AspectJ AOP
+Runtime weaving through proxy is done			Compile time weaving through AspectJ Java tools is done 
+It supports only method level PointCut			It suports field level Pointcuts
+It is DTD based 								It is schema based and Annotation configuration
+
+What do you mean by Proxy in Spring Framework
+An object which is created after applying advice to a target object is known as a Proxy. In case of client objects the target object and the proxy object are the same
+
+In Spring, what is Weaving
+The process of linking an aspect with other application types or objects to create an advised object is called Weaving. In Spring AOP, weaving is performed at runtime
+
+What do you mean by Spring MVC framework
+The Spring web MVC framework provides model-view-controller architecture and ready to use components that are used to develop flexible and loosely coupled web applications. The MVC pattern helps in separating the different aspects of the application like input logic, business logic and UI logic, while providing a loose coupling between all these elements.
+
+Describe DispatcherServlet.
+The DispatcherServlet is the core of Spring Web MVC framework. It handles all the HTTP requests and responses. The DispatcherServlet receives the entry of handler mapping from the configuration file and forwards the request to the controller. The controller then returns an object of Model And View. The DispatcherServlet checks the entry of view resolver in the configuration file and calls the specified view component
+
+Explain WebApplicationContext.
+The WebApplicationContext is an extension of the plain ApplicationContext. It has some extra features that are necessary for web applications. It differs from a normal ApplicationContext in terms of its capability of resolving themes and in deciding which servlet it is associated with.
+
+In Spring MVC framework, what is controller
+Controllers provide access to the application behavior. These behaviors are generally defined through a service interface. Controllers interpret the user input and transform it into a model which is represented to the user by the view. In Spring, controller is implemented in a very abstract way. It also enables you to create a wide variety of controllers
+
+What is Spring
+Wikipedia defines the Spring framework as “an application framework and inversion of control container for the Java platform. The framework’s core features can be used by any Java application, but there are extensions for building web applications on top of the Java EE platform.” Spring is essentially a lightweight, integrated framework that can be used for developing enterprise applications in java.
+
+Name the different modules of the Spring framework.
+Some of the important Spring Framework modules are:
+
+Spring Context – for dependency injection.
+Spring AOP – for aspect oriented programming.
+Spring DAO – for database operations using DAO pattern
+Spring JDBC – for JDBC and DataSource support.
+Spring ORM – for ORM tools support such as Hibernate
+Spring Web Module – for creating web applications.
+Spring MVC – Model-View-Controller implementation for creating web applications, web services etc
+
+List some of the important annotations in annotation-based Spring configuration.
+The important annotations are:
+
+@PostConstruct
+Spring calls methods annotated with @PostConstruct only once, just after the initialization of bean properties. Keep in mind that these methods will run even if there is nothing to initialize.
+The method annotated with @PostConstruct can have any access level but it can't be static.
+One example usage of @PostConstruct is populating a database. During development, for instance, we might want to create some default users:
+
+@Component
+public class DbInit {
+ 
+    @Autowired
+    private UserRepository userRepository;
+ 
+    @PostConstruct
+    private void postConstruct() {
+        User admin = new User("admin", "admin password");
+        User normalUser = new User("user", "user password");
+        userRepository.save(admin, normalUser);
+    }
+}
+The above example will first initialize UserRepository and then run @PostConstruct method.
+
+3. @PreDestroy
+A method annotated with @PreDestroy runs only once, just before Spring removes our bean from the application context.
+Same as with @PostConstruct, the methods annotated with @PreDestroy can have any access level but can't be static.
+The purpose of this method should be to release resources or perform any other cleanup tasks before the bean gets destroyed, for example closing a database connection.
+
+@Component
+public class UserRepository {
+ 
+    private DbConnection dbConnection;
+    @PreDestroy
+    public void preDestroy() {
+        dbConnection.close();
+    }
+}
+
+Explain Bean in Spring and List the different Scopes of Spring bean.
+Beans are objects that form the backbone of a Spring application. They are managed by the Spring IoC container. In other words, a bean is an object that is instantiated, assembled, and managed by a Spring IoC container.
+
+Singleton: Only one instance of the bean will be created for each container. This is the default scope for the spring beans. While using this scope, make sure spring bean doesn’t have shared instance variables otherwise it might lead to data inconsistency issues because it’s not thread-safe.
+Prototype: A new instance will be created every time the bean is requested.
+Request: This is same as prototype scope, however it’s meant to be used for web applications. A new instance of the bean will be created for each HTTP request.
+Session: A new bean will be created for each HTTP session by the container.
+Global-session: This is used to create global session beans for Portlet applications.
+
+Explain the role of DispatcherServlet and ContextLoaderListener.
+DispatcherServlet is basically the front controller in the Spring MVC application as it loads the spring bean configuration file and initializes all the beans that have been configured. If annotations are enabled, it also scans the packages to configure any bean annotated with @Component, @Controller, @Repository or @Service annotations.
+
+ContextLoaderListener, on the other hand, is the listener to start up and shut down the WebApplicationContext in Spring root. Some of its important functions includes tying up the lifecycle of Application Context to the lifecycle of the ServletContext and automating the creation of ApplicationContext.
+
+ContextLoader<----------------------ContextLoaderListener-------------------------->ServletContextListener
+
+How to handle exceptions in Spring MVC Framework
+Spring MVC Framework provides the following ways to help us achieving robust exception handling.
+
+Controller Based:
+We can define exception handler methods in our controller classes. All we need is to annotate these methods with @ExceptionHandler annotation.
+
+Global Exception Handler:
+Exception Handling is a cross-cutting concern and Spring provides @ControllerAdvice annotation that we can use with any class to define our global exception handler.
+
+HandlerExceptionResolver implementation: 
+For generic exceptions, most of the times we serve static pages. Spring Framework provides HandlerExceptionResolver interface that we can implement to create global exception handler. The reason behind this additional way to define global exception handler is that Spring framework also provides default implementation classes that we can define in our spring bean configuration file to get spring framework exception handling benefits.
+
+What are some of the important Spring annotations which you have used
+Some of the Spring annotations that We have used in our project are:
+
+@Controller – for controller classes in Spring MVC project.
+
+@RequestMapping – for configuring URI mapping in controller handler methods. 
+
+@ResponseBody – for sending Object as response, usually for sending XML or JSON data as response.
+
+@PathVariable – for mapping dynamic values from the URI to handler method arguments.
+
+@Autowired – for autowiring dependencies in spring beans.
+
+@Qualifier – with @Autowired annotation to avoid confusion when multiple instances of bean type is present.
+
+@Service – for service classes.
+
+@Scope – for configuring the scope of the spring bean.
+
+@Configuration, @ComponentScan and @Bean – for java based configurations.
+
+AspectJ annotations for configuring aspects and advices , @Aspect, @Before, @After, @Around, @Pointcut, etc.
+
+How to integrate Spring and Hibernate Frameworks
+We can use Spring ORM module to integrate Spring and Hibernate frameworks if we are using Hibernate 3+ where SessionFactory provides current session, then we should avoid using HibernateTemplate or HibernateDaoSupport classes and better to use DAO pattern with dependency injection for the integration.
+
+Spring ORM provides support for using Spring declarative transaction management, so we should utilize that rather than going for hibernate boiler-plate code for transaction management. 
+
+Mention what does Model-View-Controller represent in an MVC application?
+Model
+It represents the application data domain. In other words, applications business logic is contained within the model and is responsible for maintaining data.
+
+View
+It represents the user interface, with which the end-users communicates. In short, all the user interface logic is contained within the VIEW.
+
+Controller
+It is the controller that answers to user actions. Based on the user actions, the respective controller responds within the model and choose a view to render that display the user interface. The user input logic is contained with-in the controller.
+
+MVC is an abbreviation for Model, View, and Controller. 
+The MVC architectural pattern separates an application into three components – Model, View, and Controller. In this pattern, the model represents the shape of the data and business logic. It maintains and preserves the data of the application. Model objects retrieve and store model state in a database. The view is basically and technically a user interface. The view segment displays the data-using model to the user and also enables them to modify the data. The controller is the part, which handles the user request.
+
+List out a few different return types of a controller action method
+View Result
+Javascript Result
+Redirect Result
+JSON Result
+Content Result
+
+What are the advantages of MVC
+Benefits or the advantages of MVC are as follows:
+
+Multiple view support: Because of the separation of the model from the view, the user interface can display multiple views of the same data and at the same time.
+
+Change Accommodation: User interfaces tend to change more frequently than business rules.
+
+Testability: This framework provides better testability of the Web Application and good support for the test-driven development too.
+
+Lightweight: MVC framework doesn’t use View State and that reduces the bandwidth of the requests to an extent.
+
+Explain the role of components Presentation, Abstraction, and Control in MVC
+Presentation: It is the visual representation of a specific abstraction within the application.
+
+Abstraction: It is the business domain functionality within the application.
+
+Control: It is a component that keeps consistency between the abstraction within the system and their presentation to the user. It is also used to communicate with other controls within the system.
+
+How to maintain session in MVC
+The session can be maintained in MVC by three ways temp data, viewdata, and view bag.
+
+What is MVC Application life cycle
+Any web application has two main execution steps, first understanding the request and depending on the type of the request, sending out an appropriate response. MVC application life cycle has two main phases, first creating the request object and second sending the response to the browser.
+
+Creating the request object includes four basic steps:
+
+Step 1: Fill route
+Step 2: Fetch route
+Step 3: Request context created
+Step 4: Controller instance created
+
+What does the MVC Pattern define with 3 logical layers
+The MVC model defines web applications with 3 logic layers:
+
+The business layer (Model logic)
+
+The display layer (View logic)
+
+The input control (Controller logic)
+
+The Model is the part of the application, which only handles the logic for the application data. Regularly, the model objects retrieve data (as well as store data) from a database. The View is the part of the application, which takes care of the display of the data. Most often, the views are created from the model data, although there are other, more complicated methods of creating views. The Controller, as the name implies, is the part of the application that handles user interaction.
+
+What is Spring MVC
+It is a Java framework which is used to build web applications. It follows the Model-View-Controller design pattern. Not just that, it also implements all the basic features of a core Spring Framework like Inversion of Control, Dependency Injection. Spring MVC provides a dignified solution to use MVC in Spring Framework by the help of DispatcherServlet. In this case, DispatcherServlet is a class that receives the incoming request and maps it to the right resource such as Controllers, Models, and Views
+
+What are the Filters
+Sometimes we want to execute some logic either before the execution of the action method or after the execution. We can use Action Filter for such kind of scenario. Filters define the logic which is executed before or after the execution of the action method. Action Filters are attributes which we can apply to the action methods. Following are the MVC action filter types:
+
+Authorization filter (implements IAuthorizationFilter) 
+
+Action filter  (implements IActionFilter) 
+
+Result filter  (implements IResultFilter) 
+
+Exception filter  (implementsIExceptionFilter attribute)
+
+
+What is Partial View in MVC
+A partial view is a chunk of HTML that can be safely inserted into an existing DOM. Most commonly, partial views are used to componentize Razor views and make them easier to build and update. It can also be returned directly from controller methods. In this case, the browser still receives text/HTML content but not necessarily HTML content that makes up an entire page. As a result, if a URL that returns a partial view is directly invoked from the address bar of a browser, an incomplete page may be displayed. This may be something like a page that misses title, script and style sheets.
+
+Can you explain the page life cycle of MVC
+Below mentioned steps define the page life cycle.
+
+App initialization
+Routing
+Instantiate and execute controller
+Locate and invoke controller action
+Instantiate and render view.
+
+What is the use of ViewModel in MVC
+ViewModel is a plain class with properties, which is used to bind it to a strongly-typed view. ViewModel can have the validation rules defined for its properties using data annotation.
+
+What is GET and POST Action types
+GET Action Type: GET is used to request data from a specified resource. With all the GET requests, we pass the URL, which is compulsory; however, it can take up the following overloads.
+
+POST Action Type: Tthe POST is used to submit data to be processed to a specified resource. With all the POST requests, we pass the URL, which is essential and the data. However, it can take up the following overloads.
+
+How does View Data differ from View Bag in MVC
+View Data																						View Bag
+
+ViewData is used to pass data from a controller to view											ViewBag is also used to pass data from the controller to the respective view.
+It is available for the current request only.													It is also available for the current request only.
+Requires typecasting for complex data type and checks for null values to avoid error			Doesn’t require typecasting for the complex data type.
+If redirection occurs, then its value becomes null.												If redirection occurs, then its value becomes null
+
+Which filters are executed in the end
+In the end “Exception Filters” are executed.
+
+Mention what are the two ways for adding constraints to a route
+Two methods for adding constraints to the route is
+
+Using regular expressions
+Using an object that implements IRouteConstraint interface
+
+How can we implement validation in MVC
+We can easily implement validation in MVC application by using the validators defined in the System.ComponentModel.DataAnnotations namespace. There are different types of validators as follows:
+
+Required
+DataType
+Range
+StringLength
+
+Mention two instances where routing is not implemented or required
+Two instances where routing is not required are:
+
+When a physical file is found that matches the URL pattern
+When routing is disabled for a URL pattern
+
+Explain how you can implement Ajax in MVC
+In MVC, Ajax can be implemented in two ways. They are as follows:
+
+Ajax libraries
+Jquery
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

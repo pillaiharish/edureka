@@ -1,0 +1,264 @@
+TreeMap Class
+A TreeMap is sorted according to the natural ordering of its keys, or by a Comparator provided at creation time. This implementation doesn’t allow nulls but maintains order on its elements.
+
+Binary Tree in Java
+A Tree is a non-linear data structure where data objects are generally organized in terms of hierarchical relationship. The structure is non-linear in the sense that, unlike Arrays, Linked Lists, Stack and Queues, data in a tree is not organized linearly. A binary tree is a recursive tree data structure where each node can have 2 children at most. 
+Each data element stored in a tree structure called a node. A Tree node contains the following parts:
+Data
+Pointer to left child
+Pointer to the right child
+
+Full Binary Tree
+A full binary tree is a binary tree where every node has exactly 0 or 2 children.
+
+Perfect Binary Tree
+A binary tree is perfect binary Tree if all internal nodes have two children and all leaves are at the same level.
+
+Complete Binary Tree
+A complete binary tree is a binary tree in which every level, except possibly the last, is completely filled, and all nodes are as far left as possible.
+
+Binary Tree Implementation
+For the implementation, there’s an auxiliary Node class that will store int values and keeps a reference to each child. The first step is to find the place where we want to add a new node in order to keep the tree sorted. We’ll follow these rules starting from the root node:
+
+if the new node’s value is lower than the current node’s, go to the left child
+if the new node’s value is greater than the current node’s, go to the right child
+when the current node is null, we’ve reached a leaf node, we insert the new node in that position
+
+Tree Traversals
+Trees can be traversed in several ways: 
+
+Depth First Search
+Depth-first search is a type of traversal where we go as deep as possible down one path before backing up and trying a different one. There are several ways to perform a depth-first search: in-order, pre-order and post-order. We already checked out in-order traversal.
+
+Pre-Order Traversal
+In Pre-order traversal we visit the root node first, then the left subtree, and finally the right subtree. Here’s the code.
+
+public void traversePreOrder(Node node) {
+    if (node != null) {
+        System.out.print(" " + node.value);
+        traversePreOrder(node.left);
+        traversePreOrder(node.right);
+    }
+}
+Output: 5 2 4 3 8 6 7 9
+
+Post-Order Traversal
+In Post-order traversal you visit left subtree first, then the right subtree, and the root node at the end. Here’s the code.
+
+public void traversePostOrder(Node node) {
+    if (node != null) {
+        traversePostOrder(node.left);
+        traversePostOrder(node.right);
+        System.out.print(" " + node.value);
+    }
+}
+Output: 3 4 2 7 6 9 8 5
+
+Breadth-First Search
+This type of traversal visits all the nodes of a level before going to the next level. It is like throwing a stone in the center of a pond. The nodes you explore “ripple out” from the starting point. Breadth-First Search is also called level-order and visits all the levels of the tree starting from the root, and from left to right.
+
+Applications of Binary Tree
+Applications of binary trees include:
+
+Used in many search applications where data is constantly entering/leaving
+As a workflow for compositing digital images for visual effects
+Used in almost every high-bandwidth router for storing router-tables
+Also used in wireless networking and memory allocation
+Used in compression algorithms and many more
+
+
+
+Creating Copy of Java Object
+We can create a replica or copy of java object by
+
+1. Creating a copy of object in a different memory location. This is called a Deep copy.
+2. Creating a new reference that points to the same memory location. This is also called a Shallow copy.
+
+The clone method in Object class is protected in nature, so not all classes can use the clone() method. You need to implement Cloneable interface and override the clone method. If the Cloneable interface is not implemented then you will get CloneNotSupportedException.super.clone () will return shallow copy as per implementation in Object class.
+
+Shallow Copy
+This object will have an exact copy of all the fields of source object including the primitive type and object references. If the source object contains any references to other objects in field then in the new instance will have only references to those objects, a copy of those objects is not created. This means if we make changes in shallow copy then changes will get reflected in the source object. Both instances are not independent.
+
+Deep Copy
+The deep copy of an object will have an exact copy of all the fields of source object like a shallow copy, but unlike sallow copy if the source object has any reference to object as fields, then a replica of the object is created by calling clone method. This means that both source and destination objects are independent of each other. Any change made in the cloned object will not impact the source object
+
+Method Hiding
+If a subclass has a static method with the same name and signature as a static method in the superclass, then the method in the super-class will be call irrespective of the fact whether it is called from child class or parent class.
+
+Marker Interface In Java
+Marker interface is also known as a tagging interface and is used to indicate or inform the JVM that a class implementing this interface will have some special behaviour. An efficient way to classify code can be achieved using the marker interface. Examples of such an interface are: Serializable, Cloneable and Remote Interface
+
+Serializable Interface
+Serialization in java can be defined as the process of converting the state of an object into a byte stream. This can be achieved by using the serializable interface which is present in java.io.package. It must be noted that the all subtypes of a serializable class are themselves serializable.
+
+Cloneable Interface:
+This interface can be found in the java.lang package. Cloning is the mechanism of generating a replica or an exact copy of an object with a different name.
+The Cloneable Interface is implemented by a class to indicate to the object.clone() method that it is legal for the method to make a field-for-field copy of instances of that class.
+A CloneNotSupportedException is thrown for a class which invokes the clone method without implementing a cloneable interface.
+
+Remote Interface:
+A remote object can be defined as an object whose methods can be invoked from a different JVM, potentially on another host. This interface is found in the java.rmi package. A remote object must implement this method directly or indirectly.
+
+RMI:
+Remote Method Convocation is an API that enables an object to invoke methods on an object running in a different JVM. It provides remote communication between the two applications using the following objects: stub and skeleton.
+
+Stub:
+A stub can be defined as an object that is present at the client side and represents the remote object. It creates an information block which consists of:
+α Identifier of the remote object
+α Name of the method which is to be invoked
+α Parameters to the remote JVM
+
+Skeleton:
+The main job of the skeleton object is to pass the requests from the stub to the remote object. In addition, it performs the tasks given below:
+α It invokes the desired method on the original remote object
+α Reads the parameter specified for the remote object
+
+Steps to Implement Remote Interface:
+Define a remote interface:
+import java.rmi.*;
+public interface AddAll extends Remote{
+	public int add(int r,int s)throws RemoteException;
+}
+Here, the Remote interface is extended, and RemoteException is declared with all the methods of the remote interface.
+
+
+Implement the remote interface:
+There are two ways to provide implementation to the remote interface:
+α Extend the UnicastRemoteObject class
+α Use the exportObject() method of the UnicastRemoteObject class
+
+import java.rmi.*;
+import java.rmi.server.*;
+public class AddAllRemote extends UnicastRemoteObject implements Adder{
+	AddAllRemote()throws RemoteException{
+		super();
+	}
+	public int add(int r,int s){return r+s;}
+}
+
+Using rmic (rmi compiler), create the stub and skeleton objects.
+The stub and skeleton objects can be created by using the rmi compiler. The rmi tool invokes the RMI compiler to create the objects.
+rmic AddAllRemote
+
+Using the rmiregistry tool, start the registry service.
+The registry service can be started by using the rmregistry tool. A default port number is used if not specified by the user.
+rmiregistry 5000
+
+
+Create and start the remote application.
+import java.rmi.*;
+import java.rmi.registry.*;
+public class Server{
+	public static void main(String args[]){
+		try{
+			AddAll stub=new AddAllRemote();
+			Naming.rebind("<a href="rmi://localhost:5000/sak">rmi://localhost:5000/sak</a>",stub);
+		}catch(Exception e){
+			System.out.println(e);
+		}
+	}
+}
+The remote object is being bound by the name sak in the above example.
+
+
+Create and start the client application.
+In the example given, the server and the client applications are being run on the same machine. Thus, the usage of localhost is being made.
+import java.rmi.*;
+public class Client{
+	public static void main(String args[]){
+		try{
+			AddAll stub=(AddAll)Naming.lookup("<a href="rmi://localhost:5000/sak">rmi://localhost:5000/sak</a>");
+			System.out.println(stub.add(29,18));
+		}catch(Exception e){
+		
+		}
+	}
+}
+To access the remote object from a different machine, the local host name must be changed to the IP Address or the host name where the remote object is located.
+
+An efficient way to classify code can be achieved using the marker interface.
+
+
+Thread Pool in Java
+In a Thread Pool, a group of fixed size threads is created. Whenever a task has to be granted, one of the threads is pulled out and assigned that task by the service provider, as soon as the job is completed the thread is returned back to the thread pool. Thread pool is preferably used because active threads consume system resources, when is JVM creates too many threads at the same time, the system could run out of memory. Hence the number of threads to be created has to be limited. Therefore the concept of the thread pool is preferred!
+
+Risk in the Java Thread Pool are :
+
+Thread Leakage: If a thread is removed from the pool to perform a task but not returned back to it when the task is completed, thread leakage occurs.
+Deadlock: In thread pool is executing thread is waiting for the output from the block the thread waiting in the queue due to unavailability of thread for execution, there’s a case of a deadlock.
+Resource Thrashing: More number of threads than the optimal number required can cause starvation problems leading to resource thrashing.
+
+Advantages of a Thread Pool are :
+
+Better performance
+Saves time
+No need to create a thread again and again
+Easy to access
+Real-time usage
+
+Disadvantages of the Thread Pool are :
+
+There is no control over the priority and state of the thread we are working with.
+There is no stable identity given to the thread, no track can be kept.
+When there is a high demand for the thread pool, the process may be deleted.
+The thread pool can not work well when two threads are working in parallel.
+There are several situations where the application code can be affected by another application code, despite robust application isolation.
+
+package MyPackage;
+  
+import java.util.concurrent.LinkedBlockingQueue;
+  
+public class ThreadPool {
+	private final int nThreads;
+	private final PoolWorker[] threads;
+	private final LinkedBlockingQueue<Runnable> queue;
+	  
+	public ThreadPool(int Threads) {
+		this.nThreads = Threads;
+		queue = new LinkedBlockingQueue<Runnable>();
+		threads = new PoolWorker[Threads];
+		  
+		for (int i = 0; i < nThreads; i++) {
+			threads[i] = new PoolWorker();
+			threads[i].start();
+		}
+	}
+	  
+	public void execute(Runnable task) {
+		synchronized (queue) {
+			queue.add(task);
+			queue.notify();
+		}
+	}
+}
+  
+private class PoolWorker extends Thread {
+	public void run() {
+		Runnable task;		  
+		while (true) {
+			synchronized (queue) {
+				while (queue.isEmpty()) {
+					try {
+						queue.wait();
+					} catch (InterruptedException e) {
+						System.out.println("An error occurred while queue is waiting: " + e.getMessage());
+					}
+				}
+				task = (Runnable)queue.poll();
+			}
+				  
+			// If we don't catch RuntimeException,
+			// the pool could leak threads
+			try {
+				task.run();
+			} catch (RuntimeException e) {
+				System.out.println("Thread pool is interrupted due to an issue: " + e.getMessage());
+			}
+		}																			
+	}
+}
+
+
+
+
+

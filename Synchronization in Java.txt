@@ -1,0 +1,353 @@
+Synchronization in Java
+Multiple threads attempt to write within an equivalent file. This may corrupt the data since one of the threads can override the data or when a thread is opening the same file at the same time, another thread might be closing the same file. There is a need to synchronize the action of multiple threads. This can be implemented using a concept called Monitors.
+
+Each object in Java is associated with a monitor, which a thread can lock or unlock.
+Only one thread at a time may hold a lock on a monitor.
+Java programming language provides a very handy way of creating threads and synchronizing their task by using the Synchronized blocks.
+It also keeps the shared resources within this particular block.
+Synchronized blocks in Java are marked with the Synchronized keyword. This block in Java is synchronized on some object. All blocks that are synchronized on the same object can only have one thread executing inside them at a time. All other threads attempting to enter the synchronized block are blocked until the thread inside the synchronized block exits the block.
+
+Types of Synchronization : There are basically two types of synchronization available. They are:
+
+Process Synchronization: The simultaneous execution of multiple threads or processes to reach a state such that they commit to a certain sequence of actions.
+
+Thread Synchronization: At times when more than one thread tries to access a shared resource, we need to ensure that resource will be used by only one thread at a time.
+
+Locks in Java
+Synchronization is built around an internal entity known as the lock or monitor. Each and every object has a lock associated with it. So a thread that needs consistent access to an object’s fields needs to acquire the object’s lock before accessing them, and then release the lock when the work is done.
+
+From Java 5, the package java.util.concurrent.locks contains many lock implementations.
+
+public class Lock {
+	private boolean isLocked = false;
+	public synchronized void lock() throws InterruptedException {
+		while(isLocked) {
+			wait();
+		}
+		isLocked = true;
+	}
+	public synchronized void unlock() {
+		isLocked = false;
+		notify();
+	}
+}
+
+The lock() method locks the Lock instance so that all threads calling lock() are blocked until unlock() is executed.
+
+Multi-threading without Synchronization
+class Multithread {
+	public void printCount() {
+		try {
+			for(int i = 5; i<0; i--) {
+				System.out.println("Counter --- " + i );
+			}
+		}
+		catch (Exception e) {
+			System.out.println("Thread interrupted.");
+		}
+	}
+}
+class Thread extends Multithread {
+	private Thread t;
+	private String threadName;
+	Multithread MT;
+	Thread( String name, Multithread mt) {
+		threadName = name;
+		MT= mt;
+	}
+	public void run() {
+		MT.printCount();
+		System.out.println("Thread " + threadName + " exiting.");
+	}
+	public void start () {
+		System.out.println("Starting " + threadName );
+		if (t == null) {
+			t = new Thread (this, threadName); t.start ();
+		}
+	}
+}
+public class TestThread {
+	public static void main(String args[]) {
+		Multithread MT = new Multithread();
+		Thread t = new Thread( "Thread - 1 ", MT);
+		Thread t1 = new Thread( "Thread - 2 ", MT);
+		t.start();
+		t1.start(); // wait for threads to end
+		try {
+			t.join();
+			t1.join();
+		} catch ( Exception e) {
+			System.out.println("Interrupted");
+		}
+	}
+}
+
+
+Multi-threading with Synchronization
+class Multithread {
+	public void printCount() {
+		try {
+			for(int i = 5; i > 0; i--) {
+				System.out.println("Counter --- " + i );
+			}
+		} catch (Exception e) {
+			System.out.println("Thread interrupted.");
+		}
+	}
+}
+class Thread extends Multithread {
+	private Thread t;
+	private String threadName;
+	Multithread MT;
+	Thread( String name, Multithread mt) {
+		threadName = name;
+		MT= mt;
+	}
+	public void run() {
+		synchronized(MT) {
+			MT.printCount();
+		}
+		System.out.println("Thread " + threadName + " exiting.");
+	}
+	public void start () {
+		System.out.println("Starting " + threadName );
+		if (t == null) {
+			t = new Thread (this, threadName);
+			t.start ();
+		}
+	}
+}
+public class TestThread {
+	public static void main(String args[]) {
+		Multithread MT = new Multithread();
+		Thread T = new Thread( "Thread - 1 ", MT);
+		Thread T1 = new Thread( "Thread - 2 ", MT);
+		T.start();
+		T1.start(); // wait for threads to end
+		try {
+			T.join();
+			T1.join();
+		} catch ( Exception e) {
+			System.out.println("Interrupted");
+		}
+	}
+}
+ 
+
+Synchronized Keyword
+Java synchronized keyword marks a block or a method a critical section. A critical section is where only one thread is executing at a time, and the thread holds the lock for the synchronized section. This synchronized keyword helps in writing concurrent parts of any application. It also protects shared resources within the block.
+
+The synchronized keyword can be used with :
+A code block
+A method
+
+Synchronized Keyword: A code block
+Syntax : The general syntax for writing a synchronized block is :
+
+synchronized ( lockObject) {
+	//synchronized statements
+}
+
+When a thread wants to execute the synchronized statements inside the block, it must acquire the lock on the lockObject‘s monitor. Only one thread can acquire the monitor of a lock object at a time. So all other threads must wait till the currently executing thread acquires the lock and finish its execution.
+This way, the synchronized keyword guarantees that only one thread will be executing the synchronized block statements at a time, and thus prevents multiple threads from corrupting the shared data that is present inside the block.
+
+Note:
+If a thread is put on sleep (using sleep() method) then it does not release the lock. During this sleep time, no thread will be executing the synchronized block statements.
+Java synchronization will throw NullPointerException if lock object used in ‘synchronized (lock)‘ is null.
+
+Synchronized Keyword: A method
+Syntax : The general syntax for writing a synchronized method is :
+
+<access modifier> synchronized method ( parameters) {
+	//synchronized code
+}
+
+Here lockObject is just a reference to an object whose lock is associated with the monitor which represents the synchronized statements.
+
+Similar to the synchronized block, a thread must acquire the lock on the connected monitor object with the synchronized method. In the case of synchronized method, the lock object is:
+
+‘.class’ object 	– 	if the given method is static.
+‘this’ object 		– 	if the method is non-static. ‘this’ is the reference to the current object in which the synchronized method is invoked.
+
+Java synchronized keyword is re-entrant in nature. It means if a synchronized method calls another synchronized method which requires the same lock, then current thread which is holding the lock can enter into that method without acquiring the lock.
+
+Difference between synchronized keyword and synchronized block
+When you use synchronized keyword with a method, it acquires a lock in the object for the entire method. This means that no other thread can use any synchronized method until the current thread that is invoked has finished its execution.
+Synchronized block acquires a lock in the object only between parentheses after the synchronized keyword is specified. This means that no other thread can acquire a lock on the already locked object until the block exits. But other threads will be able to access the rest of the code that is present in the method
+
+
+Semaphore in Java?
+A semaphore is a variable used for the synchronization of processes which is used for managing concurrent processes. It is also used to control access to a common resource by multiple concurrent processes and avoid a race condition.
+
+A Semaphore in Java controls access to a shared resource through a counter. It is a thread synchronization construct used to send signals between threads to avoid missed signals or guard a critical section
+
+Types of semaphore –
+
+Binary semaphore: A binary semaphore only takes only 0 and 1 as values and is used to implement mutual exclusion as well as synchronize concurrent processes.
+Counting semaphore: The value of a counting semaphore at any point indicates the maximum number of processes that can enter the critical section at the exact same time.
+
+Working of Semaphore
+
+If semaphore count > 0, the thread acquires a permit, decrementing the semaphore’s count.
+Else, the thread is blocked until a permit can be acquired.
+When thread no longer needs access to a shared resource, it releases the permit, incrementing the semaphore count.
+If another thread is waiting for a permit, then that thread will acquire a permit at that time
+
+import java.util.concurrent.*; 
+ 
+//Will take Resource as  shared class
+class Resource { 
+    static int count = 0; 
+} 
+ 
+class MyDemo extends Demo 
+{ 
+    Semaphore sem; 
+    String threadName; 
+    public MyDemo(Semaphore sem, String threadName) { 
+        super(threadName); 
+        this.sem = sem; 
+        this.threadName = threadName; 
+    } 
+ 
+    @Override
+    public void run() { 
+         
+        // Run By X
+        if(this.getName().equals("X")) { 
+            System.out.println("Starting " + threadName); 
+            try { 
+                // Will get the permit to access shared resource
+                System.out.println(threadName + " waiting for a permit."); 
+             
+                // acquiring the lock 
+                sem.acquire(); 
+             
+                System.out.println(threadName + " gets a permit."); 
+         
+                // Now, accessing the shared resource and rest will wait  
+                 
+                for(int i=0; i < 7; i++) { 
+                    Resource.count++; 
+                    System.out.println(threadName + ": " + Resouce.count); 
+         
+                     
+                    // Now thread Y will try  to execute 
+                    Thread.sleep(20); 
+                } 
+            } catch (InterruptedException exc) { 
+                System.out.println(exc); 
+            } 
+         
+			// Release the permit. 
+			System.out.println(threadName + " releases the permit."); 
+			sem.release(); 
+        } 
+         
+        // run by thread Y 
+        else { 
+            System.out.println("Starting " + threadName); 
+            try { 
+                // First, Y will try to get permit
+                System.out.println(threadName + " waiting for a permit."); 
+             
+                // acquiring the lock 
+                sem.acquire(); 
+             
+                System.out.println(threadName + " gets a permit."); 
+         
+                // Now, accessing the shared resource and others will wait
+                 
+                for(int i=0; i < 7; i++) { 
+                    Resource.count--; 
+                    System.out.println(threadName + ": " + Resource.count); 
+         
+                    // Now, allowing a context switch -- if possible. 
+                    // for thread X to execute 
+                    Thread.sleep(20); 
+                } 
+            } catch (InterruptedException exc) { 
+                    System.out.println(exc); 
+                } 
+			// Release the permit. 
+			System.out.println(threadName + " releases the permit."); 
+			sem.release(); 
+        } 
+    } 
+} 
+ 
+public class SemTest 
+{ 
+    public static void main(String args[]) throws InterruptedException 
+    { 
+        // creating a Semaphore object 
+        // with number of permits 1
+        Semaphore sem = new Semaphore(1); 
+         
+        // creating two threads with name X and Y 
+        // Here thread X will increment and Y will decrement the counter
+        MyDemo md1 = new MyDemo(sem, "X"); 
+        MyDemo md2 = new MyDemo(sem, "Y"); 
+         
+        // stating threads X and Y 
+        md1.start(); 
+        md2.start(); 
+         
+        // waiting for threads X and Y 
+        md1.join(); 
+        mtd.join(); 
+         
+     
+        System.out.println("count: " + Resource.count); 
+    } 
+} 
+
+
+Random class in Java
+In Java, Random class is a part of java.util package. The generation of random numbers takes place by using an instance of the Java Random Class. This class provides different methods in order to produce random numbers of type integer, double, long, float, etc.
+
+Constructors used in a Java Random class : This class contains two constructors that are mentioned below :
+
+Random(): this constructor helps in creating a new random generator
+Random(long seed): this constructor helps in creating a new random generator using specified seed
+
+Note: Whenever a random number generation process takes place, the seed value is considered. If the seed value is not provided, it gets created from system nano time. If in case 2 random instances possess the same seed value, the same sequence of random numbers will be generated.
+
+Methods used in a Java random class : Some important methods are :
+
+nextDouble() :Returns the next pseudo-random number that is a double value between the range of 0.0 to 1.0.
+nextBoolean() : Returns the next pseudo-random which is a Boolean value from random number generator sequence
+nextFloat() : Returns the next pseudo-random which is a float value between 0.0 to 1.0
+nextInt() : Returns the next pseudo-random which is an integer value from random number generator sequence
+nextInt(Int n) : Returns the next pseudo-random which is an integer value between 0 and the specified value from random number generator sequence
+nextBytes(byte[] bytes) : Generates random bytes and places them into a byte array supplied by the user
+Longs() : Returns an unlimited stream of pseudorandom long values
+nextGaussian() : Helps in returning the next pseudo-random, Gaussian (precisely) distributed double value with mean 0.0 & standard deviation 1.0 from this random number generator’s sequence
+There are other methods that are inherited from java.lang.object like: notify, notifyAll, wait, toString, finalise, equals, clone, getClass, and hashCode.
+
+package MyPackage;
+import java.util.Random;
+ 
+public class JavaRandomExample {
+    public static void main(String[] args) {
+        //create random object
+        Random random= new Random();
+        //returns unlimited stream of pseudorandom long values
+        System.out.println("Longs value : "+random.longs());
+        // Returns the next pseudorandom boolean value
+        boolean val = random.nextBoolean();
+        System.out.println("Random boolean value : "+val);
+        byte[] bytes = new byte[10];
+        //generates random bytes and put them in an array
+        random.nextBytes(bytes);
+        System.out.print("Random bytes = ( ");
+        for(int i = 0;i<bytes.length; i++) {
+			System.out.printf("%d ", bytes[i]);
+        }
+        System.out.print(")");
+    }
+ 
+}
+
+
+
